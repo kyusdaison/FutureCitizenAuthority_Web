@@ -1,10 +1,11 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import { HolographicGlobe } from '../components/HolographicGlobe';
 import { FadeInUp } from '../components/FadeInUp';
 import { MagneticButton } from '../components/MagneticButton';
+import { lazy, Suspense } from 'react';
 import { HexGridBackground } from '../components/HexGridBackground';
-import { NetworkMatrix } from '../components/NetworkMatrix';
+
+const NetworkMatrix = lazy(() => import('../components/NetworkMatrix').then(module => ({ default: module.NetworkMatrix })));
 
 export const HeroSection = () => {
   const { scrollYProgress } = useScroll();
@@ -14,23 +15,24 @@ export const HeroSection = () => {
   return (
     <section id="vision" className="min-h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden">
       {/* HUD Elements */}
-      <div className="absolute top-1/4 left-12 hidden xl:flex flex-col gap-2 text-left opacity-60">
-         <div className="text-[10px] font-mono tracking-[0.4em] text-slate-500 uppercase">SYS.COORD <span className="text-slate-700">//</span> 45.92.110</div>
-         <div className="text-[10px] font-mono tracking-[0.4em] text-yellow-500 uppercase">NET.STATUS <span className="text-slate-700">//</span> OPTIMAL</div>
-         <div className="w-16 h-px bg-slate-800 mt-2"></div>
+      <div className="absolute top-1/4 left-12 hidden xl:flex flex-col gap-2 text-left opacity-80">
+         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">SYS.COORD <span className="text-slate-600">//</span> 45.92.110</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">NET.STATUS <span className="text-slate-600">//</span> OPTIMAL</div>
+         <div className="w-32 h-px bg-gradient-to-r from-fc-gold/40 to-transparent mt-2"></div>
       </div>
       
-      <div className="absolute bottom-1/3 right-12 hidden xl:flex flex-col gap-2 text-right opacity-60">
-         <div className="text-[10px] font-mono tracking-[0.4em] text-fc-gold uppercase"><span className="text-slate-700">//</span> PROTOCOL ZKP-MPC</div>
-         <div className="text-[10px] font-mono tracking-[0.4em] text-slate-500 uppercase"><span className="text-slate-700">//</span> SHARD ALPHA-7</div>
-         <div className="w-16 h-px bg-slate-800 mt-2 ml-auto"></div>
+      <div className="absolute bottom-1/3 right-12 hidden xl:flex flex-col gap-2 text-right opacity-80">
+         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"><span className="text-slate-600">//</span> PROTOCOL ZKP-MPC</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-600">//</span> SHARD ALPHA-7</div>
+         <div className="w-32 h-px bg-gradient-to-l from-fc-gold/40 to-transparent mt-2 ml-auto"></div>
       </div>
       
       {/* Hex Grid and Node Network Layer */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <NetworkMatrix />
+        <Suspense fallback={<div className="absolute inset-0 bg-transparent" />}>
+          <NetworkMatrix />
+        </Suspense>
         <HexGridBackground />
-        <HolographicGlobe />
       </div>
 
       {/* Vertical Label */}
@@ -63,9 +65,9 @@ export const HeroSection = () => {
         </motion.h1>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2, delay: 0.6 }} className="mt-4 max-w-2xl flex flex-col items-center relative z-20">
-          <div className="w-px h-16 bg-gradient-to-b from-slate-800 to-transparent mb-8 w-[1px]"></div>
-          <p className="text-[11px] md:text-[13px] font-mono tracking-[0.25em] text-slate-300 uppercase leading-[2.5] text-center max-w-xl auth-glass-panel border-gold-glow border-t p-8 rounded-sm">
-            The official ledger of <span className="text-gold-gradient font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">State Identity</span> and <span className="text-gold-gradient font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">Public Trust</span>. A parallelized L1 architecture merging sub-second finality with sovereign regulatory compliance.
+          <div className="w-px h-16 bg-gradient-to-b from-fc-gold/20 to-transparent mb-8"></div>
+          <p className="text-[11px] md:text-[13px] font-mono tracking-[0.3em] text-slate-300 uppercase leading-[2.5] text-center max-w-2xl auth-glass-panel border-t border-[rgba(212,175,55,0.15)] p-8 rounded-sm">
+            The <span className="text-gold-gradient font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">Sovereign Digital Infrastructure</span> ecosystem. A high-performance public chain matrix integrating Web3 Identity, programmable finance, and sovereign government services.
           </p>
         </motion.div>
 
@@ -79,15 +81,16 @@ export const HeroSection = () => {
       </motion.div>
       
       {/* Infinite Marquee Ticker */}
-      <div className="absolute bottom-0 w-[200vw] left-0 h-10 border-t border-slate-800 bg-slate-950 flex items-center overflow-hidden z-20">
-        <div className="animate-marquee flex gap-12 text-[9px] font-mono tracking-[0.3em] text-slate-500 uppercase">
+      <div className="absolute bottom-0 w-[200vw] left-0 h-10 border-t border-white/5 bg-[#020306] flex items-center overflow-hidden z-20">
+        <div className="hairline-divider-h absolute top-0 left-0"></div>
+        <div className="animate-marquee flex gap-16 text-[9px] font-mono tracking-[0.4em] text-slate-500 uppercase">
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="flex gap-12 whitespace-nowrap">
-              <span>// MAINNET TPS: 140,000+</span>
-              <span>// TTF: 400ms</span>
-              <span>// ACTIVE PROTOCOLS: 2,048</span>
-              <span>// EXECUTION: SECURE ENCLAVE</span>
-              <span>// CLASSIFICATION: UNRESTRICTED // NATIVE ASSET: $FCC</span>
+            <div key={i} className="flex gap-16 whitespace-nowrap">
+              <span>// MAINNET TPS: 50,000+ (HTTS)</span>
+              <span>// TTF: 0.5 - 2.0 SECONDS</span>
+              <span>// CORE PROTOCOLS: WEB3 ID & ZKP-MPC</span>
+              <span>// EXECUTION: SOVEREIGN ENCLAVE</span>
+              <span>// CLASSIFICATION: UNRESTRICTED <span className="text-fc-gold opacity-50 ml-2">// NATIVE ASSET: $FCC</span></span>
             </div>
           ))}
         </div>

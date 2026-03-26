@@ -72,7 +72,7 @@ export const IdentitySection = () => {
           <div className="lg:col-span-7 relative flex flex-col items-center justify-center min-h-[500px] group">
             <FadeInUp delay={0.2} className="absolute inset-0">
               <div className="w-full h-full border border-slate-800 overflow-hidden relative shadow-2xl">
-                <img src="/fcc_web3_identity.png" alt="Web3 Identity Terminal" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-105" />
+                <img src="/fcc_web3_identity.webp" alt="Web3 Identity Terminal" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-transparent to-[#020617]/20"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-[#020617]/30"></div>
               </div>

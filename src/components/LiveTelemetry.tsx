@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 const INITIAL_LOGS = [
   "nexus@fcc-core:~$ init_htts_engine --production",
@@ -7,41 +7,20 @@ const INITIAL_LOGS = [
   "[OK] Validating ZKP Identity Proofs: 0x8f9c...a1"
 ];
 
-/**
- * 高性能实时遥测组件
- * 使用 useRef 存储日志，避免频繁 re-render
- */
 export const LiveTelemetry: React.FC = () => {
-  const logsRef = useRef<string[]>([...INITIAL_LOGS]);
-  const [, forceUpdate] = useState({});
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [logs, setLogs] = useState<string[]>([...INITIAL_LOGS]);
 
-  // 使用 useCallback 缓存添加日志函数
   const addLog = useCallback(() => {
     const hash = Math.random().toString(16).substring(2, 10);
     const shard = Math.floor(Math.random() * 64) + 1;
     const ms = (Math.random() * 0.1 + 0.3).toFixed(3);
-    
-    const newLog = `[htts-sync] Shard_${shard} verified block 0x${hash} in ${ms}s`;
-    
-    logsRef.current = [...logsRef.current.slice(-5), newLog];
-    
-    // 强制更新，但保持引用不变
-    forceUpdate({});
+    setLogs(prev => [...prev.slice(-5), `[htts-sync] Shard_${shard} verified block 0x${hash} in ${ms}s`]);
   }, []);
 
   useEffect(() => {
-    // 使用较长的间隔减少更新频率
-    intervalRef.current = setInterval(addLog, 2000); // 从 1500ms 增加到 2000ms
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
+    const id = setInterval(addLog, 2000);
+    return () => clearInterval(id);
   }, [addLog]);
-
-  const logs = logsRef.current;
 
   return (
     <div className="font-mono text-[10px] text-green-500/80 bg-[#010203] p-6 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,1)] w-full max-w-lg hidden lg:flex flex-col relative overflow-hidden h-[220px]">

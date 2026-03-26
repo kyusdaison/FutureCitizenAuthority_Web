@@ -27,22 +27,24 @@ export const OptimizedImage = memo(function OptimizedImage({
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
   const [imgSrc, setImgSrc] = useState(src);
+  const [prevSrc, setPrevSrc] = useState(src);
   const imgRef = useRef<HTMLDivElement>(null);
 
-  // 尝试使用 WebP 版本
-  useEffect(() => {
-    if (!webp || !src.endsWith('.png')) {
-      setImgSrc(src);
-      return;
-    }
+  // Sync imgSrc when src prop changes (state-during-render pattern)
+  if (prevSrc !== src) {
+    setPrevSrc(src);
+    setImgSrc(src);
+  }
 
+  // Async WebP availability check (only for .png sources)
+  useEffect(() => {
+    if (!webp || !src.endsWith('.png')) return;
     const webpSrc = src.replace('.png', '.webp');
-    
-    // 检查 WebP 图片是否存在
     const img = new Image();
     img.onload = () => setImgSrc(webpSrc);
     img.onerror = () => setImgSrc(src);
     img.src = webpSrc;
+    return () => { img.onload = null; img.onerror = null; };
   }, [src, webp]);
 
   // 懒加载观察

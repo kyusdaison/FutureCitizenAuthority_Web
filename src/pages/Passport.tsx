@@ -4,7 +4,17 @@ import { CipherHeading } from '../components/CipherHeading';
 import { useWallet } from '../contexts/WalletContext';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 import { mockDataService, type PassportStat, type ActivityLog } from '../services/mockDataService';
-import { IdentityAvatar } from '../components/IdentityAvatar';
+import { lazy, Suspense } from 'react';
+const IdentityAvatar = lazy(() => import('../components/IdentityAvatar').then(module => ({ default: module.IdentityAvatar })));
+
+const generateHash = (length = 16) => {
+  const chars = '0123456789abcdef';
+  let hash = '0x';
+  for (let i = 0; i < length; i++) {
+    hash += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return hash;
+};
 
 export default function Passport() {
   const { connectedIdentity, level } = useWallet();
@@ -135,16 +145,6 @@ export default function Passport() {
   const radarPoints = stats.map((s, i) => getPointCoordinates(s, i, stats.length));
   const radarPath = radarPoints.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') + ' Z';
 
-  // Generate random hash for display
-  const generateHash = (length = 16) => {
-    const chars = '0123456789abcdef';
-    let hash = '0x';
-    for (let i = 0; i < length; i++) {
-      hash += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return hash;
-  };
-
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-12">
       {/* Header */}
@@ -186,7 +186,9 @@ export default function Passport() {
 
             {mintPhase === 0 ? (
               <>
-                <IdentityAvatar address={connectedIdentity || '0x0000000000000000000000000000000000000000'} level={level} />
+                <Suspense fallback={<div className="w-full h-full animate-pulse bg-cyan-500/10 rounded-full" />}>
+                  <IdentityAvatar address={connectedIdentity || '0x0000000000000000000000000000000000000000'} level={level} />
+                </Suspense>
                 <h2 className="text-2xl font-display text-white mb-2 mt-8">Mint Your Identity</h2>
                 <p className="text-slate-400 text-sm text-center max-w-md mb-8">
                   Establish a cryptographic link between your physical identity and the FC blockchain.
@@ -266,7 +268,9 @@ export default function Passport() {
             <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
               {/* Avatar Section */}
               <div className="w-40 h-40 relative">
-                <IdentityAvatar address={connectedIdentity || '0x0000...0000'} level={level} />
+                <Suspense fallback={<div className="absolute inset-0 animate-pulse bg-cyan-500/10 rounded-full" />}>
+                  <IdentityAvatar address={connectedIdentity || '0x0000...0000'} level={level} />
+                </Suspense>
                 {isScanning && (
                   <motion.div 
                     className="absolute inset-0 border-2 border-cyan-400/50 rounded-full"

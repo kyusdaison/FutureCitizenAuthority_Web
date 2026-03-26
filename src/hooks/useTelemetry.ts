@@ -14,7 +14,7 @@ export interface TelemetryData {
 }
 
 export function useTelemetry(intervalMs: number = 2000) {
-  const [data, setData] = useState<TelemetryData>({
+  const [data, setData] = useState<TelemetryData>(() => ({
     tps: 14352,
     maxTps: 65000,
     tpsHistory: Array.from({ length: 20 }, () => 14000 + Math.floor(Math.random() * 2000)),
@@ -25,7 +25,7 @@ export function useTelemetry(intervalMs: number = 2000) {
     txPool: 41410,
     fcPrice: '699.42',
     fcPriceChange: '+12.4%'
-  });
+  }));
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -56,7 +56,7 @@ export const NarrativeTracker: React.FC = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    updateActiveSection(); // 初始检查
+    rafRef.current = requestAnimationFrame(updateActiveSection);
     
     return () => {
       window.removeEventListener('scroll', handleScroll);

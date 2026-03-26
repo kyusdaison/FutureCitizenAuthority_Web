@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 // Lazily initialize audio context to comply with browser autoplay policies
 const getAudioContext = () => {
   if (typeof window === 'undefined') return null;
-  // @ts-expect-error
+  // @ts-expect-error -- webkitAudioContext is vendor-prefixed and not in standard TypeScript DOM types
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) return null;
   return new AudioContextClass();

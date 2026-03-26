@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Globe from 'react-globe.gl';
 import { useSoundEffects } from '../hooks/useSoundEffects';
-
-interface GlobalNodeMapProps {
-  onNavigate?: (view: string) => void;
-}
 
 const HUBS = [
   { lat: 35.6895, lng: 139.6917, name: 'Vanguard DEX', route: 'swap', color: '#0ea5e9' },
@@ -21,13 +18,17 @@ const INITIAL_NODES = Array.from({ length: 150 }).map(() => ({
   size: Math.random() / 3 + 0.1,
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type GlobeRef = any;
+interface ArcData { startLat: number; startLng: number; endLat: number; endLng: number; color: string }
+interface RingData { lat: number; lng: number; maxR: number; propagationSpeed: number; repeatPeriod: number; color: string }
+interface HexBinData { sumWeight: number }
+type HubEntry = typeof HUBS[number]
 
-export const GlobalNodeMap = ({ onNavigate }: GlobalNodeMapProps) => {
-  const globeEl = useRef<GlobeRef>(null);
-  const [arcsData, setArcsData] = useState<Record<string, any>[]>([]);
-  const [ringsData, setRingsData] = useState<Record<string, any>[]>([]);
+export const GlobalNodeMap = () => {
+  const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const globeEl = useRef<any>(null);
+  const [arcsData, setArcsData] = useState<ArcData[]>([]);
+  const [ringsData, setRingsData] = useState<RingData[]>([]);
   const { playSuccess } = useSoundEffects();
 
   // Reference stable nodes directly
@@ -38,9 +39,15 @@ export const GlobalNodeMap = ({ onNavigate }: GlobalNodeMapProps) => {
     const globe = globeEl.current;
     if (globe) {
       globe.controls().autoRotate = true;
-      globe.controls().autoRotateSpeed = 0.5;
+      globe.controls().autoRotateSpeed = 0.15; // Slow down for massive scale mystery
       globe.controls().enableZoom = false;
-      globe.pointOfView({ altitude: 2 });
+      
+      // Cinematic Entrance: Start massive (close-up) and slowly pull back
+      globe.pointOfView({ altitude: 0.05 }); // Start extremely close
+      setTimeout(() => {
+        // Animate out to full altitude over 8 seconds for a majestic reveal
+        globe.pointOfView({ altitude: 2.2 }, 8000); 
+      }, 200);
       
       // Simulate live network transactions flashing
       const interval = setInterval(() => {
@@ -58,12 +65,15 @@ export const GlobalNodeMap = ({ onNavigate }: GlobalNodeMapProps) => {
         const newRing = {
           lat: endNode.lat,
           lng: endNode.lng,
-          color: newArc.color
+          color: newArc.color,
+          maxR: Math.random() * 5 + 3,
+          propagationSpeed: 1.2,
+          repeatPeriod: 2500
         };
         
         setArcsData(prev => [...prev.slice(-20), newArc]);
         setRingsData(prev => [...prev.slice(-8), newRing]);
-      }, 1500);
+      }, 3500);
       
       return () => clearInterval(interval);
     }
@@ -80,19 +90,18 @@ export const GlobalNodeMap = ({ onNavigate }: GlobalNodeMapProps) => {
         arcColor="color"
         arcDashLength={0.4}
         arcDashGap={0.2}
-        arcDashAnimateTime={1500}
+        arcDashAnimateTime={4000} // Slower, elegant light paths
         arcsTransitionDuration={0}
         
         ringsData={ringsData}
         ringColor={() => (t: number) => `rgba(14,165,233,${1-t})`}
         ringMaxRadius={5}
-        ringPropagationSpeed={3}
-        ringRepeatPeriod={700}
+        ringPropagationSpeed={1.2} // Slower ripples
+        ringRepeatPeriod={2500}
         
         hexBinPointsData={nodes}
         hexBinPointWeight="size"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        hexAltitude={(d: any) => d.sumWeight * 0.1}
+        hexAltitude={(d: HexBinData) => d.sumWeight * 0.1}
         hexBinResolution={4}
         hexMargin={0.2}
         hexTopColor={() => '#0ea5e9'}
@@ -100,27 +109,26 @@ export const GlobalNodeMap = ({ onNavigate }: GlobalNodeMapProps) => {
         hexBinMerge={true}
 
         htmlElementsData={HUBS}
-        htmlElement={(d: any) => {
+        htmlElement={(d: object) => {
+          const typedD = d as HubEntry;
           const el = document.createElement('div');
           el.innerHTML = `
             <div class="cursor-pointer group flex flex-col items-center hover:scale-110 transition-transform duration-300" style="pointer-events: auto;">
               <div class="relative flex justify-center items-center">
-                  <div class="absolute inset-0 rounded-full blur-md opacity-60 animate-pulse" style="background-color: ${d.color}; box-shadow: 0 0 15px ${d.color};"></div>
-                  <div class="w-4 h-4 rounded-full border border-white/50 relative z-10 animate-ping" style="background-color: ${d.color}; box-shadow: inset 0 0 5px rgba(255,255,255,0.8);"></div>
+                  <div class="absolute inset-0 rounded-full blur-md opacity-60 animate-pulse" style="background-color: ${typedD.color}; box-shadow: 0 0 15px ${typedD.color};"></div>
+                  <div class="w-4 h-4 rounded-full border border-white/50 relative z-10 animate-ping" style="background-color: ${typedD.color}; box-shadow: inset 0 0 5px rgba(255,255,255,0.8);"></div>
                   <div class="w-2 h-2 rounded-full bg-white absolute z-20"></div>
               </div>
               <div class="mt-2 flex flex-col items-center font-display tracking-widest uppercase">
-                  <div class="text-[10px] font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/80 px-3 py-1.5  border backdrop-blur-md shadow-2xl whitespace-nowrap" style="border-color: ${d.color}; box-shadow: 0 0 10px ${d.color};">
-                      <span class="mr-2 opacity-50">#${d.route.substring(0,3)}/</span>${d.name}
+                  <div class="text-[10px] font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/80 px-3 py-1.5  border backdrop-blur-md shadow-2xl whitespace-nowrap" style="border-color: ${typedD.color}; box-shadow: 0 0 10px ${typedD.color};">
+                      <span class="mr-2 opacity-50">#${typedD.route.substring(0,3)}/</span>${typedD.name}
                   </div>
               </div>
             </div>
           `;
           el.onclick = () => {
              playSuccess();
-             if (onNavigate) {
-               onNavigate(d.route);
-             }
+             navigate(`/${typedD.route}`);
           };
           return el;
         }}

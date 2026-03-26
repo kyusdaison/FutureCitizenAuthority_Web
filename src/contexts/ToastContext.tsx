@@ -24,10 +24,11 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 
   // 清理函数
   useEffect(() => {
+    const timers = timersRef.current;
     return () => {
       // 组件卸载时清理所有定时器
-      timersRef.current.forEach(timer => clearTimeout(timer));
-      timersRef.current.clear();
+      timers.forEach(timer => clearTimeout(timer));
+      timers.clear();
     };
   }, []);
 
@@ -72,6 +73,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {

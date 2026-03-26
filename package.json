@@ -20,6 +20,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-globe.gl": "^2.37.0",
+    "react-router-dom": "^7.13.2",
     "recharts": "^3.8.0",
     "three": "^0.183.2",
     "use-sound": "^5.0.0"

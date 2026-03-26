@@ -21,8 +21,9 @@ const logMetric = (metric: Metric) => {
   console.log(`[Web Vitals] ${metric.name}:`, vitalMetric);
 
   // 发送到Google Analytics（如果可用）
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', metric.name, {
+  type WindowWithGtag = typeof window & { gtag?: (...args: unknown[]) => void };
+  if (typeof window !== 'undefined' && (window as WindowWithGtag).gtag) {
+    (window as WindowWithGtag).gtag!('event', metric.name, {
       value: Math.round(metric.value),
       event_category: 'Web Vitals',
       event_label: metric.rating,

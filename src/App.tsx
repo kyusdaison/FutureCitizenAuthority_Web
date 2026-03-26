@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { OfficialBackground } from './components/OfficialBackground';
 import { BootSequence } from './components/BootSequence';
 import { TacticalCursor } from './components/TacticalCursor';
@@ -41,15 +42,21 @@ import { FCChainLink } from './components/FCChainLink';
 import { AbstractNodeCrest } from './components/AbstractNodeCrest';
 import { useWallet } from './contexts/WalletContext';
 import { useSecurity } from './contexts/SecurityContext';
-import { VanguardOrb } from './components/VanguardOrb';
+const VanguardOrb = React.lazy(() => import('./components/VanguardOrb').then(module => ({ default: module.VanguardOrb })));
 import { MarketTicker } from './components/MarketTicker';
 import { useCommandPalette } from './hooks/useCommandPalette';
+import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
 
 type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'passport' | 'sentinel' | 'whisper';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<View>('home');
+  const location = useLocation();
+  const navigateFn = useNavigate();
+  const currentView = (location.pathname === '/' ? 'home' : location.pathname.slice(1)) as View;
+  const navigate = useCallback((view: string) => {
+    navigateFn(view === 'home' ? '/' : `/${view}`);
+  }, [navigateFn]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isOpen: isCommandPaletteOpen, close: closeCommandPalette, open: openCommandPalette } = useCommandPalette();
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
@@ -77,33 +84,7 @@ export default function App() {
   const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const yBackground = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
-  // 优化鼠标追踪 - 使用 RAF 节流
-  const mousePos = useRef({ x: 0, y: 0 });
-  const rafRef = useRef<number>(0);
-  const ticking = useRef(false);
-
-  useEffect(() => {
-    const updateMousePosition = () => {
-      document.body.style.setProperty('--mouse-x', `${mousePos.current.x}px`);
-      document.body.style.setProperty('--mouse-y', `${mousePos.current.y}px`);
-      ticking.current = false;
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
-      
-      if (!ticking.current) {
-        rafRef.current = requestAnimationFrame(updateMousePosition);
-        ticking.current = true;
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
+  useMouseTracker();
 
 
 
@@ -113,85 +94,85 @@ export default function App() {
       id: 'nav-dashboard',
       title: 'Go to Dashboard',
       subtitle: 'Application Matrix / Core Analytics',
-      action: () => { setCurrentView('dashboard'); closeCommandPalette(); }
+      action: () => { navigate('dashboard'); closeCommandPalette(); }
     },
     {
       id: 'nav-ecosystem',
       title: 'Go to Ecosystem',
       subtitle: 'Explore the FC Network',
-      action: () => { setCurrentView('ecosystem'); closeCommandPalette(); }
+      action: () => { navigate('ecosystem'); closeCommandPalette(); }
     },
     {
       id: 'nav-explorer',
       title: 'Go to Block Explorer',
       subtitle: 'Real-time Network Telemetry',
-      action: () => { setCurrentView('explorer'); closeCommandPalette(); }
+      action: () => { navigate('explorer'); closeCommandPalette(); }
     },
     {
       id: 'nav-home',
       title: 'Go to Zenith Page',
       subtitle: 'Main Landing Page',
-      action: () => { setCurrentView('home'); closeCommandPalette(); }
+      action: () => { navigate('home'); closeCommandPalette(); }
     },
     {
       id: 'nav-staking',
       title: 'Go to Validator Staking',
       subtitle: 'Manage FCC delegation and yields',
-      action: () => { setCurrentView('staking'); closeCommandPalette(); }
+      action: () => { navigate('staking'); closeCommandPalette(); }
     },
     {
       id: 'nav-developer',
       title: 'Go to Developer Command Center',
       subtitle: 'Compile and Deploy via Terminal',
-      action: () => { setCurrentView('developer'); closeCommandPalette(); }
+      action: () => { navigate('developer'); closeCommandPalette(); }
     },
     {
       id: 'nav-bridge',
       title: 'Go to Interoperability Bridge',
       subtitle: 'Cross-chain asset transfer',
-      action: () => { setCurrentView('bridge'); closeCommandPalette(); }
+      action: () => { navigate('bridge'); closeCommandPalette(); }
     },
     {
       id: 'nav-swap',
       title: 'Go to Vanguard DEX',
       subtitle: 'Decentralized Token Exchange',
-      action: () => { setCurrentView('swap'); closeCommandPalette(); }
+      action: () => { navigate('swap'); closeCommandPalette(); }
     },
     {
       id: 'nav-whisper',
       title: 'Go to Whisper Protocol',
       subtitle: 'Encrypted ZK-Comms',
-      action: () => { setCurrentView('whisper'); closeCommandPalette(); }
+      action: () => { navigate('whisper'); closeCommandPalette(); }
     },
     {
       id: 'nav-sentinel',
       title: 'Go to FC Sentinel',
       subtitle: 'Network Security Operations',
-      action: () => { setCurrentView('sentinel'); closeCommandPalette(); }
+      action: () => { navigate('sentinel'); closeCommandPalette(); }
     },
     {
       id: 'nav-passport',
       title: 'Go to Citizen Passport',
       subtitle: 'Unified Identity Dashboard',
-      action: () => { setCurrentView('passport'); closeCommandPalette(); }
+      action: () => { navigate('passport'); closeCommandPalette(); }
     },
     {
       id: 'nav-artifacts',
       title: 'Go to Digital Artifacts',
       subtitle: 'NFT Identity & Asset Gallery',
-      action: () => { setCurrentView('artifacts'); closeCommandPalette(); }
+      action: () => { navigate('artifacts'); closeCommandPalette(); }
     },
     {
       id: 'nav-oracle',
       title: 'Go to A.I. Oracle',
       subtitle: 'Omniscient Network Intelligence',
-      action: () => { setCurrentView('oracle'); closeCommandPalette(); }
+      action: () => { navigate('oracle'); closeCommandPalette(); }
     },
     {
       id: 'nav-tokenomics',
       title: 'Go to Tokenomics & Governance',
       subtitle: 'FCC Economic Model',
-      action: () => { setCurrentView('tokenomics'); closeCommandPalette(); }
+      action: () => { navigate('tokenomics'); closeCommandPalette(); }
     },
     {
       id: 'action-connect-wallet',
@@ -215,22 +196,21 @@ export default function App() {
           closeCommandPalette(); 
       }
     }
-  ], [closeCommandPalette, ambientPlaying, toggleAmbient]);
+  ], [navigate, closeCommandPalette, ambientPlaying, toggleAmbient]);
 
-  const navigate = useCallback((view: string) => setCurrentView(view as View), []);
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white cursor-none md:cursor-none pb-8">
       <OfficialBackground />
       
       {/* Official State Banner */}
-      <div className="w-full bg-slate-900 border-b border-slate-800 text-[9px] uppercase tracking-widest text-slate-400 py-2 flex justify-center items-center gap-3 relative z-[60]">
-        <svg className="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+      <div className="w-full bg-[#020306] border-b border-white/5 text-[9px] uppercase tracking-[0.3em] text-slate-500 py-2 flex justify-center items-center gap-3 relative z-[60]">
+        <svg className="w-3.5 h-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
-        <span className="font-bold font-mono text-white/90">An official website of the Future Citizen Authority</span>
-        <span className="opacity-40">|</span>
-        <span className="font-mono text-cyan-500/80">Secure Cyber-Sovereign Channel</span>
+        <span className="font-bold font-mono text-slate-300">An official website of the Future Citizen Authority</span>
+        <span className="opacity-20 text-slate-500">|</span>
+        <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Cyber-Sovereign Channel</span>
       </div>
 
       <TacticalCursor />
@@ -298,7 +278,7 @@ export default function App() {
       {currentView === 'home' && (
       <nav className="fixed top-9 w-full z-50 py-4 px-8 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
         <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <img src="/hero-logo.png" alt="Future Citizen Authority" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
+          <img src="/hero-logo.webp" alt="Future Citizen Authority" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
           <div className="flex flex-col">
             <span className="text-sm font-bold tracking-[0.3em] uppercase text-white">Future Citizen Authority</span>
             <span className="text-[9px] tracking-[0.2em] font-mono text-slate-500">Vanguard Intelligence Directorate</span>
@@ -308,7 +288,7 @@ export default function App() {
           <a href="#vision" className="hover:text-white transition-colors duration-300">Directive</a>
           <a href="#architecture" className="hover:text-white transition-colors duration-300">Infrastructure</a>
           <a href="#identity" className="hover:text-white transition-colors duration-300">Citizenship</a>
-          <button onClick={() => setCurrentView('ecosystem')} className="hover:text-white transition-colors duration-300 uppercase tracking-[0.2em]">Topology</button>
+          <button onClick={() => navigate('ecosystem')} className="hover:text-white transition-colors duration-300 uppercase tracking-[0.2em]">Topology</button>
           <a href="#tokenomics" className="hover:text-white transition-colors duration-300">Treasury</a>
         </div>
         <div className="flex items-center gap-4">
@@ -325,7 +305,7 @@ export default function App() {
             </span>
           </button>
           
-          <button onClick={() => setCurrentView('dashboard')} className="hidden md:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
+          <button onClick={() => navigate('dashboard')} className="hidden md:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
             <div className="relative bg-slate-950 px-6 py-2 flex items-center justify-center">
               <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Authorize Session</span>
             </div>
@@ -367,8 +347,6 @@ export default function App() {
         <div className="relative z-10 flex min-h-screen">
           <>
             <Sidebar
-              currentView={currentView}
-              onNavigate={navigate}
               onConnectClick={() => setIsWalletModalOpen(true)}
             />
             <main className="ml-64 w-[calc(100%-16rem)] min-h-screen relative z-10 overflow-y-auto">
@@ -383,7 +361,7 @@ export default function App() {
                     className="w-full h-full min-h-screen"
                   >
                      {currentView === 'ecosystem' && <Ecosystem />}
-                     {currentView === 'dashboard' && <Dashboard onNavigate={navigate} />}
+                     {currentView === 'dashboard' && <Dashboard />}
                        {currentView === 'explorer' && <Explorer />}
                        {currentView === 'staking' && <Staking />}
                        {currentView === 'developer' && <DeveloperHub />}
@@ -404,7 +382,9 @@ export default function App() {
       )}
 
       <MarketTicker />
-      <VanguardOrb />
+      <Suspense fallback={null}>
+        <VanguardOrb />
+      </Suspense>
       <LiveTelemetryFooter />
     </div>
   );

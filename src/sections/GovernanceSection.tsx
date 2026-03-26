@@ -17,14 +17,14 @@ export const GovernanceSection = () => {
       {/* Vertical Label */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] rotate-180 pointer-events-none vertical-text">
          <h2 className="text-[8rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <GlitchText text="05 GOVERNANCE" active={true} />
+           <GlitchText text="05 GOVERNANCE" isActive={true} />
          </h2>
       </div>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-center relative z-10">
         
         <div className="w-full md:w-1/2 relative flex flex-col">
            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 1.2 }} className="w-full h-[350px] md:h-[450px] mb-12 relative overflow-hidden border border-white/5 group bg-black">
-             <img src="/fcc_governance_scale.png" alt="DAO Scale" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-105" />
+             <img src="/fcc_governance_scale.webp" alt="DAO Scale" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-105" />
              <div className="absolute inset-0 bg-gradient-to-t from-[#020306] via-[#020306]/20 to-transparent"></div>
            </motion.div>
            <div className="relative z-10 md:-mt-24 px-6 md:px-0">

@@ -61,6 +61,7 @@ const OrbParticles = ({ isHovered }: { isHovered: boolean }) => {
 export const VanguardOrb = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const { recentMegaTx } = useMarket();
@@ -120,9 +121,9 @@ export const VanguardOrb = () => {
         setIsOpen(true);
       }
       playTypewriter();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       speak(msg);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recentMegaTx]);
 
   const handleCommand = (cmd: string) => {
@@ -170,6 +171,7 @@ export const VanguardOrb = () => {
   };
 
   const handleMouseEnter = () => {
+    if (!hasInteracted) setHasInteracted(true);
     if (!isHovered) {
       playHover();
       setIsHovered(true);
@@ -260,10 +262,14 @@ export const VanguardOrb = () => {
         onClick={handleClick}
       >
         <div className={`absolute inset-0 rounded-full bg-vanguard/20 blur-xl transition-opacity duration-500 max-w-[500px] overflow-hidden ${isHovered ? 'opacity-100 scale-110' : 'opacity-40 scale-100'}`}></div>
-        <Canvas camera={{ position: [0, 0, 3], fov: 45 }} className="!w-full !h-full max-w-[500px] overflow-hidden">
-          <ambientLight intensity={0.5} />
-          <OrbParticles isHovered={isHovered} />
-        </Canvas>
+        {hasInteracted ? (
+          <Canvas camera={{ position: [0, 0, 3], fov: 45 }} className="!w-full !h-full max-w-[500px] overflow-hidden">
+            <ambientLight intensity={0.5} />
+            <OrbParticles isHovered={isHovered} />
+          </Canvas>
+        ) : (
+          <div className="absolute inset-0 rounded-full bg-vanguard/20" />
+        )}
       </div>
     </div>
   );

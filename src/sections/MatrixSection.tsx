@@ -8,7 +8,11 @@ export const MatrixSection = () => {
   const yParallaxFast = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   return (
-    <section id="matrix" className="py-24 px-6 lg:px-12 bg-transparent border-t border-slate-800 relative overflow-hidden">
+    <section id="matrix" className="py-24 px-6 lg:px-12 bg-[#020306] border-y border-white/5 relative overflow-hidden">
+      {/* Blueprint Background Grid */}
+      <div className="absolute inset-0 bg-tactical-grid opacity-30 pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#020306] via-transparent to-[#020306] pointer-events-none z-0"></div>
+
       <div className="absolute left-0 top-1/2 w-[600px] h-[600px] bg-slate-800/20 blur-[120px] rounded-full -translate-y-1/2 pointer-events-none"></div>
       
       {/* Giant Watermark */}

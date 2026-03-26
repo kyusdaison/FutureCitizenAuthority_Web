@@ -52,7 +52,7 @@ export function MarketProvider({ children }: { children: ReactNode }) {
           recentMegaTx: newMegaTx
         };
       });
-    }, 1500);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
@@ -60,4 +60,5 @@ export function MarketProvider({ children }: { children: ReactNode }) {
   return <MarketContext.Provider value={data}>{children}</MarketContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useMarket = () => useContext(MarketContext);

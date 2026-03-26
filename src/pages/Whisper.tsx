@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWallet } from '../contexts/WalletContext';
 import { useToast } from '../contexts/ToastContext';
@@ -58,11 +58,13 @@ export default function Whisper() {
         setProbeEvent(prev => ({ ...prev, timeLeft: prev.timeLeft - 1 }));
       }, 1000);
     } else if (probeEvent.active && probeEvent.timeLeft === 0) {
-      toast({ message: "Probe breached defenses. Transmission failed. 5 $DATA lost.", type: "error" });
-      setProbeEvent({ active: false, timeLeft: 0 });
-      setMessages(prev => [...prev, {
-        id: Date.now().toString(), sender: 'system', text: '[!] TRANSMISSION INTERCEPTED AND DESTROYED.', isEncrypted: false, timestamp: new Date().toISOString()
-      }]);
+      probeTimerRef.current = setTimeout(() => {
+        toast({ message: "Probe breached defenses. Transmission failed. 5 $DATA lost.", type: "error" });
+        setProbeEvent({ active: false, timeLeft: 0 });
+        setMessages(prev => [...prev, {
+          id: Date.now().toString(), sender: 'system', text: '[!] TRANSMISSION INTERCEPTED AND DESTROYED.', isEncrypted: false, timestamp: new Date().toISOString()
+        }]);
+      }, 0);
     }
     return () => {
       if (probeTimerRef.current) clearTimeout(probeTimerRef.current);
@@ -88,15 +90,33 @@ export default function Whisper() {
     }, 3500);
   };
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const deliverMessage = useCallback((msgId: string, text: string) => {
+    setTimeout(() => {
+      setMessages(p => p.map(m => m.id === msgId ? { ...m, isEncrypted: false } : m));
+      setTimeout(() => {
+        const replyId = (Date.now() + 1).toString();
+        setMessages(p => [...p, {
+          id: replyId,
+          sender: 'them',
+          text: `ACK: "${text.substring(0, 10)}..."`,
+          isEncrypted: true,
+          timestamp: new Date().toISOString()
+        }]);
+        setTimeout(() => {
+          setMessages(p => p.map(m => m.id === replyId ? { ...m, isEncrypted: false } : m));
+        }, 1500);
+      }, 1000);
+    }, 2000);
+  }, []);
+
+  const handleSendMessage = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() || connectionState !== 'connected') return;
     if (balances.data < 5) {
       toast({ message: "Insufficient $DATA to encrypt payload. Requires 5 $DATA.", type: "error" });
       return;
     }
-
-    if (probeEvent.active) return; // Block sending during probe
+    if (probeEvent.active) return;
 
     const msgId = Date.now().toString();
     const newMsg: Message = {
@@ -111,42 +131,13 @@ export default function Whisper() {
     setInputValue('');
     updateBalances({ data: balances.data - 5 });
 
-    // 15% Chance of Dark Forest Probe
     if (Math.random() < 0.15) {
-      setTimeout(() => {
-        setProbeEvent({ active: true, timeLeft: 5 });
-      }, 500);
+      setTimeout(() => setProbeEvent({ active: true, timeLeft: 5 }), 500);
       return;
     }
 
-    // Normal message delivery
     deliverMessage(msgId, newMsg.text);
-  };
-
-  const deliverMessage = (msgId: string, text: string) => {
-    // Decrypt after 2s
-    setTimeout(() => {
-      setMessages(p => p.map(m => m.id === msgId ? { ...m, isEncrypted: false } : m));
-      
-      // Auto reply after another 1s
-      setTimeout(() => {
-        const replyId = (Date.now() + 1).toString();
-        setMessages(p => [...p, {
-          id: replyId,
-          sender: 'them',
-          text: `ACK: "${text.substring(0, 10)}..."`,
-          isEncrypted: true,
-          timestamp: new Date().toISOString()
-        }]);
-
-        // Decrypt reply
-        setTimeout(() => {
-          setMessages(p => p.map(m => m.id === replyId ? { ...m, isEncrypted: false } : m));
-        }, 1500);
-
-      }, 1000);
-    }, 2000);
-  };
+  }, [inputValue, connectionState, balances, toast, probeEvent, updateBalances, deliverMessage]);
 
   const handleDeflect = () => {
     setProbeEvent({ active: false, timeLeft: 0 });

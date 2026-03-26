@@ -1,22 +1,25 @@
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useWallet } from '../contexts/WalletContext';
 
 interface SidebarProps {
-  currentView: string;
-  onNavigate: (view: string) => void;
   onConnectClick: () => void;
 }
 
-export const Sidebar = ({ currentView, onNavigate, onConnectClick }: SidebarProps) => {
+export const Sidebar = ({ onConnectClick }: SidebarProps) => {
   const { connectedIdentity } = useWallet();
+  const navigateFn = useNavigate();
+  const location = useLocation();
+  const currentView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+  const onNavigate = (view: string) => navigateFn(view === 'home' ? '/' : `/${view}`);
   return (
     <aside className="fixed left-0 top-0 bottom-0 w-64 bg-[#020617]/95 backdrop-blur-md border-r border-slate-800 flex flex-col z-50">
       <div className="p-6 flex items-center space-x-3 border-b border-slate-800 group pt-8 cursor-pointer" onClick={() => onNavigate('home')}>
         <div className="w-10 h-10 flex items-center justify-center p-1 bg-slate-900 border border-slate-700">
-          <img src="/hero-logo.png" alt="Logo" className="w-full h-full object-contain filter brightness-150" />
+          <img src="/hero-logo.webp" alt="Logo" className="w-full h-full object-contain filter brightness-150" />
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-sans font-black leading-tight tracking-[0.2em] text-slate-100 uppercase">FUTURE CITIZEN</span>
-          <span className="text-[9px] font-mono font-bold leading-none tracking-[0.3em] text-cyan-500 mt-1 uppercase">A G E N C Y</span>
+          <span className="text-[9px] font-mono font-bold leading-none tracking-[0.3em] text-cyan-500 mt-1 uppercase">A U T H O R I T Y</span>
         </div>
       </div>
 

@@ -13,10 +13,10 @@ export const NodeNetwork = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const rafRef = useRef<number>(0);
+  const animateRef = useRef<() => void>(null!);
   const frameCountRef = useRef(0);
   const prefersReducedMotion = useReducedMotion();
 
-  // 使用 useCallback 缓存动画函数
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d', { alpha: true });
@@ -73,8 +73,12 @@ export const NodeNetwork = () => {
       }
     }
 
-    rafRef.current = requestAnimationFrame(animate);
+    rafRef.current = requestAnimationFrame(animateRef.current);
   }, []);
+
+  useEffect(() => {
+    animateRef.current = animate;
+  }, [animate]);
 
   useEffect(() => {
     // 如果用户偏好减少动画，不渲染

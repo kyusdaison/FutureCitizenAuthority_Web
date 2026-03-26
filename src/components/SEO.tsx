@@ -36,6 +36,7 @@ export const SEO = ({
 };
 
 // 用于更新document title的hook
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePageTitle = (title: string) => {
   useEffect(() => {
     const originalTitle = document.title;

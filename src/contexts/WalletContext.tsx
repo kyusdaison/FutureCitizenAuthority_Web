@@ -35,20 +35,23 @@ const loadSavedState = () => {
 };
 
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
-  const saved = loadSavedState();
-
-  const [connectedIdentity, setConnectedIdentity] = useState<string | null>(
-    saved?.connectedIdentity ?? null
-  );
-  const [balances, setBalances] = useState<Balances>(
-    saved?.balances ? { fcc: 0, usdc: 0, data: 0, neon: 0, ...saved.balances } : { fcc: 0, usdc: 0, data: 0, neon: 0 }
-  );
-  const [xp, setXp] = useState<number>(
-    typeof saved?.xp === 'number' ? saved.xp : 0
-  );
-  const [stakedFCC, setStakedFCC] = useState<number>(
-    typeof saved?.stakedFCC === 'number' ? saved.stakedFCC : 0
-  );
+  // Lazy initializers: loadSavedState() runs once on mount, not on every re-render
+  const [connectedIdentity, setConnectedIdentity] = useState<string | null>(() => {
+    const saved = loadSavedState();
+    return saved?.connectedIdentity ?? null;
+  });
+  const [balances, setBalances] = useState<Balances>(() => {
+    const saved = loadSavedState();
+    return saved?.balances ? { fcc: 0, usdc: 0, data: 0, neon: 0, ...saved.balances } : { fcc: 0, usdc: 0, data: 0, neon: 0 };
+  });
+  const [xp, setXp] = useState<number>(() => {
+    const saved = loadSavedState();
+    return typeof saved?.xp === 'number' ? saved.xp : 0;
+  });
+  const [stakedFCC, setStakedFCC] = useState<number>(() => {
+    const saved = loadSavedState();
+    return typeof saved?.stakedFCC === 'number' ? saved.stakedFCC : 0;
+  });
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ connectedIdentity, balances, xp, stakedFCC }));

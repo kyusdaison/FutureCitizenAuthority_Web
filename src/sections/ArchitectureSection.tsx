@@ -79,7 +79,7 @@ export const ArchitectureSection = () => {
           <div className="w-full aspect-video mb-32 relative overflow-hidden group border border-slate-700 bg-[#020617] shadow-xl">
             <OptimizedVideo 
               src="/fcc_architecting_blockchain.mp4"
-              poster="/fcc_architecture_core.png"
+              poster="/fcc_architecture_core.webp"
               className="w-full h-full group-hover:opacity-100 transition-all duration-1000"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent pointer-events-none"></div>

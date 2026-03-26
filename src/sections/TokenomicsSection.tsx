@@ -9,17 +9,20 @@ export const TokenomicsSection = () => {
   const yParallaxSlow = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
   return (
-    <section id="tokenomics" className="py-24 px-6 lg:px-12 border-y border-white/5 bg-black relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-fc-gold/5 blur-[150px] mix-blend-screen rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+    <section id="tokenomics" className="py-24 px-6 lg:px-12 border-y border-white/5 bg-[#020306] relative overflow-hidden">
+      {/* Blueprint Background Dots */}
+      <div className="absolute inset-0 bg-tactical-dots opacity-40 pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#020306] via-transparent to-[#020306] pointer-events-none z-0"></div>
+
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-fc-gold/5 blur-[150px] mix-blend-screen rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-0"></div>
       
       {/* Giant Watermark */}
       <motion.div style={{ y: yParallaxSlow }} className="absolute left-[50%] top-[60%] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.015] font-display font-black text-[40vw] tracking-tighter text-white mix-blend-overlay z-0">
          FCC
       </motion.div>
-      {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text">
          <h2 className="text-[8rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <GlitchText text="03 ECONOMICS" active={true} />
+           <GlitchText text="03 ECONOMICS" isActive={true} />
          </h2>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
@@ -49,7 +52,7 @@ export const TokenomicsSection = () => {
                    <motion.img 
                      animate={{ y: [0, -15, 0] }} 
                      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }} 
-                     src="/fcc_token_asset.png" 
+                     src="/fcc_token_asset.webp" 
                      alt="FCC Token" 
                      className="w-[85%] h-auto object-contain relative z-10 drop-shadow-[0_0_50px_rgba(197,154,69,0.3)] group-hover:scale-110 transition-transform duration-1000" 
                    />

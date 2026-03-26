@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { useTelemetry } from '../hooks/useTelemetry';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import { useTelemetryContext } from '../contexts/TelemetryContext';
 import { CosmicBackground } from '../components/CosmicBackground';
 import { DecipherText } from '../components/DecipherText';
 import { HologramModal } from '../components/HologramModal';
 import { NetworkGraph } from '../components/NetworkGraph';
-import { GlobalNodeMap } from '../components/GlobalNodeMap';
+const GlobalNodeMap = lazy(() => import('../components/GlobalNodeMap').then(module => ({ default: module.GlobalNodeMap })));
 import type { 
   Block, 
   Transaction 
@@ -24,7 +24,7 @@ const Explorer = () => {
   const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
 
-  const telemetry = useTelemetry(3000);
+  const telemetry = useTelemetryContext();
 
   // Simulate Live Network Telemetry synced with global hook
   useEffect(() => {
@@ -32,7 +32,6 @@ const Explorer = () => {
       const heightToUse = telemetry.blockHeight;
       currentHeightRef.current = heightToUse;
       
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       setTimeout(() => {
         // Create 1 new block corresponding to the telemetry height
         setBlocks(prev => {
@@ -117,7 +116,9 @@ const Explorer = () => {
           <div className="text-[10px] text-telemetry text-cyan-500/50">ACTIVE ROUTING</div>
         </div>
         <div className="absolute inset-0 top-12 z-0 cursor-move">
-          <GlobalNodeMap />
+          <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-8 h-8 border-t-2 border-cyan-500 animate-spin"></div></div>}>
+            <GlobalNodeMap />
+          </Suspense>
         </div>
       </div>
 

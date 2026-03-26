@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DecipherText } from './DecipherText';
-import { HoloCore } from './HoloCore';
+import { lazy, Suspense } from 'react';
+const HoloCore = lazy(() => import('./HoloCore').then(module => ({ default: module.HoloCore })));
 
 interface HologramModalProps {
   isOpen: boolean;
@@ -77,7 +78,9 @@ export const HologramModal = ({ isOpen, onClose, title, data, theme = 'cyan' }: 
             
             {/* Left Hologram Panel (3D Core) */}
             <div className="w-full md:w-2/5 border-b md:border-b-0 md:border-r border-white/5 relative bg-black/60 min-h-[300px] flex flex-col">
-              <HoloCore theme={theme} />
+              <Suspense fallback={<div className="flex-1 flex items-center justify-center"><div className="w-8 h-8 border-t-2 border-cyan-500 rounded-full animate-spin"></div></div>}>
+                <HoloCore theme={theme} />
+              </Suspense>
               <div className="absolute bottom-6 left-0 w-full text-center z-10 pointer-events-none">
                 <div className={`inline-flex items-center gap-2 px-3 py-1  bg-black border ${style.border} text-[9px] uppercase tracking-[0.2em] font-mono ${style.text} backdrop-blur-md font-bold`}>
                   <div className={`w-1.5 h-1.5  ${theme === 'yellow' ? 'bg-yellow-500' : (theme === 'cyan' ? 'bg-cyan-500' : 'bg-cyan-400')} animate-[pulse_2s_infinite]`}></div>

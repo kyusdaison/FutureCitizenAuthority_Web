@@ -31,13 +31,11 @@ export function SecurityProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // React to market anomalies
+  // React to market anomalies (demo-only: disabled in production)
   useEffect(() => {
-    // If a mega-transaction anomaly just occurred, significantly increase breach probability
+    if (!import.meta.env.DEV) return;
     if (recentMegaTx && !isBreached) {
-       // 30% chance of a breach exactly when a mega tx appears
        if (Math.random() < 0.3) {
-         // Slight delay for dramatic effect
          const timer = setTimeout(() => {
            triggerSimulatedBreach();
          }, 1500);
@@ -46,10 +44,10 @@ export function SecurityProvider({ children }: { children: React.ReactNode }) {
     }
   }, [recentMegaTx, isBreached]);
 
-  // Randomly simulate a breach event (very rare for real app, frequent for demo)
+  // Randomly simulate a breach event (demo-only: disabled in production)
   useEffect(() => {
+    if (!import.meta.env.DEV) return;
     const interval = setInterval(() => {
-      // 5% chance every 20 seconds to trigger a breach if not already breached
       if (!isBreached && Math.random() < 0.05) {
         triggerSimulatedBreach();
       }
@@ -65,6 +63,7 @@ export function SecurityProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useSecurity() {
   const context = useContext(SecurityContext);
   if (context === undefined) {

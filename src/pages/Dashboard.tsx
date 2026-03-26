@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react';
-import { GlobalNodeMap } from '../components/GlobalNodeMap';
-import { useTelemetry } from '../hooks/useTelemetry';
+import { useState, useEffect, Suspense, lazy } from 'react';
+const GlobalNodeMap = lazy(() => import('../components/GlobalNodeMap').then(module => ({ default: module.GlobalNodeMap })));
+import { useTelemetryContext } from '../contexts/TelemetryContext';
 import { useWallet } from '../contexts/WalletContext';
 import { mockDataService, type ProposalData, type ValidatorData } from '../services/mockDataService';
 
-interface DashboardProps {
-  onNavigate?: (view: string) => void;
-}
-
-const Dashboard = ({ onNavigate }: DashboardProps) => {
-  const telemetry = useTelemetry(3000);
+const Dashboard = () => {
+  const telemetry = useTelemetryContext();
   const { connectedIdentity, balances } = useWallet();
   const [proposals, setProposals] = useState<ProposalData[]>([]);
   const [validators, setValidators] = useState<ValidatorData[]>([]);
@@ -84,7 +80,9 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
           </div>
         </div>
         <div className="h-[450px]">
-          <GlobalNodeMap onNavigate={onNavigate} />
+          <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-8 h-8 border-t-2 border-cyan-500 animate-spin"></div></div>}>
+            <GlobalNodeMap />
+          </Suspense>
         </div>
       </div>
 
@@ -168,7 +166,7 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
         <div className="space-y-6">
            <div className="agency-panel p-6 flex flex-col items-center text-center">
               <div className="w-24 h-24 mb-6 relative flex justify-center items-center overflow-hidden border border-white/10 bg-white/5 grayscale">
-                <img src="/fcc-lion-god-tier.png" alt="Wallet Identity" className="w-full h-full object-contain scale-[1.3] opacity-80" />
+                <img src="/fcc-lion-god-tier.webp" alt="Wallet Identity" className="w-full h-full object-contain scale-[1.3] opacity-80" />
               </div>
               <h3 className="text-xl text-vanguard text-white mb-2 uppercase">Cryptographic Identity</h3>
               <p className="text-[10px] text-telemetry text-slate-500 mb-8 bg-black border border-white/10 px-4 py-1.5 inline-block">{connectedIdentity || 'Not Connected'}</p>

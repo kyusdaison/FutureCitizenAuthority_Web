@@ -20,7 +20,7 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   const prefersReducedMotion = useReducedMotion();
   const [transform, setTransform] = useState({ x: 0, y: 0 });
   const rafRef = useRef<number>(0);
-  const isHovering = useRef(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current || prefersReducedMotion) return;
@@ -44,13 +44,13 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   }, [intensity, prefersReducedMotion]);
 
   const handleMouseLeave = useCallback(() => {
-    isHovering.current = false;
+    setIsHovering(false);
     // 使用 CSS transition 实现平滑回弹
     setTransform({ x: 0, y: 0 });
   }, []);
 
   const handleMouseEnter = useCallback(() => {
-    isHovering.current = true;
+    setIsHovering(true);
   }, []);
 
   // 如果偏好减少动画，直接渲染子元素
@@ -69,8 +69,8 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
       <div 
         style={{ 
           transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-          transition: isHovering.current 
-            ? 'none' 
+          transition: isHovering
+            ? 'none'
             : 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)',
           willChange: 'transform'
         }}
