@@ -134,19 +134,18 @@ export default function Passport() {
   const centerX = 150;
   const centerY = 150;
   
-  const getPointCoordinates = (value: number, index: number, total: number) => {
+  const getPointCoordinates = (value: number, index: number, total: number, customRadius = radarRadius) => {
     const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
-    const distance = (value / maxStat) * radarRadius;
+    const distance = (value / maxStat) * customRadius;
     const x = centerX + distance * Math.cos(angle);
     const y = centerY + distance * Math.sin(angle);
     return { x, y };
   };
 
-  const radarPoints = stats.map((s, i) => getPointCoordinates(s, i, stats.length));
-  const radarPath = radarPoints.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') + ' Z';
+
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-12">
+    <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8 md:space-y-12 flex flex-col items-center md:items-stretch">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -167,7 +166,7 @@ export default function Passport() {
         <div className="flex flex-col items-center justify-center py-20">
           {/* Minting Flow Visualization */}
           <motion.div 
-            className="relative w-full max-w-2xl vercel-glass-card p-12 flex flex-col items-center"
+            className="relative w-full max-w-2xl vercel-glass-card p-6 md:p-12 flex flex-col items-center"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
@@ -255,7 +254,7 @@ export default function Passport() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Passport Card */}
           <motion.div 
-            className="lg:col-span-2 vercel-glass-card p-8 relative overflow-hidden group"
+            className="lg:col-span-2 vercel-glass-card p-4 md:p-8 relative overflow-hidden group w-full"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             onMouseMove={handleMouseMove}
@@ -263,93 +262,186 @@ export default function Passport() {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           >
             {/* Holographic Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-transparent to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             
-            <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
-              {/* Avatar Section */}
-              <div className="w-40 h-40 relative">
-                <Suspense fallback={<div className="absolute inset-0 animate-pulse bg-cyan-500/10 rounded-full" />}>
-                  <IdentityAvatar address={connectedIdentity || '0x0000...0000'} level={level} />
-                </Suspense>
-                {isScanning && (
-                  <motion.div 
-                    className="absolute inset-0 border-2 border-cyan-400/50 rounded-full"
-                    animate={{ scale: [1, 1.2, 1], opacity: [1, 0, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                )}
-              </div>
-
-              {/* Identity Details */}
-              <div className="flex-1 space-y-6">
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h2 className="text-2xl font-bold text-white">Citizen</h2>
-                    <span className="px-2 py-0.5 bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 text-[10px] font-bold tracking-widest uppercase">
-                      Level {level}
-                    </span>
-                  </div>
-                  <p className="font-mono text-sm text-slate-400">{connectedIdentity || 'Not Connected'}</p>
+            <div className="relative z-10 space-y-8">
+              {/* --- 1. CREDENTIAL DECK --- */}
+              <div className="flex flex-col md:flex-row gap-8 items-start relative pb-6 border-b border-white/5">
+                {/* Tactical Backdrop */}
+                <div className="absolute inset-0 bg-tactical-grid opacity-[0.15] bg-[length:30px_30px] pointer-events-none" />
+                
+                {/* Avatar Section */}
+                <div className="w-32 h-32 md:w-40 md:h-40 relative flex-shrink-0 z-10">
+                  <Suspense fallback={<div className="absolute inset-0 animate-pulse bg-cyan-500/10 rounded-none" />}>
+                    <IdentityAvatar address={connectedIdentity || '0x0000...0000'} level={level} />
+                  </Suspense>
+                  
+                  {/* Digital Borders */}
+                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-500/50" />
+                  <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-500/50" />
+                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-500/50" />
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-500/50" />
+                  
+                  {isScanning && (
+                    <motion.div 
+                      className="absolute inset-0 border border-cyan-400/30 bg-cyan-400/10"
+                      animate={{ opacity: [0.1, 0.5, 0.1], translateY: ["-10%", "10%", "-10%"] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-black/30 border border-white/5">
-                    <div className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Auth Hash</div>
-                    <div className="font-mono text-xs text-yellow-500 truncate">{authHash || generateHash()}</div>
+                {/* Identity Details */}
+                <div className="flex-1 space-y-6 w-full z-10">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <h2 className="text-3xl font-display font-light text-white tracking-widest uppercase">Citizen ID</h2>
+                      </div>
+                      <p className="font-mono text-xs text-slate-400 bg-black/50 px-3 py-1.5 inline-block border border-cyan-500/20 shadow-[0_0_10px_rgba(6,182,212,0.1)]">{connectedIdentity || 'Not Connected'}</p>
+                    </div>
+                    {/* Official Seal Mockup */}
+                    <div className="w-16 h-16 rounded-full border border-yellow-500/30 hidden md:flex items-center justify-center bg-yellow-500/5 relative">
+                      <div className="absolute inset-0 rounded-full border border-dashed border-yellow-500/50 animate-spin-slow" />
+                      <span className="text-[8px] font-bold text-yellow-500 tracking-[0.2em] uppercase text-center leading-tight">State<br/>Auth</span>
+                    </div>
                   </div>
-                  <div className="p-4 bg-black/30 border border-white/5">
-                    <div className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Issue Date</div>
-                    <div className="font-mono text-xs text-white">{new Date().toLocaleDateString()}</div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="p-3 bg-black/40 border border-white/5 relative overflow-hidden group-hover:border-cyan-500/20 transition-colors">
+                      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+                      <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Clearance</div>
+                      <div className="font-bold text-cyan-400 font-mono tracking-wider">LEVEL {level}</div>
+                    </div>
+                    <div className="p-3 bg-black/40 border border-white/5 group-hover:border-green-500/20 transition-colors relative overflow-hidden">
+                      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent" />
+                      <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Status</div>
+                      <div className="font-bold text-green-400 font-mono tracking-wider">RESIDENT</div>
+                    </div>
+                    <div className="col-span-2 p-3 bg-black/40 border border-white/5">
+                      <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Authorization Hash</div>
+                      <div className="font-mono text-[10px] text-yellow-500 truncate">{authHash || generateHash()}</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Radar Stats Visualization */}
-            <div className="mt-8 flex justify-center">
-              <svg width="300" height="300" className="overflow-visible">
-                {/* Background Grid */}
-                {[0.2, 0.4, 0.6, 0.8, 1].map((scale, i) => (
-                  <polygon
-                    key={i}
-                    points={stats.map((_, idx) => {
-                      const coords = getPointCoordinates(scale * maxStat, idx, stats.length);
-                      return `${coords.x},${coords.y}`;
-                    }).join(' ')}
-                    fill="none"
-                    stroke="rgba(255,255,255,0.1)"
-                    strokeWidth="1"
-                  />
-                ))}
-                
-                {/* Data Polygon */}
-                <motion.path
-                  d={radarPath}
-                  fill="rgba(6, 182, 212, 0.2)"
-                  stroke="#06b6d4"
-                  strokeWidth="2"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                />
-                
-                {/* Labels */}
-                {labels.map((label, i) => {
-                  const coords = getPointCoordinates(maxStat * 1.15, i, labels.length);
-                  return (
-                    <text
-                      key={label}
-                      x={coords.x}
-                      y={coords.y}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      className="fill-slate-400 text-[10px] uppercase tracking-wider"
-                    >
-                      {label}
-                    </text>
-                  );
-                })}
-              </svg>
+              {/* Data Matrix / Visual Barcode */}
+              <div className="w-full h-10 bg-tactical-dots bg-[length:8px_8px] opacity-30 border-y border-white/10 flex items-center px-4 overflow-hidden relative">
+                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-cyan-500/10 via-transparent to-yellow-500/10 pointer-events-none" />
+                 <div className="font-mono text-[8px] tracking-[0.3em] text-cyan-400 opacity-60 whitespace-nowrap overflow-hidden">
+                   {generateHash(128)}
+                 </div>
+              </div>
+
+              {/* --- 2. THE SOVEREIGN VAULT --- */}
+              <div className="pt-8">
+                <div className="flex items-center gap-3 mb-6 relative">
+                  <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-yellow-500/30 to-transparent" />
+                  <svg className="w-5 h-5 text-yellow-600 drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <h3 className="text-xl font-bold text-white tracking-[0.2em] uppercase text-shadow-gold">Sovereign Vault</h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                  {/* Balance Panel */}
+                  <div className="p-6 bg-[#09090b] border border-yellow-500/20 relative group hover:border-yellow-500/50 transition-colors">
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute left-0 top-0 w-1 h-full bg-yellow-600/50 group-hover:bg-yellow-500 transition-colors" />
+                    <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2 font-mono ml-2">Available Liquidity</div>
+                    <div className="flex items-baseline gap-2 ml-2">
+                       <span className="text-3xl font-display font-bold text-white tracking-wider">24,500</span>
+                       <span className="text-yellow-600 font-bold font-mono">FCC</span>
+                    </div>
+                    <div className="mt-4 text-[10px] font-mono text-slate-500 flex justify-between ml-2 pt-4 border-t border-white/5">
+                       <span>USD EQUIVALENT</span>
+                       <span className="text-slate-300">~$30,135.00</span>
+                    </div>
+                  </div>
+
+                  {/* Staked / Delegated Panel */}
+                  <div className="p-6 bg-[#09090b] border border-cyan-500/20 relative group hover:border-cyan-500/50 transition-colors">
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute left-0 top-0 w-1 h-full bg-cyan-600/50 group-hover:bg-cyan-400 transition-colors" />
+                    <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2 font-mono ml-2">Delegated To Network</div>
+                    <div className="flex items-baseline gap-2 ml-2">
+                       <span className="text-3xl font-display font-bold text-white tracking-wider">12,000</span>
+                       <span className="text-cyan-600 font-bold font-mono">FCC</span>
+                    </div>
+                    <div className="mt-4 text-[10px] font-mono text-slate-500 flex justify-between ml-2 pt-4 border-t border-white/5">
+                       <span>VERIFIED NODES</span>
+                       <span className="text-slate-300">4 ACTIVE</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Radar Stats Sub-Section inside the vault */}
+                <div className="mt-12 relative overflow-hidden bg-black/30 border border-white/5 p-8 flex flex-col md:flex-row items-center gap-12">
+                   <div className="absolute inset-0 bg-tactical-grid opacity-20 pointer-events-none mix-blend-screen" />
+                   
+                   <div className="flex-1 space-y-4 relative z-10 w-full">
+                     <h4 className="text-sm font-bold text-white tracking-widest uppercase">Trust Metrics</h4>
+                     <p className="text-xs text-slate-400 leading-relaxed">
+                       Your physical identity bindings grant a multiplied governance and trust rating across the Future Citizen blockchain. Cryptographic scoring evaluates ongoing node operations.
+                     </p>
+                     <div className="pt-4 space-y-2">
+                       {stats.slice(0, 3).map((stat, idx) => (
+                         <div key={idx} className="flex justify-between items-center text-[10px] font-mono border-b border-white/5 pb-2">
+                           <span className="text-slate-500">{labels[idx]}</span>
+                           <span className={stat > 80 ? "text-cyan-400" : "text-yellow-500"}>{stat}%</span>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+
+                   <div className="relative w-[200px] h-[200px] flex-shrink-0 flex items-center justify-center">
+                     <svg width="240" height="240" className="overflow-visible absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        {/* Background Grid */}
+                        {[0.2, 0.4, 0.6, 0.8, 1].map((scale, i) => (
+                          <polygon
+                            key={i}
+                            points={stats.map((_, idx) => {
+                              const coords = getPointCoordinates(scale * maxStat, idx, stats.length, 80);
+                              return `${coords.x},${coords.y}`;
+                            }).join(' ')}
+                            fill="none"
+                            stroke="rgba(255,255,255,0.05)"
+                            strokeWidth="1"
+                          />
+                        ))}
+                        
+                        {/* Data Polygon */}
+                        <motion.path
+                          d={stats.map((s, i) => getPointCoordinates(s, i, stats.length, 80)).map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') + ' Z'}
+                          fill="rgba(6, 182, 212, 0.15)"
+                          stroke="#06b6d4"
+                          strokeWidth="1.5"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 1.5, ease: "easeOut" }}
+                        />
+                        
+                        {/* Labels */}
+                        {labels.map((label, i) => {
+                          const coords = getPointCoordinates(maxStat * 1.25, i, labels.length, 80);
+                          return (
+                            <text
+                              key={label}
+                              x={coords.x}
+                              y={coords.y}
+                              textAnchor="middle"
+                              dominantBaseline="middle"
+                              className="fill-slate-500 text-[8px] uppercase tracking-widest font-mono"
+                            >
+                              {label}
+                            </text>
+                          );
+                        })}
+                      </svg>
+                   </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 

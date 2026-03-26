@@ -158,25 +158,25 @@ const Explorer = () => {
                   <div 
                     key={block.hash} 
                     onClick={() => setSelectedBlock(block)}
-                    className="bg-white/[0.02] border border-white/5 p-4 flex items-center justify-between hover:bg-white/[0.04] hover:border-cyan-500/30 transition-colors cursor-pointer group"
+                    className="bg-white/[0.02] border border-white/5 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 hover:bg-white/[0.04] hover:border-cyan-500/30 transition-colors cursor-pointer group"
                   >
-                     <div className="flex items-center gap-4">
+                     <div className="flex items-center gap-4 w-full sm:w-auto">
                        <div className="w-12 h-12 bg-black/50 border border-white/10 flex items-center justify-center relative overflow-hidden shrink-0">
                          <div className="absolute inset-0 bg-cyan-500/10 opacity-0 hover:opacity-100 transition-opacity"></div>
                          <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                          </svg>
                        </div>
-                       <div className="flex flex-col">
+                       <div className="flex flex-col min-w-0">
                          <div className="text-sm font-bold text-white font-mono mb-1">{block.height.toLocaleString()}</div>
-                         <div className="text-[10px] text-telemetry text-slate-500 uppercase tracking-widest font-bold">
+                         <div className="text-[10px] text-telemetry text-slate-500 uppercase tracking-widest font-bold flex flex-wrap gap-1">
                            <span className="text-white/40">Minced by </span>
-                           <span className="text-white hover:text-cyan-400 cursor-pointer transition-colors max-w-[120px] truncate inline-block align-bottom"><DecipherText text={block.miner} duration={700} /></span>
+                           <span className="text-white hover:text-cyan-400 cursor-pointer transition-colors max-w-[100px] sm:max-w-[120px] truncate inline-block align-bottom"><DecipherText text={block.miner} duration={700} /></span>
                          </div>
                        </div>
                      </div>
-                     <div className="flex flex-col items-end shrink-0">
-                       <div className="text-xs text-white font-mono mb-1">{block.txCount} txns</div>
+                     <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center w-full sm:w-auto shrink-0 border-t border-white/5 sm:border-0 pt-2 sm:pt-0">
+                       <div className="text-xs text-white font-mono sm:mb-1">{block.txCount} txns</div>
                        <div className="text-[9px] text-telemetry font-bold text-slate-500 uppercase tracking-widest">{block.timeDelay}s ago</div>
                      </div>
                   </div>
@@ -205,18 +205,22 @@ const Explorer = () => {
                     onClick={() => setSelectedTx(tx)}
                     className="bg-white/[0.02] border border-white/5 p-4 flex items-center justify-between hover:bg-white/[0.04] hover:border-cyan-500/30 transition-colors cursor-pointer group"
                   >
-                     <div className="flex flex-col gap-2 w-full max-w-[65%]">
+                     <div className="flex flex-col gap-2 w-full max-w-[100%] sm:max-w-[70%]">
                        <div className="flex items-center gap-2">
-                         <div className="w-1.5 h-1.5 bg-cyan-500 shadow-none" title="Confirmed"></div>
-                         <span className="text-xs px-2 py-0.5 bg-white/5 text-slate-400 border border-white/10 font-bold font-mono group-hover:bg-cyan-500/10 group-hover:text-cyan-400 transition-colors">TX#</span>
-                         <span className="text-[11px] text-telemetry text-cyan-400 hover:text-cyan-300 cursor-pointer truncate w-full"><DecipherText text={tx.hash} duration={1000} /></span>
+                         <div className="w-1.5 h-1.5 bg-cyan-500 shadow-none shrink-0" title="Confirmed"></div>
+                         <span className="text-[10px] sm:text-xs px-2 py-0.5 bg-white/5 text-slate-400 border border-white/10 font-bold font-mono group-hover:bg-cyan-500/10 group-hover:text-cyan-400 transition-colors hidden sm:block">TX#</span>
+                         <span className="text-[10px] sm:text-[11px] text-telemetry text-cyan-400 hover:text-cyan-300 cursor-pointer truncate w-full"><DecipherText text={tx.hash} duration={1000} /></span>
                        </div>
-                       <div className="flex items-center gap-2 text-[10px] text-telemetry font-bold tracking-widest uppercase">
-                         <span className="text-slate-500">FROM</span>
-                         <span className="text-white hover:text-cyan-400 cursor-pointer truncate w-[100px]"><DecipherText text={tx.from} duration={600} /></span>
-                         <span className="text-slate-600">→</span>
-                         <span className="text-slate-500">TO</span>
-                         <span className="text-white hover:text-cyan-400 cursor-pointer truncate w-[100px]"><DecipherText text={tx.to} duration={600} /></span>
+                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[9px] sm:text-[10px] text-telemetry font-bold tracking-widest uppercase">
+                         <div className="flex items-center gap-1 min-w-0">
+                           <span className="text-slate-500 shrink-0">FROM</span>
+                           <span className="text-white hover:text-cyan-400 cursor-pointer truncate w-[60px] sm:w-[100px]"><DecipherText text={tx.from} duration={600} /></span>
+                         </div>
+                         <span className="text-slate-600 shrink-0">→</span>
+                         <div className="flex items-center gap-1 min-w-0">
+                           <span className="text-slate-500 shrink-0">TO</span>
+                           <span className="text-white hover:text-cyan-400 cursor-pointer truncate w-[60px] sm:w-[100px]"><DecipherText text={tx.to} duration={600} /></span>
+                         </div>
                        </div>
                      </div>
                      <div className="flex flex-col items-end shrink-0 pl-4">

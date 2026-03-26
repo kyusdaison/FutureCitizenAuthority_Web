@@ -27,7 +27,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto w-full pb-20">
+    <div className="space-y-6 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
       {/* Top Stats Bar Vercel Style */}
       <div className="w-full flex justify-center mb-10 mt-4">
           <div className="vercel-stats-bar w-full grid grid-cols-1 md:grid-cols-4 text-center divide-y md:divide-y-0 md:divide-x divide-white/10 overflow-hidden">
@@ -72,14 +72,14 @@ const Dashboard = () => {
 
       {/* Global Node Topology Map */}
       <div className="mb-6 w-full">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl text-vanguard text-white uppercase">Global Node Topology</h2>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
+          <h2 className="text-xl md:text-2xl text-vanguard text-white uppercase">Global Node Topology</h2>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 bg-cyan-500 animate-[pulse_2s_infinite]"></span>
             <span className="text-[10px] text-telemetry text-cyan-500 tracking-widest uppercase font-bold">Live Network</span>
           </div>
         </div>
-        <div className="h-[450px]">
+        <div className="h-[300px] md:h-[450px]">
           <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-8 h-8 border-t-2 border-cyan-500 animate-spin"></div></div>}>
             <GlobalNodeMap />
           </Suspense>
@@ -137,12 +137,12 @@ const Dashboard = () => {
                 )}
                 {proposals.map((prop) => (
                   <div key={prop.id} className="p-5 bg-white/[0.02] border border-white/5 hover:border-white/30 transition-all hover:bg-white/[0.04]">
-                    <div className="flex justify-between items-start mb-4">
+                    <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
                       <div>
                         <span className="text-[10px] font-bold text-white bg-white/10 border border-white/20 px-2.5 py-1 inline-block mb-3 uppercase tracking-wider">{prop.status}</span>
-                        <h4 className="font-bold text-white text-lg font-mono uppercase tracking-widest">{prop.id}: {prop.title}</h4>
+                        <h4 className="font-bold text-white text-base md:text-lg font-mono uppercase tracking-widest">{prop.id}: {prop.title}</h4>
                       </div>
-                      <div className="text-right flex flex-col items-end">
+                      <div className="text-left sm:text-right flex flex-col items-start sm:items-end w-full sm:w-auto mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-white/5 sm:border-0">
                         <div className="text-[10px] text-slate-500 font-bold tracking-widest uppercase mb-1">Ends in</div>
                         <div className="text-sm font-mono text-cyan-500 bg-cyan-950/50 border border-cyan-900 px-2 py-1">{prop.endsIn}</div>
                       </div>

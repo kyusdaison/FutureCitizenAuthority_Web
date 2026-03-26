@@ -3,16 +3,29 @@ import { useWallet } from '../contexts/WalletContext';
 
 interface SidebarProps {
   onConnectClick: () => void;
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
-export const Sidebar = ({ onConnectClick }: SidebarProps) => {
+export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }: SidebarProps) => {
   const { connectedIdentity } = useWallet();
   const navigateFn = useNavigate();
   const location = useLocation();
   const currentView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
-  const onNavigate = (view: string) => navigateFn(view === 'home' ? '/' : `/${view}`);
+  const onNavigate = (view: string) => {
+    navigateFn(view === 'home' ? '/' : `/${view}`);
+    onCloseMobile?.();
+  };
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-[#020617]/95 backdrop-blur-md border-r border-slate-800 flex flex-col z-50">
+    <>
+      {/* Mobile Backdrop Overlay */}
+      {isMobileOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-[#020306]/80 backdrop-blur-sm z-[90]"
+          onClick={onCloseMobile}
+        />
+      )}
+      <aside className={`fixed left-0 top-0 bottom-0 w-64 bg-[#020617]/95 backdrop-blur-md border-r border-slate-800 flex flex-col z-[100] transition-transform duration-300 ease-in-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
       <div className="p-6 flex items-center space-x-3 border-b border-slate-800 group pt-8 cursor-pointer" onClick={() => onNavigate('home')}>
         <div className="w-10 h-10 flex items-center justify-center p-1 bg-slate-900 border border-slate-700">
           <img src="/hero-logo.webp" alt="Logo" className="w-full h-full object-contain filter brightness-150" />
@@ -219,6 +232,7 @@ export const Sidebar = ({ onConnectClick }: SidebarProps) => {
         </div>
       </div>
     </aside>
+    </>
   );
 };
 

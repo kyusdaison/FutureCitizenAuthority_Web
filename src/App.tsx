@@ -58,6 +58,7 @@ export default function App() {
     navigateFn(view === 'home' ? '/' : `/${view}`);
   }, [navigateFn]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const { isOpen: isCommandPaletteOpen, close: closeCommandPalette, open: openCommandPalette } = useCommandPalette();
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const { connectedIdentity, level } = useWallet();
@@ -65,6 +66,20 @@ export default function App() {
   const { scrollYProgress } = useScroll();
   const [ambientPlaying, setAmbientPlaying] = useState(false);
   const { toggleAmbient } = useSoundEffects();
+  
+  const [isLowPowerMode, setIsLowPowerMode] = useState(() => {
+    return localStorage.getItem('fc_low_power_mode') === 'true';
+  });
+
+  useEffect(() => {
+    if (isLowPowerMode) {
+      document.body.classList.add('low-power-mode');
+      localStorage.setItem('fc_low_power_mode', 'true');
+    } else {
+      document.body.classList.remove('low-power-mode');
+      localStorage.setItem('fc_low_power_mode', 'false');
+    }
+  }, [isLowPowerMode]);
   
   // 主题效果
   useEffect(() => {
@@ -187,6 +202,15 @@ export default function App() {
       action: () => { sessionStorage.clear(); window.location.reload(); }
     },
     {
+      id: 'sys-power-mode',
+      title: `System: ${isLowPowerMode ? 'Disable' : 'Enable'} Low Power Mode`,
+      subtitle: 'Toggle heavy visual effects for performance',
+      action: () => { 
+          setIsLowPowerMode(!isLowPowerMode); 
+          closeCommandPalette(); 
+      }
+    },
+    {
       id: 'sys-ambient-drone',
       title: `System: ${ambientPlaying ? 'Disable' : 'Enable'} Ambient Drone`,
       subtitle: 'Toggle deep background hum',
@@ -196,7 +220,7 @@ export default function App() {
           closeCommandPalette(); 
       }
     }
-  ], [navigate, closeCommandPalette, ambientPlaying, toggleAmbient]);
+  ], [navigate, closeCommandPalette, ambientPlaying, toggleAmbient, isLowPowerMode]);
 
 
   return (
@@ -213,9 +237,9 @@ export default function App() {
         <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Cyber-Sovereign Channel</span>
       </div>
 
-      <TacticalCursor />
+      {!isLowPowerMode && <TacticalCursor />}
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-      <NoiseOverlay />
+      {!isLowPowerMode && <NoiseOverlay />}
       <BootSequence />
       {currentView === 'home' && <NarrativeTracker />}
       
@@ -346,10 +370,23 @@ export default function App() {
       ) : (
         <div className="relative z-10 flex min-h-screen">
           <>
+            {/* Mobile Header for dashboard/inner pages */}
+            <div className="lg:hidden fixed top-0 left-0 w-full h-16 bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 z-50 flex items-center justify-between px-6">
+              <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateFn('/')}>
+                <img src="/hero-logo.webp" alt="Logo" className="w-8 h-8 object-contain filter brightness-150" />
+                <span className="text-xs font-bold font-mono tracking-widest text-slate-300 uppercase">F.C.A</span>
+              </div>
+              <button onClick={() => setIsMobileSidebarOpen(true)} className="text-white p-2" aria-label="Toggle Mobile Menu" title="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+              </button>
+            </div>
+
             <Sidebar
+              isMobileOpen={isMobileSidebarOpen}
+              onCloseMobile={() => setIsMobileSidebarOpen(false)}
               onConnectClick={() => setIsWalletModalOpen(true)}
             />
-            <main className="ml-64 w-[calc(100%-16rem)] min-h-screen relative z-10 overflow-y-auto">
+            <main className="w-full lg:ml-64 lg:w-[calc(100%-16rem)] min-h-screen mt-16 lg:mt-0 relative z-10 overflow-y-auto">
               <Suspense fallback={<PageLoader />}>
                 <AnimatePresence mode="wait">
                   <motion.div

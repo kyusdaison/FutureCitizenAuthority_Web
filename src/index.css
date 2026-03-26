@@ -597,3 +597,35 @@ html {
 .premium-btn:hover::before {
   left: 200%;
 }
+
+/* =========================================
+   LOW POWER MODE OVERRIDES
+   ========================================= */
+
+body.low-power-mode .glass-panel,
+body.low-power-mode .vercel-glass-card,
+body.low-power-mode .auth-glass-panel,
+body.low-power-mode .glass-panel-heavy {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  background-color: rgba(15, 23, 42, 0.95) !important;
+}
+
+body.low-power-mode .scanline,
+body.low-power-mode .scanline-overlay,
+body.low-power-mode .noise-overlay,
+body.low-power-mode .mouse-spotlight {
+  display: none !important;
+  animation: none !important;
+}
+
+body.low-power-mode .animate-pulse-slow,
+body.low-power-mode .animate-pulse,
+body.low-power-mode .animate-float,
+body.low-power-mode .opacity-10 {
+  animation: none !important;
+}
+
+body.low-power-mode * {
+  box-shadow: none !important;
+}
