@@ -22,7 +22,7 @@ export const TokenomicsSection = () => {
       </motion.div>
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text">
          <h2 className="text-[8rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <GlitchText text="03 ECONOMICS" isActive={true} />
+           <GlitchText text="05 ECONOMICS" isActive={true} />
          </h2>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
@@ -30,7 +30,7 @@ export const TokenomicsSection = () => {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-12 h-px bg-fc-gold/50"></div>
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-fc-gold uppercase">
-              <CipherHeading text="03 // Network Economics" />
+              <CipherHeading text="05 // Network Economics" />
             </h2>
             <div className="w-12 h-px bg-fc-gold/50"></div>
           </div>

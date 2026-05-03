@@ -34,7 +34,7 @@ const Bridge = React.lazy(() => import('./pages/Bridge'));
 const Swap = React.lazy(() => import('./pages/Swap'));
 const Artifacts = React.lazy(() => import('./pages/Artifacts'));
 const Oracle = React.lazy(() => import('./pages/Oracle'));
-const Passport = React.lazy(() => import('./pages/Passport'));
+const Identity = React.lazy(() => import('./pages/Identity'));
 const Sentinel = React.lazy(() => import('./pages/Sentinel'));
 const Whisper = React.lazy(() => import('./pages/Whisper'));
 
@@ -48,12 +48,13 @@ import { useCommandPalette } from './hooks/useCommandPalette';
 import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
 
-type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'passport' | 'sentinel' | 'whisper';
+type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper';
 
 export default function App() {
   const location = useLocation();
   const navigateFn = useNavigate();
-  const currentView = (location.pathname === '/' ? 'home' : location.pathname.slice(1)) as View;
+  const rawView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+  const currentView = (rawView === 'passport' ? 'identity' : rawView) as View;
   const navigate = useCallback((view: string) => {
     navigateFn(view === 'home' ? '/' : `/${view}`);
   }, [navigateFn]);
@@ -80,6 +81,12 @@ export default function App() {
       localStorage.setItem('fc_low_power_mode', 'false');
     }
   }, [isLowPowerMode]);
+
+  useEffect(() => {
+    if (rawView === 'passport') {
+      navigateFn('/identity', { replace: true });
+    }
+  }, [rawView, navigateFn]);
   
   // 主题效果
   useEffect(() => {
@@ -166,10 +173,10 @@ export default function App() {
       action: () => { navigate('sentinel'); closeCommandPalette(); }
     },
     {
-      id: 'nav-passport',
-      title: 'Go to Citizen Passport',
-      subtitle: 'Unified Identity Dashboard',
-      action: () => { navigate('passport'); closeCommandPalette(); }
+      id: 'nav-identity',
+      title: 'Go to Identity',
+      subtitle: 'Unified Identity Command Center',
+      action: () => { navigate('identity'); closeCommandPalette(); }
     },
     {
       id: 'nav-artifacts',
@@ -311,7 +318,7 @@ export default function App() {
         <div className="hidden md:flex gap-8 lg:gap-12 text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase font-sans">
           <a href="#vision" className="hover:text-white transition-colors duration-300">Directive</a>
           <a href="#architecture" className="hover:text-white transition-colors duration-300">Infrastructure</a>
-          <a href="#identity" className="hover:text-white transition-colors duration-300">Citizenship</a>
+          <a href="#identity" className="hover:text-white transition-colors duration-300">Identity</a>
           <button onClick={() => navigate('ecosystem')} className="hover:text-white transition-colors duration-300 uppercase tracking-[0.2em]">Topology</button>
           <a href="#tokenomics" className="hover:text-white transition-colors duration-300">Treasury</a>
         </div>
@@ -329,19 +336,23 @@ export default function App() {
             </span>
           </button>
           
-          <button onClick={() => navigate('dashboard')} className="hidden md:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
+          <button onClick={() => navigate('identity')} className="hidden md:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
             <div className="relative bg-slate-950 px-6 py-2 flex items-center justify-center">
-              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Authorize Session</span>
+              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Open Identity</span>
             </div>
           </button>
           {connectedIdentity ? (
-            <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full cursor-default">
+            <button
+              type="button"
+              onClick={() => navigate('identity')}
+              className="hidden md:flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full transition-colors hover:bg-green-500/15"
+            >
               <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse" />
               <span className="text-[10px] font-mono text-cyan-400 font-bold tracking-widest">{connectedIdentity}</span>
-            </div>
+            </button>
           ) : (
             <button onClick={() => setIsWalletModalOpen(true)} className="hidden md:block btn-vercel-primary px-8 py-3 text-[10px] font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-              AUTHORIZE
+              Authorize Identity
             </button>
           )}
         </div>
@@ -358,11 +369,11 @@ export default function App() {
       {currentView === 'home' ? (
       <motion.main style={{ y: yContent }} className="relative z-10 w-full will-change-transform">
         <HeroSection />
-        <ArchitectureSection />
         <IdentitySection />
+        <ArchitectureSection />
+        <GovernanceSection />
         <MatrixSection />
         <TokenomicsSection />
-        <GovernanceSection />
         <CollectiveSection />
         <RoadmapSection />
         <FooterSection />
@@ -407,7 +418,7 @@ export default function App() {
                        {currentView === 'swap' && <Swap />}
                        {currentView === 'artifacts' && <Artifacts />}
                        {currentView === 'oracle' && <Oracle />}
-                       {currentView === 'passport' && <Passport />}
+                       {currentView === 'identity' && <Identity />}
                        {currentView === 'sentinel' && <Sentinel />}
                        {currentView === 'whisper' && <Whisper />}
                     </motion.div>
@@ -426,5 +437,3 @@ export default function App() {
     </div>
   );
 }
-
-

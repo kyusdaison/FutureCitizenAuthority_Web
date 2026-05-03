@@ -101,13 +101,13 @@ const MOCK_VALIDATORS: ValidatorData[] = [
   { name: 'Quantum Validator', weight: '7.2%', apy: '13.5%', uptime: '99.8%', fee: '4%' }
 ];
 
-export interface PassportStat {
+export interface IdentityStat {
   title: string;
   val: string;
   sub: string;
 }
 
-const MOCK_PASSPORT_STATS: PassportStat[] = [
+const MOCK_IDENTITY_STATS: IdentityStat[] = [
   { title: 'ON-CHAIN TXs', val: '1,492', sub: '+12% this week' },
   { title: 'STAKED VOLUME', val: '45,290 FCC', sub: 'Yielding 14.2% APY' },
   { title: 'MINTED ARTIFACTS', val: '8 / 12', sub: 'Matrix Level 2' },
@@ -191,9 +191,9 @@ export const mockDataService = {
     return MOCK_VALIDATORS;
   },
 
-  getPassportStats: async (): Promise<PassportStat[]> => {
+  getIdentityStats: async (): Promise<IdentityStat[]> => {
     await delay(500);
-    return MOCK_PASSPORT_STATS;
+    return MOCK_IDENTITY_STATS;
   },
 
   getActivityLogs: async (): Promise<ActivityLog[]> => {

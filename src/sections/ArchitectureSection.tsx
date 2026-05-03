@@ -22,7 +22,7 @@ export const ArchitectureSection = () => {
       {/* Vertical Label */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] rotate-180 pointer-events-none vertical-text z-0">
          <h2 className="text-[8rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>01 DIRECTIVE</span>
+           <span>02 WALLET RAIL</span>
          </h2>
       </div>
 
@@ -47,15 +47,15 @@ export const ArchitectureSection = () => {
             <FadeInUp>
               <div className="flex items-center gap-4 mb-8">
                 <h2 className="text-[10px] font-bold tracking-[0.5em] text-cyan-600 uppercase">
-                  <CipherHeading text="01 // Core Directive" />
+                  <CipherHeading text="02 // Wallet & Settlement Rail" />
                 </h2>
                 <div className="w-24 h-px bg-slate-700"></div>
               </div>
               
               <h3 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-8 text-white drop-shadow-md">
                 <CipherHeading text="The " className="inline-block" />
-                <span className="italic text-cyan-600 font-serif"><CipherHeading text="Asynchronous" /></span>
-                <CipherHeading text=" Authority." className="inline-block" />
+                <span className="italic text-cyan-600 font-serif"><CipherHeading text="Wallet" /></span>
+                <CipherHeading text=" Rail." className="inline-block" />
               </h3>
             </FadeInUp>
           </div>
@@ -63,7 +63,7 @@ export const ArchitectureSection = () => {
             <FadeInUp delay={0.2}>
               <div className="absolute top-0 left-[-1px] w-[2px] h-12 bg-fc-gold"></div>
               <p className="text-[11px] md:text-[13px] font-mono tracking-[0.1em] text-slate-400 uppercase leading-[2.5] mb-10">
-                The <strong className="text-white font-bold">HTTS Consensus Mechanism</strong> represents a breakthrough in distributed ledger technology. Fusing Proof of History (PoH), Proof of Stake (PoS), and dynamic state sharding with an asynchronous parallel execution environment.
+                Verified identity is only useful when it can instantly open a working wallet. The <strong className="text-white font-bold">HTTS settlement rail</strong> provisions seedless access, sub-second execution, and auto-gas treasury logic so institutions and citizens can move from verification into real payments without operational friction.
               </p>
             </FadeInUp>
             
@@ -85,7 +85,7 @@ export const ArchitectureSection = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent pointer-events-none"></div>
             <div className="absolute top-6 left-6 flex items-center gap-4 z-10 pointer-events-none agency-panel px-4 py-2">
               <div className="w-2 h-2 bg-red-500 animate-pulse shadow-[0_0_10px_#ef4444]"></div>
-              <span className="text-[10px] font-bold text-slate-300 tracking-[0.4em] uppercase">Executive Briefing // L1 Architecture</span>
+              <span className="text-[10px] font-bold text-slate-300 tracking-[0.4em] uppercase">Executive Briefing // Wallet & Settlement</span>
             </div>
           </div>
         </FadeInUp>
@@ -108,8 +108,8 @@ export const ArchitectureSection = () => {
                     ))}
                   </div>
                 </div>
-                <h4 className="text-2xl font-serif text-white mb-4 relative z-10">140,000+ TPS</h4>
-                <p className="text-[11px] md:text-[13px] font-mono tracking-widest text-slate-400 uppercase leading-[2] mb-6 relative z-10">Parallelized state transition functions across 64 dynamic execution shards eliminate global bottlenecks. Features native integration of Bulletproofs for zero-knowledge range verification at scale.</p>
+                <h4 className="text-2xl font-serif text-white mb-4 relative z-10">Identity-Bound Wallets</h4>
+                <p className="text-[11px] md:text-[13px] font-mono tracking-widest text-slate-400 uppercase leading-[2] mb-6 relative z-10">Provision device-linked wallets through validator-assisted MPC so verified users can activate sovereign custody without seed phrases, custody desks, or manual recovery rituals.</p>
                 <div className="h-0.5 w-full bg-slate-800 overflow-hidden relative z-10 mt-auto"><div className="h-full bg-fc-gold w-0 group-hover:w-full transition-all duration-1000 ease-out"></div></div>
               </div>
             </TiltCard>
@@ -128,8 +128,8 @@ export const ArchitectureSection = () => {
                   <RefreshCw className="w-8 h-8 text-cyan-600 opacity-70" />
                   <div className="text-[9px] font-mono tracking-widest text-cyan-600/50">PING // &lt;1ms</div>
                 </div>
-                <h4 className="text-2xl font-serif text-white mb-4 relative z-10">400ms Finality</h4>
-                <p className="text-[11px] md:text-[13px] font-mono tracking-widest text-slate-400 uppercase leading-[2] mb-6 relative z-10">Asynchronous Byzantine Fault Tolerance (aBFT) combined with verifiable delay functions yields deterministic transaction finality (0.4s), indistinguishable from centralized Web2 server configurations.</p>
+                <h4 className="text-2xl font-serif text-white mb-4 relative z-10">400ms Settlement</h4>
+                <p className="text-[11px] md:text-[13px] font-mono tracking-widest text-slate-400 uppercase leading-[2] mb-6 relative z-10">Asynchronous Byzantine Fault Tolerance (aBFT) and parallel execution make verified payroll, treasury, and merchant flows settle in under a second without sacrificing auditability.</p>
                 <div className="h-0.5 w-full bg-slate-800 overflow-hidden relative z-10 mt-auto"><div className="h-full bg-cyan-600 w-0 group-hover:w-full transition-all duration-1000 ease-out"></div></div>
               </div>
             </TiltCard>
@@ -152,8 +152,8 @@ export const ArchitectureSection = () => {
                     <div className="w-1.5 h-4 bg-emerald-600/40 relative"><div className="absolute left-1/2 -translate-x-1/2 -top-1 -bottom-2 w-px bg-emerald-600/40"></div></div>
                   </div>
                 </div>
-                <h4 className="text-2xl font-serif text-white mb-4 relative z-10">Auto-Gas DEX</h4>
-                <p className="text-[11px] md:text-[13px] font-mono tracking-widest text-slate-400 uppercase leading-[2] mb-6 relative z-10">Built-in FC-DEX protocol automatically converts stablecoins to FCC for native gas. Integrates dynamic block space pricing to guarantee absolute frictionless Web3 onboarding.</p>
+                <h4 className="text-2xl font-serif text-white mb-4 relative z-10">Auto-Gas Treasury</h4>
+                <p className="text-[11px] md:text-[13px] font-mono tracking-widest text-slate-400 uppercase leading-[2] mb-6 relative z-10">Built-in FC-DEX routing converts stablecoins into FCC for gas behind the scenes, giving governments and institutions programmable money rails without making operators manage token logistics.</p>
                 <div className="h-0.5 w-full bg-slate-800 overflow-hidden relative z-10 mt-auto"><div className="h-full bg-cyan-600 w-0 group-hover:w-full transition-all duration-1000 ease-out"></div></div>
               </div>
             </TiltCard>

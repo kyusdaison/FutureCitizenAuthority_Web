@@ -2,11 +2,11 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 
 const SECTIONS = [
   { id: 'hero', name: '00 // INITIALIZE' },
-  { id: 'architecture', name: '01 // ARCHITECTURE' },
-  { id: 'identity', name: '02 // IDENTITY' },
-  { id: 'matrix', name: '03 // MATRIX' },
-  { id: 'tokenomics', name: '04 // ECONOMICS' },
-  { id: 'governance', name: '05 // GOVERNANCE' },
+  { id: 'identity', name: '01 // IDENTITY' },
+  { id: 'architecture', name: '02 // WALLET RAIL' },
+  { id: 'governance', name: '03 // GOVERNANCE' },
+  { id: 'matrix', name: '04 // STACK' },
+  { id: 'tokenomics', name: '05 // ECONOMICS' },
   { id: 'collective', name: '06 // THE COLLECTIVE' },
   { id: 'roadmap', name: '07 // GENESIS' }
 ];

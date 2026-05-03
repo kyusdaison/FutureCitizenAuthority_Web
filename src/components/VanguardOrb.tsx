@@ -144,7 +144,7 @@ export const VanguardOrb = () => {
       } else if (normalizedCmd.includes('hack') || normalizedCmd.includes('breach')) {
         response = "WARNING: Simulated breach parameters detected. Deploying Sentinel countermeasures. Standby.";
       } else if (normalizedCmd.includes('mint') || normalizedCmd.includes('identity')) {
-        response = "Citizen passports are cryptographic NFTs bound to your biological signature. Proceed to the Artifacts sector to mint.";
+        response = "Citizen identities are cryptographic credentials bound to your biological signature. Proceed to the Identity sector to initiate enrollment.";
       } else if (normalizedCmd.includes('hello') || normalizedCmd.includes('hi')) {
         response = "Greetings. Vanguard OS is actively monitoring your session.";
       } else if (normalizedCmd.includes('clear')) {

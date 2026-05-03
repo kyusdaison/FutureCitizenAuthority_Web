@@ -11,7 +11,8 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
   const { connectedIdentity } = useWallet();
   const navigateFn = useNavigate();
   const location = useLocation();
-  const currentView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+  const rawView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+  const currentView = rawView === 'passport' ? 'identity' : rawView;
   const onNavigate = (view: string) => {
     navigateFn(view === 'home' ? '/' : `/${view}`);
     onCloseMobile?.();
@@ -42,13 +43,13 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
           <ul className="space-y-1 px-4">
             <li>
               <button
-                onClick={() => onNavigate('passport')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'passport' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
+                onClick={() => onNavigate('identity')}
+                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'identity' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                  <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
                  </svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Citizen Passport</span>
+                 <span className="text-xs font-bold tracking-widest uppercase">Citizen Identity</span>
               </button>
             </li>
             

@@ -26,4 +26,9 @@ dist-ssr
 # Project specifics
 .claude
 .omc
+.wrangler
 crewai_website_experience
+
+# Local build output / preview screenshots
+build-test
+preview-home*.png

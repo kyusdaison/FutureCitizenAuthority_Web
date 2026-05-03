@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Fingerprint, ShieldCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { TiltCard } from '../components/TiltCard';
 import { FadeInUp } from '../components/FadeInUp';
 import { CipherHeading } from '../components/CipherHeading';
@@ -8,6 +9,7 @@ import { HexGridBackground } from '../components/HexGridBackground';
 export const IdentitySection = () => {
   const { scrollYProgress } = useScroll();
   const yParallaxSlow = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const navigate = useNavigate();
 
   return (
     <section id="identity" className="py-24 px-6 lg:px-12 bg-transparent border-t border-slate-800 relative overflow-hidden">
@@ -24,7 +26,7 @@ export const IdentitySection = () => {
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text z-0">
          <h2 className="text-[8rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>02 VERIFICATION</span>
+           <span>01 IDENTITY</span>
          </h2>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
@@ -41,11 +43,21 @@ export const IdentitySection = () => {
               <div className="agency-panel p-10 lg:p-12 relative border-l-4 border-l-fc-gold h-full flex flex-col justify-center bg-[#020617]/90 shadow-2xl">
                <Fingerprint className="w-10 h-10 text-fc-gold mb-8 opacity-80" />
                <h3 className="text-3xl font-serif font-light text-white mb-6 border-b border-slate-800 pb-6">
-                 <CipherHeading text="State Identity Protocol" />
+                 <CipherHeading text="Identity Verification Layer" />
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-8">
-                 A W3C-compliant Decentralized Identity (DID) architecture. We cryptographically bind physical identity primitives (biometrics, national registers) to the blockchain utilizing <strong className="text-white font-medium">zk-SNARKs</strong>. This guarantees ultimate KYC/AML compliance entirely without exposing raw personal telemetry to the public ledger.
+                 A W3C-compliant Decentralized Identity (DID) architecture that binds verified identity primitives to the blockchain using <strong className="text-white font-medium">zk-SNARKs</strong>. This is the access layer for every wallet, treasury, governance, and service flow across the FC network without exposing raw personal telemetry on the public ledger.
                </p>
+               <div className="flex flex-wrap gap-3 mb-8">
+                 {['Biometric Binding', 'zk-KYC Proofs', 'Seedless Wallets', 'Governance Access'].map((item) => (
+                   <span
+                     key={item}
+                     className="border border-fc-gold/20 bg-fc-gold/5 px-3 py-2 text-[9px] font-mono tracking-[0.3em] text-fc-gold uppercase"
+                   >
+                     {item}
+                   </span>
+                 ))}
+               </div>
                <div className="mt-auto border-t border-slate-800 pt-6 relative overflow-hidden bg-slate-900/40 p-4 border-l border-slate-800">
                  {/* Scanning laser background */}
                  <div className="absolute top-0 left-0 w-full h-[20px] bg-gradient-to-b from-transparent via-fc-gold/10 to-transparent animate-[scan_3s_ease-in-out_infinite_alternate] pointer-events-none"></div>
@@ -60,10 +72,17 @@ export const IdentitySection = () => {
                    </li>
                    <li className="flex items-center gap-4">
                      <span className="w-2 h-2 bg-fc-gold/50 animate-pulse [animation-delay:1s]"></span>
-                     [SYS] GLOBAL_CITIZEN_PASSPORT: ISSUED
+                     [SYS] GLOBAL_IDENTITY_CREDENTIAL: ACTIVE
                    </li>
                  </ul>
                 </div>
+               <button
+                 type="button"
+                 onClick={() => navigate('/identity')}
+                 className="mt-6 inline-flex items-center justify-center border border-fc-gold/30 bg-fc-gold/5 px-6 py-3 text-[10px] font-mono tracking-[0.35em] text-fc-gold uppercase transition-colors hover:border-fc-gold/60 hover:bg-fc-gold/10"
+               >
+                 Open Identity Console
+               </button>
               </div>
               </TiltCard>
             </FadeInUp>
@@ -81,12 +100,12 @@ export const IdentitySection = () => {
             <FadeInUp delay={0.4} className="w-[90%] md:w-[80%] mt-40 lg:mt-32 relative z-10">
               <TiltCard intensity={8}>
               <div className="agency-panel p-8 md:p-10 bg-[#020617]/90 backdrop-blur-2xl border border-slate-700 shadow-2xl w-full">
-                 <ShieldCheck className="w-10 h-10 text-cyan-400 mb-6 opacity-80" />
+               <ShieldCheck className="w-10 h-10 text-cyan-400 mb-6 opacity-80" />
                <h3 className="text-3xl font-serif font-light text-white mb-4 border-b border-slate-800 pb-4">
-                 <CipherHeading text="Seedless ZKP-MPC" />
+                 <CipherHeading text="Seedless Identity Wallet" />
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
-                 Complete sovereign self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet utilizes a Turing-complete 3-of-3 Shamir Secret Sharing mechanism. Elliptic curve private key shards are distributed across your physical secure enclave, the FC blockchain validators, and an encrypted offline node.
+                 Complete sovereign self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet splits key authority across your device enclave, FC validator infrastructure, and encrypted offline recovery so identity access remains resilient without sacrificing control.
                </p>
                <div className="p-4 border border-slate-800 bg-slate-900/50">
                  <p className="text-[9px] font-mono tracking-widest text-cyan-300 uppercase">System Notice:</p>

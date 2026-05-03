@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Scale } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { TiltCard } from '../components/TiltCard';
 import { CipherHeading } from '../components/CipherHeading';
 import { GlitchText } from '../components/GlitchText';
@@ -7,6 +8,7 @@ import { GlitchText } from '../components/GlitchText';
 export const GovernanceSection = () => {
   const { scrollYProgress } = useScroll();
   const yParallaxFast = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const navigate = useNavigate();
 
   return (
     <section id="governance" className="py-24 px-6 lg:px-12 bg-[#020306] relative overflow-hidden">
@@ -17,7 +19,7 @@ export const GovernanceSection = () => {
       {/* Vertical Label */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] rotate-180 pointer-events-none vertical-text">
          <h2 className="text-[8rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <GlitchText text="05 GOVERNANCE" isActive={true} />
+           <GlitchText text="03 GOVERNANCE" isActive={true} />
          </h2>
       </div>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-center relative z-10">
@@ -32,29 +34,45 @@ export const GovernanceSection = () => {
              <div className="flex items-center gap-4 mb-6">
                <div className="w-8 h-px bg-white/30"></div>
               <h2 className="text-[10px] font-bold tracking-[0.5em] text-white/50 uppercase">
-                <CipherHeading text="05 // Statecraft & DAO" />
+                <CipherHeading text="03 // Governance Access" />
               </h2>
             </div>
              <h3 className="text-5xl md:text-7xl font-serif font-light tracking-tight drop-shadow-lg mb-8 text-white">
-               <CipherHeading text="Institutional " className="inline-block" /><br/>
+               <CipherHeading text="Verified " className="inline-block" /><br/>
                <span className="italic text-gray-500 font-serif"><CipherHeading text="Governance." /></span>
              </h3>
              <p className="text-gray-400 font-light leading-[1.8] tracking-wide text-lg">
-               Future Citizen operates essentially as a highly fortified <strong className="text-white font-medium">Decentralized Autonomous Organization (DAO)</strong>. All sovereign technological and strategic shifts are cryptographically determined via our verifiable on-chain committee charter framework.
+               Identity-bound access flows into a fortified <strong className="text-white font-medium">on-chain governance framework</strong>. Verified operators, institutions, and committees can approve budgets, supervise treasury movement, and execute digital statecraft with attributable, auditable authority.
              </p>
+             <div className="mt-8 flex flex-wrap gap-4">
+               <button
+                 type="button"
+                 onClick={() => navigate('/dashboard')}
+                 className="border border-fc-gold/30 bg-fc-gold/5 px-5 py-3 text-[10px] font-mono tracking-[0.3em] text-fc-gold uppercase transition-colors hover:border-fc-gold/60 hover:bg-fc-gold/10"
+               >
+                 Open Dashboard
+               </button>
+               <button
+                 type="button"
+                 onClick={() => navigate('/identity')}
+                 className="border border-white/10 bg-white/[0.02] px-5 py-3 text-[10px] font-mono tracking-[0.3em] text-white uppercase transition-colors hover:border-white/25 hover:bg-white/[0.05]"
+               >
+                 Review Identity Access
+               </button>
+             </div>
            </div>
         </div>
         <div className="w-full md:w-1/2 flex flex-col gap-8">
            <TiltCard intensity={10}>
              <div className="p-8 border-l border-white/10 hover:border-fc-gold/50 transition-colors duration-500 group bg-white/[0.02] h-full">
-               <h4 className="text-xl font-serif font-light text-white mb-4 group-hover:text-fc-gold transition-colors">Specialized Committees</h4>
-               <p className="text-sm text-gray-400 leading-[1.8] font-light tracking-wide">Macro-structure is completely compartmentalized into isolated professional directorates: A dedicated Legal Enforcement Team, Commercialization & Operations Board, an Institutional Finance Center, and the Core Protocol R&D Collective.</p>
+               <h4 className="text-xl font-serif font-light text-white mb-4 group-hover:text-fc-gold transition-colors">Verified Committees</h4>
+               <p className="text-sm text-gray-400 leading-[1.8] font-light tracking-wide">Operational authority is segmented into credentialed committees for compliance, treasury, protocol R&amp;D, and service operations so every approval path has a named, attributable owner.</p>
              </div>
            </TiltCard>
            <TiltCard intensity={10}>
              <div className="p-8 border-l border-white/10 hover:border-fc-gold/50 transition-colors duration-500 group bg-white/[0.02] h-full">
-               <h4 className="text-xl font-serif font-light text-white mb-4 group-hover:text-fc-gold transition-colors">Uncompromising Transparency</h4>
-               <p className="text-sm text-gray-400 leading-[1.8] font-light tracking-wide">Mandated strict ledger transparency to fortify institutional compliance. Requires routine annual cryptographically-verified structural audits, alongside mandatory ad-hoc open telemetry broadcasts for all major security updates.</p>
+               <h4 className="text-xl font-serif font-light text-white mb-4 group-hover:text-fc-gold transition-colors">Auditable Treasury Controls</h4>
+               <p className="text-sm text-gray-400 leading-[1.8] font-light tracking-wide">Budget votes, policy changes, and treasury actions stay visible on-chain with cryptographically verifiable audit trails, making compliance review and institutional reporting first-class behaviors instead of afterthoughts.</p>
              </div>
            </TiltCard>
         </div>

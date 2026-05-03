@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { MagneticButton } from '../components/MagneticButton';
 import { lazy, Suspense } from 'react';
@@ -11,6 +12,7 @@ export const HeroSection = () => {
   const { scrollYProgress } = useScroll();
   const opacityHeroText = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const yHeroText = useTransform(scrollYProgress, [0, 0.15], [0, 100]);
+  const navigate = useNavigate();
 
   return (
     <section id="vision" className="min-h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden">
@@ -46,9 +48,9 @@ export const HeroSection = () => {
         
         <FadeInUp delay={0.8}>
           <MagneticButton intensity={0.2}>
-            <button className="premium-btn px-12 py-5 auth-glass-panel rounded-sm" data-text="INITIATE CLEARANCE">
-              <span className="relative z-10 text-[11px] font-mono tracking-[0.5em] text-gold-gradient uppercase">INITIATE CLEARANCE</span>
-            </button>
+            <div className="premium-btn px-12 py-5 auth-glass-panel rounded-sm">
+              <span className="relative z-10 text-[11px] font-mono tracking-[0.5em] text-gold-gradient uppercase">IDENTITY LAYER ACTIVE</span>
+            </div>
           </MagneticButton>
         </FadeInUp>
 
@@ -67,7 +69,30 @@ export const HeroSection = () => {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2, delay: 0.6 }} className="mt-4 max-w-2xl flex flex-col items-center relative z-20">
           <div className="w-px h-16 bg-gradient-to-b from-fc-gold/20 to-transparent mb-8"></div>
           <p className="text-[11px] md:text-[13px] font-mono tracking-[0.3em] text-slate-300 uppercase leading-[2.5] text-center max-w-2xl auth-glass-panel border-t border-[rgba(212,175,55,0.15)] p-8 rounded-sm">
-            The <span className="text-gold-gradient font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">Sovereign Digital Infrastructure</span> ecosystem. A high-performance public chain matrix integrating Web3 Identity, programmable finance, and sovereign government services.
+            The <span className="text-gold-gradient font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">Sovereign Digital Infrastructure</span> ecosystem. Identity-first rails for wallets, programmable finance, compliance proofs, and sovereign digital services.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+            <MagneticButton intensity={0.18}>
+              <button
+                type="button"
+                onClick={() => navigate('/identity')}
+                className="premium-btn px-10 py-4 auth-glass-panel rounded-sm"
+              >
+                <span className="relative z-10 text-[11px] font-mono tracking-[0.4em] text-gold-gradient uppercase">Enter Identity</span>
+              </button>
+            </MagneticButton>
+            <MagneticButton intensity={0.14}>
+              <button
+                type="button"
+                onClick={() => navigate('/ecosystem')}
+                className="px-10 py-4 border border-white/10 bg-[#020617]/80 text-[11px] font-mono tracking-[0.4em] text-slate-300 uppercase transition-colors hover:border-cyan-500/40 hover:text-white"
+              >
+                Explore Network
+              </button>
+            </MagneticButton>
+          </div>
+          <p className="mt-4 text-[10px] font-mono tracking-[0.35em] uppercase text-slate-500 text-center">
+            Identity onboarding for access, governance, and verifiable services.
           </p>
         </motion.div>
 

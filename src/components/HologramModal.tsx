@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DecipherText } from './DecipherText';
 import { lazy, Suspense } from 'react';
@@ -53,13 +54,13 @@ export const HologramModal = ({ isOpen, onClose, title, data, theme = 'cyan' }: 
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isOpen && typeof document !== 'undefined' && createPortal(
         <motion.div 
           initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
           animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
           exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
           transition={{ duration: 0.4 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/40"
+          className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6 bg-black/40"
         >
           <div 
             className="absolute inset-0 z-0 cursor-pointer" 
@@ -136,7 +137,8 @@ export const HologramModal = ({ isOpen, onClose, title, data, theme = 'cyan' }: 
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </motion.div>,
+        document.body
       )}
     </AnimatePresence>
   );

@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { CipherHeading } from '../components/CipherHeading';
 import { useWallet } from '../contexts/WalletContext';
+import { useToast } from '../contexts/ToastContext';
 import { useSoundEffects } from '../hooks/useSoundEffects';
-import { mockDataService, type PassportStat, type ActivityLog } from '../services/mockDataService';
+import { mockDataService, type IdentityStat, type ActivityLog } from '../services/mockDataService';
+import { ConnectWalletModal } from '../components/ConnectWalletModal';
 import { lazy, Suspense } from 'react';
 const IdentityAvatar = lazy(() => import('../components/IdentityAvatar').then(module => ({ default: module.IdentityAvatar })));
 
@@ -16,15 +19,18 @@ const generateHash = (length = 16) => {
   return hash;
 };
 
-export default function Passport() {
-  const { connectedIdentity, level } = useWallet();
+export default function Identity() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { connectedIdentity, balances, level, stakedFCC } = useWallet();
   const [isMinted, setIsMinted] = useState(false);
   const [mintPhase, setMintPhase] = useState(0); // 0=idle, 1=uplink, 2=biometrics, 3=hash, 4=minting, 5=done
   const [isScanning, setIsScanning] = useState(true);
   const [authHash, setAuthHash] = useState('');
-  const [, setPassportStats] = useState<PassportStat[]>([]);
+  const [identityStats, setIdentityStats] = useState<IdentityStat[]>([]);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const { playSuccess } = useSoundEffects();
   
   // 使用 ref 存储所有 timeout ID
@@ -54,13 +60,13 @@ export default function Passport() {
     }, 5000);
     timeoutsRef.current.push(t2);
     
-    const t3 = setTimeout(() => setMintPhase(4), 7000); // Minting NFT
+    const t3 = setTimeout(() => setMintPhase(4), 7000); // Issuing credential
     timeoutsRef.current.push(t3);
     
     const t4 = setTimeout(() => {
       setMintPhase(5); // Done
       playSuccess();
-      const t5 = setTimeout(() => setIsMinted(true), 1500); // Reveal Passport
+      const t5 = setTimeout(() => setIsMinted(true), 1500); // Reveal Identity
       timeoutsRef.current.push(t5);
     }, 9000);
     timeoutsRef.current.push(t4);
@@ -105,6 +111,16 @@ export default function Passport() {
     y.set(0);
   };
 
+  const handleInitializeIdentity = useCallback(() => {
+    if (!connectedIdentity) {
+      setIsWalletModalOpen(true);
+      toast({ message: 'Authorization required before identity verification.', type: 'process' });
+      return;
+    }
+
+    startMintingFlow();
+  }, [connectedIdentity, startMintingFlow, toast]);
+
   useEffect(() => {
     if (isMinted) {
       const timer = setTimeout(() => setIsScanning(false), 2000);
@@ -116,11 +132,11 @@ export default function Passport() {
     let mounted = true;
     
     Promise.all([
-      mockDataService.getPassportStats(),
+      mockDataService.getIdentityStats(),
       mockDataService.getActivityLogs()
     ]).then(([statsData, logsData]) => {
       if (mounted) {
-        setPassportStats(statsData);
+        setIdentityStats(statsData);
         setActivityLogs(logsData);
         setIsDataLoading(false);
       }
@@ -133,6 +149,15 @@ export default function Passport() {
   const radarRadius = 100;
   const centerX = 150;
   const centerY = 150;
+  const availableLiquidity = balances.fcc;
+  const delegatedLiquidity = stakedFCC;
+  const portfolioUsdValue = availableLiquidity * 0.69;
+  const credentialStatus = !connectedIdentity
+    ? 'AWAITING AUTHORIZATION'
+    : isMinted
+      ? 'VERIFIED'
+      : 'READY FOR ISSUANCE';
+  const credentialTier = level >= 3 ? 'INSTITUTIONAL' : level >= 2 ? 'CIVIC PLUS' : 'CITIZEN';
   
   const getPointCoordinates = (value: number, index: number, total: number, customRadius = radarRadius) => {
     const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
@@ -150,9 +175,9 @@ export default function Passport() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-serif font-light text-white mb-2">
-            <CipherHeading text="Citizen Passport" />
+            <CipherHeading text="Citizen Identity" />
           </h1>
-          <p className="text-slate-400 font-mono text-xs tracking-widest">SECURE IDENTITY VERIFICATION</p>
+          <p className="text-slate-400 font-mono text-xs tracking-widest">VERIFIED ACCESS CREDENTIAL</p>
         </div>
         {level >= 2 && (
           <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
@@ -188,17 +213,20 @@ export default function Passport() {
                 <Suspense fallback={<div className="w-full h-full animate-pulse bg-cyan-500/10 rounded-full" />}>
                   <IdentityAvatar address={connectedIdentity || '0x0000000000000000000000000000000000000000'} level={level} />
                 </Suspense>
-                <h2 className="text-2xl font-display text-white mb-2 mt-8">Mint Your Identity</h2>
+                <h2 className="text-2xl font-display text-white mb-2 mt-8">Activate Your Identity</h2>
                 <p className="text-slate-400 text-sm text-center max-w-md mb-8">
-                  Establish a cryptographic link between your physical identity and the FC blockchain.
-                  This process is secure, private, and irreversible.
+                  Issue a verifiable identity credential anchored to FC Chain.
+                  This process is secure, private, and designed for wallet-bound access.
                 </p>
                 <button 
-                  onClick={startMintingFlow}
+                  onClick={handleInitializeIdentity}
                   className="btn-vercel-primary px-12 py-4 text-sm font-bold tracking-[0.2em] uppercase"
                 >
-                  Initialize Mint
+                  {connectedIdentity ? 'Initialize Verification' : 'Authorize Identity'}
                 </button>
+                <p className="mt-4 text-[10px] font-mono tracking-[0.3em] uppercase text-slate-500 text-center">
+                  {connectedIdentity ? 'Authorization complete. Verification sequence available.' : 'Connect a sovereign identity before issuing credentials.'}
+                </p>
               </>
             ) : (
               <div className="flex flex-col items-center py-8">
@@ -233,7 +261,7 @@ export default function Passport() {
                     {mintPhase > 3 ? '✓' : mintPhase === 3 ? '⟳' : '○'} Generating Quantum Hash...
                   </div>
                   <div className={`text-sm font-mono transition-colors ${mintPhase >= 4 ? 'text-cyan-400' : 'text-slate-600'}`}>
-                    {mintPhase > 4 ? '✓' : mintPhase === 4 ? '⟳' : '○'} Minting NFT...
+                    {mintPhase > 4 ? '✓' : mintPhase === 4 ? '⟳' : '○'} Issuing Credential...
                   </div>
                   
                   {mintPhase === 3 && authHash && (
@@ -252,7 +280,7 @@ export default function Passport() {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Passport Card */}
+          {/* Main Identity Card */}
           <motion.div 
             className="lg:col-span-2 vercel-glass-card p-4 md:p-8 relative overflow-hidden group w-full"
             initial={{ opacity: 0, y: 20 }}
@@ -299,6 +327,10 @@ export default function Passport() {
                         <h2 className="text-3xl font-display font-light text-white tracking-widest uppercase">Citizen ID</h2>
                       </div>
                       <p className="font-mono text-xs text-slate-400 bg-black/50 px-3 py-1.5 inline-block border border-cyan-500/20 shadow-[0_0_10px_rgba(6,182,212,0.1)]">{connectedIdentity || 'Not Connected'}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <span className="border border-cyan-500/20 bg-cyan-500/5 px-3 py-2 text-[9px] font-mono tracking-[0.28em] text-cyan-300 uppercase">{credentialStatus}</span>
+                        <span className="border border-yellow-500/20 bg-yellow-500/5 px-3 py-2 text-[9px] font-mono tracking-[0.28em] text-yellow-400 uppercase">{credentialTier}</span>
+                      </div>
                     </div>
                     {/* Official Seal Mockup */}
                     <div className="w-16 h-16 rounded-full border border-yellow-500/30 hidden md:flex items-center justify-center bg-yellow-500/5 relative">
@@ -316,12 +348,35 @@ export default function Passport() {
                     <div className="p-3 bg-black/40 border border-white/5 group-hover:border-green-500/20 transition-colors relative overflow-hidden">
                       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent" />
                       <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Status</div>
-                      <div className="font-bold text-green-400 font-mono tracking-wider">RESIDENT</div>
+                      <div className="font-bold text-green-400 font-mono tracking-wider">{connectedIdentity ? 'ACTIVE' : 'PENDING'}</div>
                     </div>
                     <div className="col-span-2 p-3 bg-black/40 border border-white/5">
                       <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Authorization Hash</div>
                       <div className="font-mono text-[10px] text-yellow-500 truncate">{authHash || generateHash()}</div>
                     </div>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/dashboard')}
+                      className="border border-white/10 bg-white/5 px-4 py-3 text-[10px] font-mono tracking-[0.32em] text-white uppercase transition-colors hover:bg-white/10"
+                    >
+                      Open Dashboard
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/staking')}
+                      className="border border-cyan-500/20 bg-cyan-500/5 px-4 py-3 text-[10px] font-mono tracking-[0.32em] text-cyan-300 uppercase transition-colors hover:border-cyan-500/40 hover:bg-cyan-500/10"
+                    >
+                      Go To Staking
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/sentinel')}
+                      className="border border-yellow-500/20 bg-yellow-500/5 px-4 py-3 text-[10px] font-mono tracking-[0.32em] text-yellow-300 uppercase transition-colors hover:border-yellow-500/40 hover:bg-yellow-500/10"
+                    >
+                      Security Ops
+                    </button>
                   </div>
                 </div>
               </div>
@@ -351,12 +406,12 @@ export default function Passport() {
                     <div className="absolute left-0 top-0 w-1 h-full bg-yellow-600/50 group-hover:bg-yellow-500 transition-colors" />
                     <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2 font-mono ml-2">Available Liquidity</div>
                     <div className="flex items-baseline gap-2 ml-2">
-                       <span className="text-3xl font-display font-bold text-white tracking-wider">24,500</span>
+                       <span className="text-3xl font-display font-bold text-white tracking-wider">{availableLiquidity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                        <span className="text-yellow-600 font-bold font-mono">FCC</span>
                     </div>
                     <div className="mt-4 text-[10px] font-mono text-slate-500 flex justify-between ml-2 pt-4 border-t border-white/5">
                        <span>USD EQUIVALENT</span>
-                       <span className="text-slate-300">~$30,135.00</span>
+                       <span className="text-slate-300">~${portfolioUsdValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     </div>
                   </div>
 
@@ -366,12 +421,12 @@ export default function Passport() {
                     <div className="absolute left-0 top-0 w-1 h-full bg-cyan-600/50 group-hover:bg-cyan-400 transition-colors" />
                     <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2 font-mono ml-2">Delegated To Network</div>
                     <div className="flex items-baseline gap-2 ml-2">
-                       <span className="text-3xl font-display font-bold text-white tracking-wider">12,000</span>
+                       <span className="text-3xl font-display font-bold text-white tracking-wider">{delegatedLiquidity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                        <span className="text-cyan-600 font-bold font-mono">FCC</span>
                     </div>
                     <div className="mt-4 text-[10px] font-mono text-slate-500 flex justify-between ml-2 pt-4 border-t border-white/5">
                        <span>VERIFIED NODES</span>
-                       <span className="text-slate-300">4 ACTIVE</span>
+                       <span className="text-slate-300">{delegatedLiquidity > 0 ? '4 ACTIVE' : 'NO POSITIONS'}</span>
                     </div>
                   </div>
                 </div>
@@ -446,7 +501,30 @@ export default function Passport() {
           </motion.div>
 
           {/* Activity Log Sidebar */}
-          <div className="vercel-glass-card p-6">
+          <div className="space-y-6">
+            <div className="vercel-glass-card p-6">
+              <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                Identity Metrics
+              </h3>
+              <div className="grid grid-cols-1 gap-3">
+                {isDataLoading ? (
+                  [1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-20 bg-white/5 animate-pulse" />
+                  ))
+                ) : (
+                  identityStats.map((stat) => (
+                    <div key={stat.title} className="border border-white/5 bg-black/30 p-4">
+                      <div className="text-[9px] font-mono tracking-[0.28em] text-slate-500 uppercase">{stat.title}</div>
+                      <div className="mt-2 text-2xl font-display text-white">{stat.val}</div>
+                      <div className="mt-1 text-[10px] font-mono text-cyan-300">{stat.sub}</div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+
+            <div className="vercel-glass-card p-6">
             <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
               Activity Log
@@ -480,9 +558,14 @@ export default function Passport() {
                 ))
               )}
             </div>
+            </div>
           </div>
         </div>
       )}
+      <ConnectWalletModal
+        isOpen={isWalletModalOpen}
+        onClose={() => setIsWalletModalOpen(false)}
+      />
     </div>
   );
 }
