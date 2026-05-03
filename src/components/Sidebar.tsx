@@ -91,7 +91,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                  <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                  </svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Threat Protocol</span>
+	                 <span className="text-xs font-bold tracking-widest uppercase">Security Operations</span>
               </button>
             </li>
 
@@ -127,7 +127,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                 </svg>
-                <span className="text-xs font-bold tracking-widest uppercase">Vanguard DEX</span>
+	                <span className="text-xs font-bold tracking-widest uppercase">Liquidity Rail</span>
               </button>
             </li>
 
@@ -139,7 +139,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
-                <span className="text-xs font-bold tracking-widest uppercase">Whisper Comm</span>
+	                <span className="text-xs font-bold tracking-widest uppercase">Secure Messaging</span>
               </button>
             </li>
 
@@ -163,7 +163,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                  <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM12 16v-4m0-4h.01" />
                  </svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">A.I. Oracle</span>
+	                 <span className="text-xs font-bold tracking-widest uppercase">Policy Intelligence</span>
               </button>
             </li>
 
@@ -173,7 +173,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'staking' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Stake</span>
+	                 <span className="text-xs font-bold tracking-widest uppercase">Validator Ops</span>
               </button>
             </li>
 
@@ -183,7 +183,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'developer' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Dev Console</span>
+	                 <span className="text-xs font-bold tracking-widest uppercase">Developer Portal</span>
               </button>
             </li>
           </ul>
@@ -209,7 +209,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
             <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            AUTHORIZE
+	            Connect Identity
           </button>
         )}
 

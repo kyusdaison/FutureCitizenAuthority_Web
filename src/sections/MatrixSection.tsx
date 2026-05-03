@@ -22,7 +22,7 @@ export const MatrixSection = () => {
       {/* Vertical Label */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] rotate-180 pointer-events-none vertical-text">
          <h2 className="text-[6rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>05 STACK</span>
+           <span>06 STACK</span>
          </h2>
       </div>
       <div className="max-w-5xl mx-auto relative z-10">
@@ -33,7 +33,7 @@ export const MatrixSection = () => {
         <FadeInUp>
           <div className="flex items-center gap-4 mb-8">
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-cyan-600 uppercase">
-              <CipherHeading text="05 // Identity To State Stack" />
+              <CipherHeading text="06 // Identity To State Stack" />
             </h2>
             <div className="w-24 h-px bg-slate-700"></div>
           </div>

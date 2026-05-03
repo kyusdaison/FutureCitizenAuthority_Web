@@ -13,11 +13,11 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   
   const links = [
-    { label: "Vision", href: "#vision" },
-    { label: "Architecture", href: "#architecture" },
     { label: "Identity", href: "#identity" },
-    { label: "Ecosystem", href: "#matrix" },
-    { label: "Economics", href: "#tokenomics" },
+    { label: "Wallet Rail", href: "#architecture" },
+    { label: "Governance", href: "#governance" },
+    { label: "Assurance", href: "#assurance" },
+    { label: "Deployment", href: "#deployment" },
     { label: "Roadmap", href: "#roadmap" }
   ];
 
@@ -40,7 +40,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
           animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
           exit={{ opacity: 0, backdropFilter: "blur(0px)", transition: { delay: 0.3 } }}
-          className="fixed inset-0 z-[100] bg-[#020306]/90 flex flex-col justify-center items-center px-8 md:hidden"
+          className="fixed inset-0 z-[100] bg-[#020306]/90 flex flex-col justify-center items-center px-8 xl:hidden"
         >
           {/* Close Area Background */}
           <div className="absolute inset-0 z-0" onClick={() => { playClick(); onClose(); }}></div>

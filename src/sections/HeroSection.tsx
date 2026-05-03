@@ -25,7 +25,7 @@ export const HeroSection = () => {
       
       <div className="absolute bottom-1/3 right-12 hidden xl:flex flex-col gap-2 text-right opacity-80">
          <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"><span className="text-slate-600">//</span> PROTOCOL ZKP-MPC</div>
-         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-600">//</span> SHARD ALPHA-7</div>
+	         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-600">//</span> REGION NODE A-7</div>
          <div className="w-32 h-px bg-gradient-to-l from-fc-gold/40 to-transparent mt-2 ml-auto"></div>
       </div>
       
@@ -99,7 +99,7 @@ export const HeroSection = () => {
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 2 }} className="absolute bottom-16 flex flex-col items-center gap-4 z-20">
-        <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-slate-500">ENGAGE PROTOCOL</span>
+	        <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-slate-500">REVIEW FRAMEWORK</span>
         <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
           <ChevronDown className="w-4 h-4 text-cyan-500/80" />
         </motion.div>

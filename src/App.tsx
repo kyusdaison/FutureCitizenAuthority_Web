@@ -17,6 +17,7 @@ import { IdentitySection } from './sections/IdentitySection';
 import { MatrixSection } from './sections/MatrixSection';
 import { TokenomicsSection } from './sections/TokenomicsSection';
 import { GovernanceSection } from './sections/GovernanceSection';
+import { AssuranceSection } from './sections/AssuranceSection';
 import { ConversionSection } from './sections/ConversionSection';
 import { CollectiveSection } from './sections/CollectiveSection';
 import { RoadmapSection } from './sections/RoadmapSection';
@@ -50,6 +51,14 @@ import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
 
 type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper';
+
+const homeNavItems = [
+  { label: 'Identity', target: 'identity' },
+  { label: 'Wallet Rail', target: 'architecture' },
+  { label: 'Governance', target: 'governance' },
+  { label: 'Assurance', target: 'assurance' },
+  { label: 'Deployment', target: 'deployment' },
+];
 
 export default function App() {
   const location = useLocation();
@@ -109,6 +118,33 @@ export default function App() {
 
   useMouseTracker();
 
+  const scrollToSection = useCallback((target: string) => {
+    const element = document.getElementById(target);
+    if (!element) return;
+
+    window.history.replaceState(null, '', `#${target}`);
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
+  const navigateToHomeSection = useCallback((target: string) => {
+    if (currentView !== 'home') {
+      navigateFn(`/#${target}`);
+      return;
+    }
+
+    scrollToSection(target);
+  }, [currentView, navigateFn, scrollToSection]);
+
+  useEffect(() => {
+    if (currentView !== 'home' || !location.hash) return;
+
+    const target = location.hash.slice(1);
+    const timers = [150, 650].map((delay) =>
+      window.setTimeout(() => scrollToSection(target), delay)
+    );
+
+    return () => timers.forEach((timer) => window.clearTimeout(timer));
+  }, [currentView, location.hash, scrollToSection]);
 
 
   // 使用 useMemo 缓存 commands 数组
@@ -133,14 +169,26 @@ export default function App() {
     },
     {
       id: 'nav-home',
-      title: 'Go to Zenith Page',
-      subtitle: 'Main Landing Page',
+      title: 'Go to Home Page',
+      subtitle: 'Institutional landing page',
       action: () => { navigate('home'); closeCommandPalette(); }
+    },
+    {
+      id: 'nav-deployment',
+      title: 'Review Deployment Paths',
+      subtitle: 'Government, institution, and builder entry points',
+      action: () => { navigateToHomeSection('deployment'); closeCommandPalette(); }
+    },
+    {
+      id: 'nav-assurance',
+      title: 'Review Institutional Assurance',
+      subtitle: 'Compliance, data governance, and pilot readiness',
+      action: () => { navigateToHomeSection('assurance'); closeCommandPalette(); }
     },
     {
       id: 'nav-staking',
       title: 'Go to Validator Staking',
-      subtitle: 'Manage FCC delegation and yields',
+      subtitle: 'Manage validator delegation and yields',
       action: () => { navigate('staking'); closeCommandPalette(); }
     },
     {
@@ -157,7 +205,7 @@ export default function App() {
     },
     {
       id: 'nav-swap',
-      title: 'Go to Vanguard DEX',
+      title: 'Go to Liquidity Router',
       subtitle: 'Decentralized Token Exchange',
       action: () => { navigate('swap'); closeCommandPalette(); }
     },
@@ -188,7 +236,7 @@ export default function App() {
     {
       id: 'nav-oracle',
       title: 'Go to A.I. Oracle',
-      subtitle: 'Omniscient Network Intelligence',
+      subtitle: 'Network intelligence and policy telemetry',
       action: () => { navigate('oracle'); closeCommandPalette(); }
     },
     {
@@ -205,8 +253,8 @@ export default function App() {
     },
     {
       id: 'sys-reboot',
-      title: 'System: Hard Reboot OS',
-      subtitle: 'Clear session lock and reboot the system',
+      title: 'System: Reload Session',
+      subtitle: 'Clear session cache and reload the application',
       action: () => { sessionStorage.clear(); window.location.reload(); }
     },
     {
@@ -228,7 +276,7 @@ export default function App() {
           closeCommandPalette(); 
       }
     }
-  ], [navigate, closeCommandPalette, ambientPlaying, toggleAmbient, isLowPowerMode]);
+  ], [navigate, navigateToHomeSection, closeCommandPalette, ambientPlaying, toggleAmbient, isLowPowerMode]);
 
 
   return (
@@ -242,7 +290,7 @@ export default function App() {
         </svg>
         <span className="font-bold font-mono text-slate-300">An official website of the Future Citizen Authority</span>
         <span className="opacity-20 text-slate-500">|</span>
-        <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Cyber-Sovereign Channel</span>
+        <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Digital Governance Channel</span>
       </div>
 
       {!isLowPowerMode && <TacticalCursor />}
@@ -313,20 +361,25 @@ export default function App() {
           <img src="/hero-logo.webp" alt="Future Citizen Authority" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
           <div className="flex flex-col">
             <span className="text-sm font-bold tracking-[0.3em] uppercase text-white">Future Citizen Authority</span>
-            <span className="text-[9px] tracking-[0.2em] font-mono text-slate-500">Vanguard Intelligence Directorate</span>
+            <span className="text-[9px] tracking-[0.2em] font-mono text-slate-500">Digital Governance Infrastructure</span>
           </div>
         </div>
-        <div className="hidden md:flex gap-8 lg:gap-12 text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase font-sans">
-          <a href="#vision" className="hover:text-white transition-colors duration-300">Directive</a>
-          <a href="#architecture" className="hover:text-white transition-colors duration-300">Infrastructure</a>
-          <a href="#identity" className="hover:text-white transition-colors duration-300">Identity</a>
-          <button onClick={() => navigate('ecosystem')} className="hover:text-white transition-colors duration-300 uppercase tracking-[0.2em]">Topology</button>
-          <a href="#tokenomics" className="hover:text-white transition-colors duration-300">Treasury</a>
+        <div className="hidden xl:flex gap-6 2xl:gap-9 text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase font-sans">
+          {homeNavItems.map((item) => (
+            <button
+              key={item.target}
+              type="button"
+              onClick={() => scrollToSection(item.target)}
+              className="hover:text-white transition-colors duration-300 uppercase tracking-[0.2em]"
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
         <div className="flex items-center gap-4">
           <button 
             onClick={openCommandPalette}
-            className="hidden md:flex items-center gap-2 px-3 py-2 bg-[#020306]/80 border border-white/10 overflow-hidden relative group hover:border-cyan-500/30 transition-colors"
+            className="hidden 2xl:flex items-center gap-2 px-3 py-2 bg-[#020306]/80 border border-white/10 overflow-hidden relative group hover:border-cyan-500/30 transition-colors"
           >
             <div className="absolute inset-0 bg-cyan-500/5 -translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             <svg className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-500 transition-colors relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -337,9 +390,9 @@ export default function App() {
             </span>
           </button>
           
-          <button onClick={() => navigate('identity')} className="hidden md:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
+          <button onClick={() => scrollToSection('deployment')} className="hidden lg:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
             <div className="relative bg-slate-950 px-6 py-2 flex items-center justify-center">
-              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Open Identity</span>
+              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Deployment Paths</span>
             </div>
           </button>
           {connectedIdentity ? (
@@ -358,7 +411,7 @@ export default function App() {
           )}
         </div>
         <button 
-          className="md:hidden flex items-center justify-center w-10 h-10 border border-white/10 bg-white/5 hover:bg-white/10 text-white transition-colors"
+          className="xl:hidden flex items-center justify-center w-10 h-10 border border-white/10 bg-white/5 hover:bg-white/10 text-white transition-colors"
           onClick={() => setIsMobileMenuOpen(true)}
           aria-label="Toggle Mobile Menu"
         >
@@ -373,6 +426,7 @@ export default function App() {
         <IdentitySection />
         <ArchitectureSection />
         <GovernanceSection />
+        <AssuranceSection />
         <ConversionSection />
         <MatrixSection />
         <TokenomicsSection />

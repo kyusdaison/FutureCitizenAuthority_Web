@@ -5,11 +5,12 @@ const SECTIONS = [
   { id: 'identity', name: '01 // IDENTITY' },
   { id: 'architecture', name: '02 // WALLET RAIL' },
   { id: 'governance', name: '03 // GOVERNANCE' },
-  { id: 'deployment', name: '04 // DEPLOYMENT' },
-  { id: 'matrix', name: '05 // STACK' },
-  { id: 'tokenomics', name: '06 // ECONOMICS' },
-  { id: 'collective', name: '07 // OPERATIONS' },
-  { id: 'roadmap', name: '08 // GENESIS' }
+  { id: 'assurance', name: '04 // ASSURANCE' },
+  { id: 'deployment', name: '05 // DEPLOYMENT' },
+  { id: 'matrix', name: '06 // STACK' },
+  { id: 'tokenomics', name: '07 // ECONOMICS' },
+  { id: 'collective', name: '08 // OPERATIONS' },
+  { id: 'roadmap', name: '09 // GENESIS' }
 ];
 
 export const NarrativeTracker: React.FC = () => {

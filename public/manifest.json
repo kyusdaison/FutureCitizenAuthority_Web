@@ -1,7 +1,7 @@
 {
   "name": "Future Citizen Authority",
-  "short_name": "FCC",
-  "description": "The absolute ledger of Identity and Trust. A parallelized L1 architecture merging sub-second finality with sovereign regulatory compliance.",
+  "short_name": "FCA",
+  "description": "Identity-first infrastructure for verifiable citizens, seedless wallets, programmable treasury flows, and auditable digital governance.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#020617",

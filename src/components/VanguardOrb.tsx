@@ -70,7 +70,7 @@ export const VanguardOrb = () => {
     {
       id: 'init-1',
       role: 'vanguard',
-      content: 'Greetings, Citizen. I am Vanguard OS, the local intelligence node for FC Chain. How may I assist your traversal today?'
+      content: 'Welcome. I am the FCA review assistant, here to help evaluators inspect identity, governance, deployment, and operating controls.'
     }
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -112,7 +112,7 @@ export const VanguardOrb = () => {
   useEffect(() => {
     if (recentMegaTx && recentMegaTx !== lastMegaTx.current) {
       lastMegaTx.current = recentMegaTx;
-      const msg = `Market Data Intercepted: ${recentMegaTx}. Deploying algorithmic stabilizing protocols...`;
+      const msg = `Market telemetry update: ${recentMegaTx}. Updating the monitoring view for review...`;
       
       const vanguardMsg: Message = { id: Date.now().toString(), role: 'vanguard', content: msg };
       setMessages(prev => [...prev, vanguardMsg]);
@@ -134,19 +134,19 @@ export const VanguardOrb = () => {
     setIsTyping(true);
     
     setTimeout(() => {
-      let response = "Command not recognized in local index. Establishing uplink to core matrix for wider search...";
+      let response = "I do not have that item in the local briefing index. Try identity, deployment, compliance, governance, or status.";
       const normalizedCmd = cmd.toLowerCase();
       
       if (normalizedCmd.includes('status')) {
-        response = "All systems nominal. Network latency is 12ms. Global threat level stands at 0%.";
+        response = "All monitored services are nominal in this demo environment. Network latency is 12ms and no active security incident is flagged.";
       } else if (normalizedCmd.includes('fcc') || normalizedCmd.includes('token') || normalizedCmd.includes('price')) {
-        response = "FCC is currently trading at $1.24 per protocol telemetry. Total volume deployed across Vanguard DEX is 1.4B.";
+        response = "The demo telemetry shows FCC at $1.24, with 1.4B routed through the liquidity layer. Production figures should be connected to verified market data.";
       } else if (normalizedCmd.includes('hack') || normalizedCmd.includes('breach')) {
-        response = "WARNING: Simulated breach parameters detected. Deploying Sentinel countermeasures. Standby.";
+        response = "Security simulation recognized. The appropriate review path is incident classification, operator notification, containment, and audit logging.";
       } else if (normalizedCmd.includes('mint') || normalizedCmd.includes('identity')) {
-        response = "Citizen identities are cryptographic credentials bound to your biological signature. Proceed to the Identity sector to initiate enrollment.";
+        response = "Identity records are verifiable credentials issued through approved enrollment, recovery, and permission policies. Open the Identity layer to review the model.";
       } else if (normalizedCmd.includes('hello') || normalizedCmd.includes('hi')) {
-        response = "Greetings. Vanguard OS is actively monitoring your session.";
+        response = "The FCA review assistant is active. I can summarize identity, deployment, compliance, and governance surfaces.";
       } else if (normalizedCmd.includes('clear')) {
         setMessages([]);
         setIsTyping(false);
@@ -197,7 +197,7 @@ export const VanguardOrb = () => {
                <div className="flex justify-between items-center mb-3 pb-2 border-b border-white/10">
                  <div className="flex items-center gap-2">
                    <div className="w-2 h-2 rounded-full bg-vanguard animate-pulse"></div>
-                   <h3 className="text-sm font-bold text-white tracking-widest font-mono">VANGUARD OS</h3>
+	                   <h3 className="text-sm font-bold text-white tracking-widest font-mono">FCA REVIEW ASSISTANT</h3>
                  </div>
                  <div className="flex items-center gap-2">
                    <button 
@@ -216,7 +216,7 @@ export const VanguardOrb = () => {
                </div>
                
                <div className="text-xs font-mono leading-relaxed space-y-3 max-h-[250px] overflow-y-auto scrollbar-hide mb-4">
-                 <p className="text-vanguard mb-2">Initializing cognitive subroutines...</p>
+	                 <p className="text-vanguard mb-2">Review assistant ready.</p>
                  
                  {messages.map((msg) => (
                    <div key={msg.id} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
@@ -241,7 +241,7 @@ export const VanguardOrb = () => {
                <div className="relative border-t border-white/5 pt-3">
                  <input 
                     type="text" 
-                    placeholder="Ask Vanguard..." 
+	                    placeholder="Ask about identity, deployment, compliance..." 
                     className="w-full bg-black/50 border border-white/10 px-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-vanguard focus:ring-1 focus:ring-vanguard/50 transition-all placeholder:text-white/30"
                     onKeyDown={handleKeyDown}
                     autoFocus

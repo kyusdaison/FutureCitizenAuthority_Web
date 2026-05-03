@@ -1,4 +1,4 @@
-import { ArrowRight, Building2, Code2, Landmark, ShieldCheck } from 'lucide-react';
+import { ArrowRight, BadgeCheck, Building2, Code2, FileCheck2, Landmark, Route, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { TiltCard } from '../components/TiltCard';
@@ -40,6 +40,31 @@ const deploymentPaths = [
   },
 ];
 
+const evaluationSteps = [
+  {
+    icon: BadgeCheck,
+    title: 'Verify the participant',
+    copy: 'Start with a reusable identity credential that can gate wallets, services, and policy permissions.',
+  },
+  {
+    icon: Route,
+    title: 'Map the operating flow',
+    copy: 'Choose the first useful transaction path: public services, treasury operations, or builder access.',
+  },
+  {
+    icon: FileCheck2,
+    title: 'Prove the control layer',
+    copy: 'Show audit trails, approval ownership, and settlement status before scaling into the full stack.',
+  },
+];
+
+const proofSignals = [
+  { value: '3', label: 'buyer paths' },
+  { value: '0.4s', label: 'target finality' },
+  { value: 'MPC', label: 'custody model' },
+  { value: 'ZK', label: 'compliance proof' },
+];
+
 export const ConversionSection = () => {
   const navigate = useNavigate();
 
@@ -55,7 +80,7 @@ export const ConversionSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  <CipherHeading text="04 // Deployment Paths" />
+                  <CipherHeading text="05 // Deployment Paths" />
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-6">
@@ -117,6 +142,56 @@ export const ConversionSection = () => {
             );
           })}
         </div>
+
+        <FadeInUp delay={0.25}>
+          <div className="mt-10 grid grid-cols-1 xl:grid-cols-[1.35fr_0.65fr] gap-6">
+            <div className="border border-white/10 bg-[#020617]/80 p-6 md:p-8">
+              <div className="flex items-center justify-between gap-6 mb-8">
+                <div>
+                  <p className="text-xs uppercase text-fc-gold mb-3">Evaluation sequence</p>
+                  <h4 className="text-2xl md:text-3xl font-serif font-light text-white">From first meeting to pilot scope</h4>
+                </div>
+                <div className="hidden md:block h-px flex-1 bg-gradient-to-r from-fc-gold/30 via-white/10 to-transparent" />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {evaluationSteps.map((step, index) => {
+                  const Icon = step.icon;
+
+                  return (
+                    <div key={step.title} className="relative border border-white/10 bg-white/[0.02] p-5 min-h-[210px]">
+                      <div className="flex items-center justify-between mb-8">
+                        <Icon className="w-6 h-6 text-fc-gold" />
+                        <span className="text-xs text-slate-500">0{index + 1}</span>
+                      </div>
+                      <h5 className="text-lg font-serif font-light text-white mb-4">{step.title}</h5>
+                      <p className="text-sm text-slate-400 leading-relaxed">{step.copy}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="border border-white/10 bg-white/[0.02] p-6 md:p-8 flex flex-col justify-between">
+              <div>
+                <p className="text-xs uppercase text-cyan-300 mb-3">Signals to inspect</p>
+                <h4 className="text-2xl md:text-3xl font-serif font-light text-white mb-5">Make the promise checkable.</h4>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  A conversion page works harder when the claims are inspectable. These are the fastest signals to point a partner toward during a product walkthrough.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 mt-8">
+                {proofSignals.map((signal) => (
+                  <div key={signal.label} className="border border-white/10 bg-[#020617]/80 p-4">
+                    <div className="text-2xl font-serif font-light text-white mb-1">{signal.value}</div>
+                    <div className="text-xs uppercase text-slate-500">{signal.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </FadeInUp>
       </div>
     </section>
   );

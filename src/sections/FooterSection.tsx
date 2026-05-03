@@ -56,9 +56,9 @@ export const FooterSection = () => {
         <div className="mt-40 border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-[0.4em] uppercase w-full">
           <span>© {new Date().getFullYear()} Future Citizen Authority</span>
           <div className="flex gap-10 mt-6 md:mt-0">
-            <a href="#" className="hover:text-white transition-colors duration-300">X Corp</a>
-            <a href="#" className="hover:text-white transition-colors duration-300">Discord</a>
-            <a href="#" className="hover:text-white transition-colors duration-300">GitHub Source</a>
+            <button type="button" onClick={() => navigate('/identity')} className="hover:text-white transition-colors duration-300 uppercase">Identity</button>
+            <button type="button" onClick={() => navigate('/#deployment')} className="hover:text-white transition-colors duration-300 uppercase">Deployment</button>
+            <button type="button" onClick={() => navigate('/developer')} className="hover:text-white transition-colors duration-300 uppercase">Developers</button>
           </div>
         </div>
       </div>

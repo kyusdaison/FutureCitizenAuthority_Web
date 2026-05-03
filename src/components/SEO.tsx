@@ -8,9 +8,9 @@ interface SEOProps {
 }
 
 export const SEO = ({
-  title = 'Future Citizen Authority - Sovereign Blockchain Network',
-  description = 'The absolute ledger of Identity and Trust. A parallelized L1 architecture merging sub-second finality with sovereign regulatory compliance, forging the ultimate digital statecraft foundation.',
-  image = '/og-image.png',
+  title = 'Future Citizen Authority - Identity Infrastructure for Digital Governance',
+  description = 'Identity-first infrastructure for verifiable citizens, seedless wallets, programmable treasury flows, and auditable digital governance.',
+  image = '/hero-logo.webp',
   url = 'https://futurecitizen.io',
 }: SEOProps) => {
   // 使用React Helmet需要在main.tsx中包装HelmetProvider
