@@ -18,7 +18,7 @@ export const RoadmapSection = () => {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-12 h-px bg-fc-gold/50"></div>
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-fc-gold uppercase">
-              <CipherHeading text="07 // Strategic Deployment" />
+              <CipherHeading text="08 // Strategic Deployment" />
             </h2>
             <div className="w-12 h-px bg-fc-gold/50"></div>
           </div>

@@ -26,9 +26,14 @@ dist-ssr
 # Project specifics
 .claude
 .omc
+.superpowers
 .wrangler
 crewai_website_experience
 
 # Local build output / preview screenshots
 build-test
 preview-home*.png
+
+# Local deploy scripts (may contain secrets)
+deploy-cloudflare.sh
+deploy-prep.sh

@@ -18,7 +18,7 @@ export const CollectiveSection = () => {
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text z-0">
          <h2 className="text-[8rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>06 PERSONNEL</span>
+           <span>07 OPERATIONS</span>
          </h2>
       </div>
 
@@ -31,7 +31,7 @@ export const CollectiveSection = () => {
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-px bg-slate-700"></div>
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-slate-500 uppercase">
-              <CipherHeading text="06 // Architecture & Operations" />
+              <CipherHeading text="07 // Architecture & Operations" />
             </h2>
           </div>
           <h3 className="text-5xl md:text-7xl font-serif font-light tracking-tight drop-shadow-lg mb-8 text-white">

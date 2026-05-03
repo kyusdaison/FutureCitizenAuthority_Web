@@ -17,6 +17,7 @@ import { IdentitySection } from './sections/IdentitySection';
 import { MatrixSection } from './sections/MatrixSection';
 import { TokenomicsSection } from './sections/TokenomicsSection';
 import { GovernanceSection } from './sections/GovernanceSection';
+import { ConversionSection } from './sections/ConversionSection';
 import { CollectiveSection } from './sections/CollectiveSection';
 import { RoadmapSection } from './sections/RoadmapSection';
 import { FooterSection } from './sections/FooterSection';
@@ -372,6 +373,7 @@ export default function App() {
         <IdentitySection />
         <ArchitectureSection />
         <GovernanceSection />
+        <ConversionSection />
         <MatrixSection />
         <TokenomicsSection />
         <CollectiveSection />
