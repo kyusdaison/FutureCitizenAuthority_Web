@@ -1,36 +1,26 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 
 const SECTIONS = [
-  { id: 'hero', name: '00 // INITIALIZE' },
-  { id: 'model', name: '01 // MODEL' },
-  { id: 'identity', name: '02 // IDENTITY' },
-  { id: 'architecture', name: '03 // WALLET RAIL' },
-  { id: 'governance', name: '04 // GOVERNANCE' },
-  { id: 'assurance', name: '05 // ASSURANCE' },
-  { id: 'deployment', name: '06 // DEPLOYMENT' },
-  { id: 'matrix', name: '07 // STACK' },
-  { id: 'tokenomics', name: '08 // ECONOMICS' },
-  { id: 'collective', name: '09 // OPERATIONS' },
-  { id: 'roadmap', name: '10 // ROADMAP' }
+  { id: 'hero', index: '00', name: 'Initialize' },
+  { id: 'model', index: '01', name: 'Model' },
+  { id: 'identity', index: '02', name: 'Identity' },
+  { id: 'architecture', index: '03', name: 'Wallet rail' },
+  { id: 'governance', index: '04', name: 'Governance' },
+  { id: 'assurance', index: '05', name: 'Assurance' },
+  { id: 'deployment', index: '06', name: 'Deployment' },
+  { id: 'matrix', index: '07', name: 'Stack' },
+  { id: 'tokenomics', index: '08', name: 'Economics' },
+  { id: 'collective', index: '09', name: 'Operations' },
+  { id: 'roadmap', index: '10', name: 'Roadmap' }
 ];
 
 export const NarrativeTracker: React.FC = () => {
   const [activeId, setActiveId] = useState('hero');
   const rafRef = useRef<number>(0);
-  const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
   // 使用 useCallback 缓存滚动处理函数
   const updateActiveSection = useCallback(() => {
-    const scrollY = window.scrollY;
-    
-    // 如果滚动距离小于50px，不更新
-    if (Math.abs(scrollY - lastScrollY.current) < 50) {
-      ticking.current = false;
-      return;
-    }
-    
-    lastScrollY.current = scrollY;
     let currentId = 'hero';
     
     // 从后向前查找当前section
@@ -38,7 +28,7 @@ export const NarrativeTracker: React.FC = () => {
       const el = document.getElementById(SECTIONS[i].id);
       if (el) {
         const rect = el.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 2) {
+        if (rect.top <= window.innerHeight * 0.45) {
           currentId = SECTIONS[i].id;
           break;
         }
@@ -67,25 +57,46 @@ export const NarrativeTracker: React.FC = () => {
     };
   }, [updateActiveSection]);
 
+  const activeIndex = SECTIONS.findIndex((sec) => sec.id === activeId);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <div className="fixed left-8 top-1/2 -translate-y-1/2 z-[90] hidden xl:flex flex-col gap-8 pointer-events-none mix-blend-difference">
+    <nav
+      aria-label="Page sections"
+      className="fixed left-6 top-1/2 z-[70] hidden w-[248px] -translate-y-1/2 flex-col border border-white/10 bg-[#020617]/[0.86] px-3 py-4 shadow-[0_24px_80px_rgba(0,0,0,0.42)] backdrop-blur-2xl 2xl:flex"
+    >
+      <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-3">
+        <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-slate-500">Page flow</span>
+        <span className="text-[10px] font-mono text-fc-gold/90">
+          {String(Math.max(activeIndex + 1, 1)).padStart(2, '0')}/{SECTIONS.length}
+        </span>
+      </div>
+
       {SECTIONS.map((sec) => (
-        <div 
+        <button
           key={sec.id} 
-          className={`flex items-center gap-4 transition-opacity duration-500 ${
-            activeId === sec.id ? 'opacity-100' : 'opacity-30'
+          type="button"
+          onClick={() => scrollToSection(sec.id)}
+          className={`group flex w-full items-center gap-3 border px-3 py-2.5 text-left transition-all duration-300 ${
+            activeId === sec.id
+              ? 'border-fc-gold/35 bg-fc-gold/[0.075] text-white shadow-[0_0_24px_rgba(212,175,55,0.08)]'
+              : 'border-transparent text-slate-500 hover:border-white/10 hover:bg-white/[0.035] hover:text-slate-200'
           }`}
         >
           <div 
-            className={`h-px transition-all duration-700 ${
-              activeId === sec.id ? 'w-12 bg-white' : 'w-4 bg-white/50'
+            className={`h-px shrink-0 transition-all duration-500 ${
+              activeId === sec.id ? 'w-8 bg-fc-gold' : 'w-4 bg-slate-700 group-hover:w-6 group-hover:bg-slate-400'
             }`} 
           />
-          <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-white">
+          <span className="w-5 shrink-0 text-[10px] font-mono text-slate-500">{sec.index}</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.22em]">
             {sec.name}
           </span>
-        </div>
+        </button>
       ))}
-    </div>
+    </nav>
   );
 };

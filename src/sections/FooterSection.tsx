@@ -1,4 +1,4 @@
-import { ArrowRight, Gauge, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Gauge, Route, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { MagneticButton } from '../components/MagneticButton';
 
@@ -10,10 +10,10 @@ export const FooterSection = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-fc-gold/5 object-cover pointer-events-none"></div>
       <div className="max-w-5xl mx-auto text-center relative z-10">
         <h2 className="text-5xl md:text-8xl font-serif font-light tracking-tight mb-8 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-          Start With<br/><span className="italic drop-shadow-none text-gray-500 font-serif">Identity.</span>
+          Start With A<br/><span className="italic drop-shadow-none text-gray-500 font-serif">Reviewable Pilot.</span>
         </h2>
         <p className="mx-auto mb-12 max-w-2xl text-base text-slate-400 leading-[1.8]">
-          The fastest way to evaluate Future Citizen is to activate the identity layer, review the operating dashboard, and map one deployment path to a real partner conversation.
+          The fastest way to evaluate Future Citizen is to define one useful service path, inspect the identity and control model, then run a bounded pilot with measurable review criteria.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <MagneticButton className="w-full sm:w-auto">
@@ -42,14 +42,15 @@ export const FooterSection = () => {
         <MagneticButton className="mt-8">
           <button
             type="button"
-            onClick={() => navigate('/developer')}
+            onClick={() => navigate('/#deployment')}
             className="relative p-[1px] bg-white/10 hover:bg-white/20 transition-colors overflow-hidden group w-full h-full block"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fc-gold to-transparent -translate-x-full group-hover:translate-x-full duration-1000 ease-in-out pointer-events-none"></div>
             <div className="relative bg-[#010204] px-10 py-4 flex items-center justify-center border border-white/5 w-full h-full">
               <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-fc-gold/50 group-hover:border-fc-gold transition-colors"></div>
               <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-fc-gold/50 group-hover:border-fc-gold transition-colors"></div>
-	              <span className="text-xs font-bold uppercase text-slate-300 group-hover:text-white transition-colors z-10 drop-shadow-md">Developer Portal</span>
+              <Route className="mr-3 w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
+	              <span className="text-xs font-bold uppercase text-slate-300 group-hover:text-white transition-colors z-10 drop-shadow-md">Map Deployment Path</span>
             </div>
           </button>
         </MagneticButton>

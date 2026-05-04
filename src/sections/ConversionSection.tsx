@@ -59,10 +59,16 @@ const evaluationSteps = [
 ];
 
 const proofSignals = [
-  { value: '3', label: 'entry paths' },
-  { value: '0.4s', label: 'target finality' },
-  { value: 'MPC', label: 'custody model' },
-  { value: 'ZK', label: 'compliance proof' },
+  { value: '1', label: 'lead use case' },
+  { value: '4', label: 'control surfaces' },
+  { value: '90d', label: 'pilot window' },
+  { value: 'ZK/MPC', label: 'privacy + custody' },
+];
+
+const pilotCadence = [
+  { window: '0-30 days', focus: 'Use-case selection and control review' },
+  { window: '31-60 days', focus: 'Limited operator pilot and reporting checks' },
+  { window: '61-90 days', focus: 'Scale, pause, or revise decision' },
 ];
 
 export const ConversionSection = () => {
@@ -177,11 +183,20 @@ export const ConversionSection = () => {
                 <p className="text-xs uppercase text-cyan-300 mb-3">Signals to inspect</p>
                 <h4 className="text-2xl md:text-3xl font-serif font-light text-white mb-5">Make the promise checkable.</h4>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  A conversion page works harder when the claims are inspectable. These are the fastest signals to point a partner toward during a product walkthrough.
+                  A professional walkthrough should end with a bounded next step. The cleanest path is a short pilot with visible controls, clear owners, and a documented decision point.
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mt-8">
+              <div className="mt-7 space-y-3">
+                {pilotCadence.map((item) => (
+                  <div key={item.window} className="border border-white/10 bg-[#020617]/70 px-4 py-3">
+                    <div className="text-xs uppercase tracking-[0.2em] text-fc-gold/80 mb-2">{item.window}</div>
+                    <div className="text-sm text-slate-300 leading-relaxed">{item.focus}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 mt-6">
                 {proofSignals.map((signal) => (
                   <div key={signal.label} className="border border-white/10 bg-[#020617]/80 p-4">
                     <div className="text-2xl font-serif font-light text-white mb-1">{signal.value}</div>

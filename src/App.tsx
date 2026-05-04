@@ -295,9 +295,9 @@ export default function App() {
         <svg className="w-3.5 h-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
-        <span className="font-bold font-mono text-slate-300">An official website of the Future Citizen Authority</span>
+        <span className="font-bold font-mono text-slate-300">Future Citizen Authority Institutional Site</span>
         <span className="opacity-20 text-slate-500">|</span>
-        <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Digital Governance Channel</span>
+        <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Digital Governance Review Channel</span>
       </div>
 
       {!isLowPowerMode && <TacticalCursor />}

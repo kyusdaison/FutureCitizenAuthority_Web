@@ -35,6 +35,13 @@ const reviewItems = [
   'Security escalation and continuity plan',
 ];
 
+const assuranceBoundaries = [
+  'Jurisdictional policy remains with the responsible public authority.',
+  'Raw participant records do not need to be placed on public settlement rails.',
+  'High-risk treasury or service actions keep human approval and escalation paths.',
+  'Public rollout follows a bounded pilot, not an unreviewed platform launch.',
+];
+
 export const AssuranceSection = () => {
   const navigate = useNavigate();
 
@@ -119,6 +126,28 @@ export const AssuranceSection = () => {
             );
           })}
         </div>
+
+        <FadeInUp delay={0.3}>
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-[0.72fr_1.28fr] gap-6 border border-white/10 bg-[#020617]/80 p-6 md:p-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-cyan-300 mb-4">Governance posture</p>
+              <h4 className="text-3xl md:text-4xl font-serif font-light text-white leading-tight">
+                Serious infrastructure should state its boundaries.
+              </h4>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {assuranceBoundaries.map((boundary, index) => (
+                <div key={boundary} className="border border-white/10 bg-white/[0.02] p-5">
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="text-[10px] uppercase tracking-[0.28em] text-slate-500">Boundary</span>
+                    <span className="text-xs text-slate-600">0{index + 1}</span>
+                  </div>
+                  <p className="text-sm text-slate-300 leading-relaxed">{boundary}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeInUp>
       </div>
     </section>
   );

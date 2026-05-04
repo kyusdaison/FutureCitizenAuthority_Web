@@ -17,8 +17,8 @@ export const GovernanceSection = () => {
 	         GOV
       </motion.div>
       {/* Vertical Label */}
-      <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] rotate-180 pointer-events-none vertical-text">
-         <h2 className="text-[8rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.018] rotate-180 pointer-events-none vertical-text">
+         <h2 className="text-[7rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
 	           <GlitchText text="04 GOVERNANCE" isActive={true} />
          </h2>
       </div>

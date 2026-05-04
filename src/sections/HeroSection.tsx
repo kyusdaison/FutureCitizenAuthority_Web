@@ -15,6 +15,21 @@ const institutionalSignals = [
   'Pilot readiness',
 ];
 
+const briefingFacts = [
+  {
+    label: 'Audience',
+    value: 'Public agencies, regulated institutions, and infrastructure partners',
+  },
+  {
+    label: 'Primary control',
+    value: 'Verified identity before wallet, treasury, or service execution',
+  },
+  {
+    label: 'Deployment motion',
+    value: 'One bounded pilot, measurable controls, then scale decision',
+  },
+];
+
 export const HeroSection = () => {
   const { scrollYProgress } = useScroll();
   const opacityHeroText = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
@@ -25,14 +40,14 @@ export const HeroSection = () => {
     <section id="hero" className="min-h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden">
       {/* HUD Elements */}
       <div className="absolute top-1/4 left-12 hidden xl:flex flex-col gap-2 text-left opacity-80">
-         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">SYS.COORD <span className="text-slate-600">//</span> 45.92.110</div>
-         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">NET.STATUS <span className="text-slate-600">//</span> OPTIMAL</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">REVIEW.COORD <span className="text-slate-600">//</span> 45.92.110</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">SERVICE.STATUS <span className="text-slate-600">//</span> READY</div>
          <div className="w-32 h-px bg-gradient-to-r from-fc-gold/40 to-transparent mt-2"></div>
       </div>
       
       <div className="absolute bottom-1/3 right-12 hidden xl:flex flex-col gap-2 text-right opacity-80">
-         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"><span className="text-slate-600">//</span> PROTOCOL ZKP-MPC</div>
-	         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-600">//</span> REGION NODE A-7</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"><span className="text-slate-600">//</span> CONTROL ZKP-MPC</div>
+	         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-600">//</span> PILOT REGION READY</div>
          <div className="w-32 h-px bg-gradient-to-l from-fc-gold/40 to-transparent mt-2 ml-auto"></div>
       </div>
       
@@ -45,8 +60,8 @@ export const HeroSection = () => {
       </div>
 
       {/* Vertical Label */}
-      <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.05] rotate-180 pointer-events-none vertical-text">
-         <h2 className="text-[8rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.018] rotate-180 pointer-events-none vertical-text">
+         <h2 className="text-[7rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
            <span>DECLARATION</span>
          </h2>
       </div>
@@ -108,6 +123,14 @@ export const HeroSection = () => {
                 </div>
               ))}
             </div>
+            <div className="mt-5 grid w-full max-w-5xl grid-cols-1 gap-3 lg:grid-cols-3">
+              {briefingFacts.map((fact) => (
+                <div key={fact.label} className="border border-white/10 bg-[#020617]/80 p-4 text-left backdrop-blur-md">
+                  <div className="mb-2 text-[9px] font-mono uppercase tracking-[0.28em] text-fc-gold/80">{fact.label}</div>
+                  <div className="text-xs leading-relaxed text-slate-300">{fact.value}</div>
+                </div>
+              ))}
+            </div>
 	        </motion.div>
 
       </motion.div>
@@ -129,7 +152,7 @@ export const HeroSection = () => {
               <span>// TARGET FINALITY: 0.5 - 2.0 SECONDS</span>
               <span>// CORE CONTROLS: IDENTITY & ZKP-MPC</span>
               <span>// EXECUTION: GOVERNANCE ENCLAVE</span>
-              <span>// CLASSIFICATION: UNRESTRICTED <span className="text-fc-gold opacity-50 ml-2">// NATIVE DENOMINATION: $FCC</span></span>
+              <span>// REVIEW STATUS: PILOT READY <span className="text-fc-gold opacity-50 ml-2">// NATIVE DENOMINATION: $FCC</span></span>
             </div>
           ))}
         </div>
