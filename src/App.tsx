@@ -8,6 +8,7 @@ import { MobileMenu } from './components/MobileMenu';
 import { LiveTelemetryFooter } from './components/LiveTelemetryFooter';
 import { CommandPalette, type Command } from './components/CommandPalette';
 import { ConnectWalletModal } from './components/ConnectWalletModal';
+import { CommunityBreadcrumb } from './components/CommunityBreadcrumb';
 
 import { HeroSection } from './sections/HeroSection';
 import { AudiencePathsSection } from './sections/AudiencePathsSection';
@@ -466,6 +467,7 @@ export default function App() {
                     transition={{ duration: 0.3 }}
                     className="w-full h-full min-h-screen"
                   >
+                     {(['tokenomics', 'staking', 'bridge', 'swap', 'artifacts', 'oracle', 'whisper', 'sentinel'] as View[]).includes(currentView) && <CommunityBreadcrumb />}
                      {currentView === 'ecosystem' && <Ecosystem />}
                      {currentView === 'dashboard' && <Dashboard />}
                        {currentView === 'explorer' && <Explorer />}
