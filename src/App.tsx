@@ -34,8 +34,6 @@ const Identity = React.lazy(() => import('./pages/Identity'));
 const Sentinel = React.lazy(() => import('./pages/Sentinel'));
 const Whisper = React.lazy(() => import('./pages/Whisper'));
 
-import { FCChainLink } from './components/FCChainLink';
-import { AbstractNodeCrest } from './components/AbstractNodeCrest';
 import { FCChainNetworkSeal } from './components/BrandMarks';
 import { useWallet } from './contexts/WalletContext';
 import { useSecurity } from './contexts/SecurityContext';
@@ -287,11 +285,11 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white pb-8">
+    <div className="min-h-screen bg-[#0b1220] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white pb-8">
       <OfficialBackground />
       
       {/* Official State Banner */}
-      <div className="w-full bg-[#020306] border-b border-white/5 text-[9px] uppercase tracking-[0.3em] text-slate-500 py-2 flex justify-center items-center gap-3 relative z-[60]">
+      <div className="w-full bg-[#0a1019] border-b border-white/5 text-[9px] uppercase tracking-[0.3em] text-slate-500 py-2 flex justify-center items-center gap-3 relative z-[60]">
         <svg className="w-3.5 h-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
@@ -322,7 +320,7 @@ export default function App() {
       {/* Global CSS background effects */}
       {currentView !== 'home' && (
         <>
-          <div className="fixed inset-0 pointer-events-none z-[1] mouse-spotlight mix-blend-screen opacity-70" />
+          <div className="fixed inset-0 pointer-events-none z-[1] mouse-spotlight mix-blend-screen opacity-30" />
           <div className="scanline-overlay" />
           <div className="noise-overlay" />
         </>
@@ -333,29 +331,13 @@ export default function App() {
       
       {/* Global Foreground Scanline */}
       {currentView !== 'home' && (
-        <div className="fixed top-0 left-0 w-full h-[15vh] bg-gradient-to-b from-transparent via-white/[0.015] to-transparent z-[100] pointer-events-none animate-[scan_8s_linear_infinite]" />
+        <div className="fixed top-0 left-0 w-full h-[15vh] bg-gradient-to-b from-transparent via-white/[0.008] to-transparent z-[100] pointer-events-none animate-[scan_24s_linear_infinite]" />
       )}
 
       {/* Ambient Volumetric Orbs - Muted for Authority */}
-      <div className="fixed top-[10%] left-[-15%] w-[50vw] h-[50vw] rounded-full bg-cyan-700/[0.02] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
-      <div className="fixed bottom-[-15%] right-[-15%] w-[60vw] h-[60vw] rounded-full bg-slate-500/[0.02] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
+      <div className="fixed top-[10%] left-[-15%] w-[50vw] h-[50vw] rounded-full bg-cyan-700/[0.012] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
+      <div className="fixed bottom-[-15%] right-[-15%] w-[60vw] h-[60vw] rounded-full bg-slate-500/[0.012] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
 
-      {/* Avant-Garde Geometric Primitives */}
-      {currentView !== 'home' && (
-        <>
-          <div className="fixed top-[30%] left-[5%] w-32 h-32 animate-[spin_40s_linear_infinite] pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.03] will-change-transform">
-             <FCChainLink />
-          </div>
-          <div className="fixed top-[45%] right-[8%] w-32 h-32 animate-[spin_30s_linear_infinite_reverse] pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.04] will-change-transform">
-             <AbstractNodeCrest />
-          </div>
-          <div className="fixed bottom-[20%] left-[10%] w-40 h-40 animate-pulse pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.02] -rotate-12 will-change-transform">
-             <FCChainLink />
-          </div>
-        </>
-      )}
-
-      {currentView !== 'home' && <div className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 hidden md:block mouse-spotlight" />}
 
       {/* The Immersive 8K Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden scale-105">
@@ -366,7 +348,7 @@ export default function App() {
           className="w-full h-full object-cover opacity-10 mix-blend-screen will-change-transform"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/80 via-[#020617]/90 to-[#020617]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1220]/80 via-[#0b1220]/90 to-[#0b1220]" />
       </div>
 
       {/* Top Navigation Protocol */}

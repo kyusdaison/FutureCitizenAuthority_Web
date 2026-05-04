@@ -21,7 +21,7 @@ section[id] {
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617; 
+  background: #0b1220;
   border-left: 1px solid rgba(255,255,255,0.02);
 }
 
@@ -43,7 +43,7 @@ section[id] {
   
   --color-fc-gold: #b38b39;
 
-  --color-bg-base: #020617; /* Deep Slate 950 obsidian */
+  --color-bg-base: #0b1220; /* Calm-dark: lifted slate-blue, less harsh than near-black */
   --color-bg-sidebar: #0f172a; /* Slate 900 */
 
   --color-cyan-neon: #06b6d4; /* Official Cyan */
@@ -153,7 +153,7 @@ section[id] {
 .mouse-spotlight {
   background: radial-gradient(
     600px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh),
-    rgba(197, 154, 69, 0.05),
+    rgba(197, 154, 69, 0.025),
     transparent 40%
   );
 }
@@ -242,7 +242,7 @@ section[id] {
   width: 200%;
   height: 200%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  opacity: 0.018;
   pointer-events: none;
   z-index: 9998;
   contain: strict;
