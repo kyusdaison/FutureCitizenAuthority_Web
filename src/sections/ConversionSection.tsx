@@ -11,6 +11,7 @@ const deploymentPaths = [
     title: 'Digital public services',
     summary: 'Issue verifiable identity, route benefits, and supervise public treasury flows from one auditable authority layer.',
     proof: 'Resident credentials, benefit disbursement, compliance dashboards',
+    checkpoint: 'Name the agency owner, eligible population, data boundary, and first service outcome.',
     action: 'Review Identity',
     route: '/identity',
     accent: 'text-fc-gold',
@@ -22,6 +23,7 @@ const deploymentPaths = [
     title: 'Treasury and settlement',
     summary: 'Connect verified operators to seedless wallets, auto-gas execution, programmable payouts, and policy-bound approvals.',
     proof: 'MPC custody, merchant settlement, treasury controls',
+    checkpoint: 'Define approval roles, recovery paths, reporting obligations, and transaction limits.',
     action: 'Open Dashboard',
     route: '/dashboard',
     accent: 'text-cyan-300',
@@ -33,6 +35,7 @@ const deploymentPaths = [
     title: 'Identity-aware applications',
     summary: 'Build services that consume identity proofs, wallet permissions, governance events, and settlement rails without rebuilding trust infrastructure.',
     proof: 'SDK access, policy data hooks, compliance gates',
+    checkpoint: 'Confirm what trust signal is consumed, what data is not stored, and how policy changes are handled.',
     action: 'Developer Portal',
     route: '/developer',
     accent: 'text-emerald-300',
@@ -62,7 +65,7 @@ const proofSignals = [
   { value: '1', label: 'lead use case' },
   { value: '4', label: 'control surfaces' },
   { value: '90d', label: 'pilot window' },
-  { value: 'ZK/MPC', label: 'privacy + custody' },
+  { value: 'ZK / MPC', label: 'privacy and custody controls' },
 ];
 
 const pilotCadence = [
@@ -86,7 +89,7 @@ export const ConversionSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  <CipherHeading text="06 // Deployment Paths" />
+                  <CipherHeading text="07 // Deployment Paths" />
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-6">
@@ -94,7 +97,7 @@ export const ConversionSection = () => {
                 <span className="italic text-fc-gold font-serif"><CipherHeading text="Entry Point." /></span>
               </h3>
               <p className="text-base md:text-lg text-slate-400 leading-[1.8] max-w-2xl">
-                Future Citizen becomes easier to understand when every conversation starts from the buyer's first useful deployment. Identity is the base, but the business case changes by audience.
+                Future Citizen becomes easier to understand when every conversation starts from the buyer's first useful deployment. Identity is the base, but the review path should begin with the service outcome, responsible owner, and control boundary.
               </p>
             </div>
 
@@ -133,6 +136,10 @@ export const ConversionSection = () => {
                     <div className="mt-auto border-t border-white/10 pt-6">
                       <p className="text-xs uppercase text-slate-500 mb-3">First proof of value</p>
                       <p className="text-sm text-white/85 leading-relaxed mb-8">{path.proof}</p>
+                      <div className="mb-8 border border-white/10 bg-white/[0.025] p-4">
+                        <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-slate-500">Pilot checkpoint</p>
+                        <p className="text-sm leading-relaxed text-slate-300">{path.checkpoint}</p>
+                      </div>
                       <button
                         type="button"
                         onClick={() => navigate(path.route)}
@@ -183,7 +190,7 @@ export const ConversionSection = () => {
                 <p className="text-xs uppercase text-cyan-300 mb-3">Signals to inspect</p>
                 <h4 className="text-2xl md:text-3xl font-serif font-light text-white mb-5">Make the promise checkable.</h4>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  A professional walkthrough should end with a bounded next step. The cleanest path is a short pilot with visible controls, clear owners, and a documented decision point.
+                  A professional walkthrough should end with a bounded next step. The cleanest path is a short pilot with visible controls, clear owners, documented evidence, and a decision point that can be defended internally.
                 </p>
               </div>
 

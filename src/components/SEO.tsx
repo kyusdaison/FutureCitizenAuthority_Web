@@ -10,7 +10,7 @@ interface SEOProps {
 export const SEO = ({
   title = 'Future Citizen Authority - Identity Infrastructure for Digital Governance',
   description = 'Identity-first infrastructure for verifiable citizens, seedless wallets, programmable treasury flows, and auditable digital governance.',
-  image = '/hero-logo.webp',
+  image = '/brand/fca-authority-crest.png',
   url = 'https://futurecitizen.io',
 }: SEOProps) => {
   // 使用React Helmet需要在main.tsx中包装HelmetProvider

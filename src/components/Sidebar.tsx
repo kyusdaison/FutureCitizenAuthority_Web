@@ -29,7 +29,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
       <aside className={`fixed left-0 top-0 bottom-0 w-64 bg-[#020617]/95 backdrop-blur-md border-r border-slate-800 flex flex-col z-[100] transition-transform duration-300 ease-in-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
       <div className="p-6 flex items-center space-x-3 border-b border-slate-800 group pt-8 cursor-pointer" onClick={() => onNavigate('home')}>
         <div className="w-10 h-10 flex items-center justify-center p-1 bg-slate-900 border border-slate-700">
-          <img src="/hero-logo.webp" alt="Logo" className="w-full h-full object-contain filter brightness-150" />
+          <img src="/brand/fca-authority-crest.png" alt="Logo" className="w-full h-full object-contain filter brightness-150" />
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-sans font-black leading-tight tracking-[0.2em] text-slate-100 uppercase">FUTURE CITIZEN</span>
@@ -83,19 +83,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
               </button>
             </li>
 
-            <li>
-              <button
-                onClick={() => onNavigate('sentinel')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'sentinel' ? 'text-red-500 bg-slate-800/50 border-l-2 border-red-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                 </svg>
-	                 <span className="text-xs font-bold tracking-widest uppercase">Security Operations</span>
-              </button>
-            </li>
-
-            <li>
+<li>
               <button
                 onClick={() => onNavigate('tokenomics')}
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'tokenomics' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
@@ -131,43 +119,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
               </button>
             </li>
 
-            <li>
-              <button
-                onClick={() => onNavigate('whisper')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'whisper' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-	                <span className="text-xs font-bold tracking-widest uppercase">Secure Messaging</span>
-              </button>
-            </li>
-
-            <li>
-              <button
-                onClick={() => onNavigate('artifacts')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'artifacts' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span className="text-xs font-bold tracking-widest uppercase">Assets</span>
-              </button>
-            </li>
-            
-            <li>
-              <button
-                onClick={() => onNavigate('oracle')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'oracle' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM12 16v-4m0-4h.01" />
-                 </svg>
-	                 <span className="text-xs font-bold tracking-widest uppercase">Policy Intelligence</span>
-              </button>
-            </li>
-
-            <li>
+<li>
               <button 
                 onClick={() => onNavigate('staking')} 
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'staking' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}

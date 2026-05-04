@@ -1,0 +1,11 @@
+# Future Citizen Authority — institutional site
+User-agent: *
+Allow: /
+
+# Demo / experimental surfaces — not yet ready for indexing
+Disallow: /sentinel
+Disallow: /whisper
+Disallow: /artifacts
+Disallow: /oracle
+
+Sitemap: https://fca.ms/sitemap.xml

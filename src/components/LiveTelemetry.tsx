@@ -2,9 +2,9 @@ import { useEffect, useState, useCallback } from 'react';
 
 const INITIAL_LOGS = [
   "fca-review:~$ open settlement-readiness-brief",
-  "[OK] HTTS settlement layer available",
-  "[OK] Regional validator groups online",
-  "[OK] Sample ZK identity proof verified: 0x8f9c...a1"
+  "[FILE] custody-boundary.md available",
+  "[FILE] pilot-operating-plan.md available",
+  "[FILE] sample-zk-proof-flow.md available"
 ];
 
 export const LiveTelemetry: React.FC = () => {
@@ -12,9 +12,8 @@ export const LiveTelemetry: React.FC = () => {
 
   const addLog = useCallback(() => {
     const hash = Math.random().toString(16).substring(2, 10);
-    const region = Math.floor(Math.random() * 64) + 1;
-    const ms = (Math.random() * 0.1 + 0.3).toFixed(3);
-    setLogs(prev => [...prev.slice(-5), `[audit-sync] region-${region} verified event 0x${hash} in ${ms}s`]);
+    const checkpoint = Math.floor(Math.random() * 6) + 1;
+    setLogs(prev => [...prev.slice(-5), `[review-sample] control-checkpoint-${checkpoint} linked to audit event 0x${hash}`]);
   }, []);
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export const LiveTelemetry: React.FC = () => {
           </div>
         ))}
         <div className="text-cyan-300 mt-2 flex items-center gap-2">
-          &gt; REVIEW TELEMETRY ACTIVE <span className="w-2 h-3 bg-cyan-300 animate-pulse" />
+          &gt; REVIEW SAMPLE MODE <span className="w-2 h-3 bg-cyan-300/70" />
         </div>
       </div>
     </div>

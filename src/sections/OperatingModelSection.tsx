@@ -8,47 +8,51 @@ const operatingSteps = [
     icon: BadgeCheck,
     title: 'Verify the participant',
     copy: 'Issue a reusable identity credential that can gate services, wallets, permissions, and governance participation.',
+    plain: 'This answers: who is allowed to act?',
     proof: 'Credential model',
   },
   {
     icon: WalletCards,
     title: 'Activate the wallet rail',
     copy: 'Connect verified users to seedless MPC wallets, recovery boundaries, stablecoin routing, and settlement status.',
+    plain: 'This answers: how do they transact safely?',
     proof: 'Custody boundary',
   },
   {
     icon: ShieldCheck,
     title: 'Apply governance controls',
     copy: 'Route approvals through committee ownership, policy gates, treasury rules, and inspectable audit events.',
+    plain: 'This answers: who approves sensitive actions?',
     proof: 'Approval trail',
   },
   {
     icon: Landmark,
     title: 'Deploy one service path',
     copy: 'Start with a controlled public service, treasury, or builder workflow before scaling into the full operating stack.',
+    plain: 'This answers: what proves value first?',
     proof: 'Pilot scope',
   },
 ];
 
 const reviewQuestions = [
-  'Who is being verified?',
-  'What data stays private?',
-  'Who can approve actions?',
-  'Which pilot proves value first?',
+  'Who is being verified, and by which authority?',
+  'What data stays private or off public rails?',
+  'Who can approve, recover, or revoke actions?',
+  'Which pilot proves value before expansion?',
 ];
 
 const decisionPath = [
   {
     phase: 'Briefing',
-    outcome: 'Agree the first citizen, treasury, or institutional workflow worth testing.',
+    outcome: 'Agree the first citizen, treasury, or institutional workflow worth testing and name the responsible owner.',
   },
   {
     phase: 'Control review',
-    outcome: 'Inspect identity proofs, wallet boundaries, approval ownership, and reporting needs.',
+    outcome: 'Inspect identity proofs, wallet boundaries, approval ownership, reporting needs, and privacy exposure.',
   },
   {
     phase: 'Pilot authorization',
-    outcome: 'Define operators, success metrics, escalation paths, and data handling rules.',
+    outcome: 'Define operators, success metrics, escalation paths, data handling rules, and decision authority.',
   },
   {
     phase: 'Scale decision',
@@ -76,7 +80,7 @@ export const OperatingModelSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  <CipherHeading text="01 // Operating Model" />
+                  <CipherHeading text="02 // Operating Model" />
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-8">
@@ -84,7 +88,7 @@ export const OperatingModelSection = () => {
                 <span className="italic text-fc-gold font-serif"><CipherHeading text="Logic." /></span>
               </h3>
               <p className="text-base md:text-lg text-slate-400 leading-[1.85] max-w-xl mb-8">
-                Future Citizen is easiest to evaluate as a control plane: identity proves who can act, wallets let them transact, governance defines what is allowed, and deployment turns that into one measurable service path.
+                Future Citizen is easiest to evaluate as a control plane: identity proves who can act, wallets let them transact, governance defines what is allowed, and deployment turns that into one measurable service path. The reviewer should never have to guess where authority, data, or custody responsibility sits.
               </p>
 
               <div className="border border-white/10 bg-white/[0.02] p-5">
@@ -118,7 +122,10 @@ export const OperatingModelSection = () => {
                           <span className="text-xs text-slate-600">0{index + 1}</span>
                         </div>
                         <h4 className="text-2xl font-serif font-light text-white mb-4">{step.title}</h4>
-                        <p className="text-sm text-slate-400 leading-[1.8] mb-8">{step.copy}</p>
+                        <p className="text-sm text-slate-400 leading-[1.8] mb-5">{step.copy}</p>
+                        <div className="mb-8 border border-white/10 bg-white/[0.025] px-4 py-3">
+                          <p className="text-xs leading-relaxed text-slate-300">{step.plain}</p>
+                        </div>
                         <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-5">
                           <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Proof</span>
                           <span className="inline-flex items-center gap-2 text-sm text-cyan-200">

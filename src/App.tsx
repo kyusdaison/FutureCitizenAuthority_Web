@@ -1,27 +1,22 @@
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from 'framer-motion';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { OfficialBackground } from './components/OfficialBackground';
 import { BootSequence } from './components/BootSequence';
-import { TacticalCursor } from './components/TacticalCursor';
 import { NoiseOverlay } from './components/NoiseOverlay';
-import { NarrativeTracker } from './components/NarrativeTracker';
 import { MobileMenu } from './components/MobileMenu';
 import { LiveTelemetryFooter } from './components/LiveTelemetryFooter';
 import { CommandPalette, type Command } from './components/CommandPalette';
 import { ConnectWalletModal } from './components/ConnectWalletModal';
 
 import { HeroSection } from './sections/HeroSection';
+import { AudiencePathsSection } from './sections/AudiencePathsSection';
 import { OperatingModelSection } from './sections/OperatingModelSection';
 import { ArchitectureSection } from './sections/ArchitectureSection';
 import { IdentitySection } from './sections/IdentitySection';
-import { MatrixSection } from './sections/MatrixSection';
-import { TokenomicsSection } from './sections/TokenomicsSection';
 import { GovernanceSection } from './sections/GovernanceSection';
 import { AssuranceSection } from './sections/AssuranceSection';
 import { ConversionSection } from './sections/ConversionSection';
-import { CollectiveSection } from './sections/CollectiveSection';
-import { RoadmapSection } from './sections/RoadmapSection';
 import { FooterSection } from './sections/FooterSection';
 import { Sidebar } from './components/Sidebar';
 import React, { Suspense } from 'react';
@@ -43,10 +38,10 @@ const Whisper = React.lazy(() => import('./pages/Whisper'));
 
 import { FCChainLink } from './components/FCChainLink';
 import { AbstractNodeCrest } from './components/AbstractNodeCrest';
+import { FCChainNetworkSeal } from './components/BrandMarks';
 import { useWallet } from './contexts/WalletContext';
 import { useSecurity } from './contexts/SecurityContext';
 const VanguardOrb = React.lazy(() => import('./components/VanguardOrb').then(module => ({ default: module.VanguardOrb })));
-import { MarketTicker } from './components/MarketTicker';
 import { useCommandPalette } from './hooks/useCommandPalette';
 import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
@@ -54,9 +49,9 @@ import { useSoundEffects } from './hooks/useSoundEffects';
 type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper';
 
 const homeNavItems = [
+  { label: 'Audiences', target: 'audiences' },
   { label: 'Model', target: 'model' },
   { label: 'Identity', target: 'identity' },
-  { label: 'Governance', target: 'governance' },
   { label: 'Assurance', target: 'assurance' },
   { label: 'Deployment', target: 'deployment' },
 ];
@@ -181,6 +176,12 @@ export default function App() {
       action: () => { navigateToHomeSection('model'); closeCommandPalette(); }
     },
     {
+      id: 'nav-audiences',
+      title: 'Review Audience Paths',
+      subtitle: 'Government, institution, and builder entry points',
+      action: () => { navigateToHomeSection('audiences'); closeCommandPalette(); }
+    },
+    {
       id: 'nav-deployment',
       title: 'Review Deployment Paths',
       subtitle: 'Government, institution, and builder entry points',
@@ -287,7 +288,8 @@ export default function App() {
 
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white cursor-none md:cursor-none pb-8">
+    <MotionConfig reducedMotion="user">
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white pb-8">
       <OfficialBackground />
       
       {/* Official State Banner */}
@@ -300,12 +302,10 @@ export default function App() {
         <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Digital Governance Review Channel</span>
       </div>
 
-      {!isLowPowerMode && <TacticalCursor />}
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
       {!isLowPowerMode && <NoiseOverlay />}
       <BootSequence />
-      {currentView === 'home' && <NarrativeTracker />}
-      
+
       {isCommandPaletteOpen && (
         <CommandPalette 
           isOpen={isCommandPaletteOpen} 
@@ -365,7 +365,7 @@ export default function App() {
       {currentView === 'home' && (
       <nav className="fixed top-9 w-full z-50 py-4 px-8 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
         <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <img src="/hero-logo.webp" alt="Future Citizen Authority" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
+          <img src="/brand/fca-authority-crest.png" alt="Future Citizen Authority" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
           <div className="flex flex-col">
             <span className="text-sm font-bold tracking-[0.3em] uppercase text-white">Future Citizen Authority</span>
             <span className="text-[9px] tracking-[0.2em] font-mono text-slate-500">Digital Governance Infrastructure</span>
@@ -402,18 +402,26 @@ export default function App() {
               <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Deployment Paths</span>
             </div>
           </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('matrix')}
+            className="hidden 2xl:flex items-center gap-2 border border-white/10 bg-[#020306]/80 px-3 py-2 transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/5"
+          >
+            <FCChainNetworkSeal className="h-5 w-5" />
+            <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-slate-400">Powered by FC Chain</span>
+          </button>
           {connectedIdentity ? (
             <button
               type="button"
-              onClick={() => navigate('identity')}
+              onClick={() => navigate('/identity')}
               className="hidden md:flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full transition-colors hover:bg-green-500/15"
             >
-              <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
               <span className="text-[10px] font-mono text-cyan-400 font-bold tracking-widest">{connectedIdentity}</span>
             </button>
           ) : (
-            <button onClick={() => setIsWalletModalOpen(true)} className="hidden md:block btn-vercel-primary px-8 py-3 text-[10px] font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-              Connect Identity
+            <button onClick={() => navigate('/identity')} className="hidden md:block btn-vercel-primary px-8 py-3 text-[10px] font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+              Review Identity
             </button>
           )}
         </div>
@@ -430,16 +438,13 @@ export default function App() {
       {currentView === 'home' ? (
       <motion.main style={{ y: yContent }} className="relative z-10 w-full will-change-transform">
         <HeroSection />
+        <AudiencePathsSection />
         <OperatingModelSection />
         <IdentitySection />
         <ArchitectureSection />
         <GovernanceSection />
         <AssuranceSection />
         <ConversionSection />
-        <MatrixSection />
-        <TokenomicsSection />
-        <CollectiveSection />
-        <RoadmapSection />
         <FooterSection />
       </motion.main>
       ) : (
@@ -448,7 +453,7 @@ export default function App() {
             {/* Mobile Header for dashboard/inner pages */}
             <div className="lg:hidden fixed top-0 left-0 w-full h-16 bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 z-50 flex items-center justify-between px-6">
               <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateFn('/')}>
-                <img src="/hero-logo.webp" alt="Logo" className="w-8 h-8 object-contain filter brightness-150" />
+                <img src="/brand/fca-authority-crest.png" alt="Logo" className="w-8 h-8 object-contain filter brightness-150" />
                 <span className="text-xs font-bold font-mono tracking-widest text-slate-300 uppercase">F.C.A</span>
               </div>
               <button onClick={() => setIsMobileSidebarOpen(true)} className="text-white p-2" aria-label="Toggle Mobile Menu" title="Menu">
@@ -493,11 +498,11 @@ export default function App() {
         </div>
       )}
 
-      <MarketTicker />
       <Suspense fallback={null}>
         <VanguardOrb />
       </Suspense>
       <LiveTelemetryFooter />
     </div>
+    </MotionConfig>
   );
 }

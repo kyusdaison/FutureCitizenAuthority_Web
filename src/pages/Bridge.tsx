@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../contexts/ToastContext';
 import { useWallet } from '../contexts/WalletContext';
+import { FCChainNetworkSeal } from '../components/BrandMarks';
 
 const CHAINS = [
   { id: 'eth', name: 'Ethereum', icon: 'Ξ', color: 'text-blue-400', bg: 'bg-blue-500/20' },
@@ -10,7 +11,7 @@ const CHAINS = [
   { id: 'bsc', name: 'Binance', icon: 'B', color: 'text-yellow-600', bg: 'bg-yellow-600/20' },
 ];
 
-const DESTINATION = { id: 'fcc', name: 'FC Chain', icon: 'FC', color: 'text-cyan-500', bg: 'bg-cyan-500/10' };
+const DESTINATION = { id: 'fcc', name: 'FC Chain', color: 'text-cyan-500', bg: 'bg-cyan-500/10' };
 
 export default function Bridge() {
   const { toast } = useToast();
@@ -192,12 +193,12 @@ export default function Bridge() {
                   <div className="w-full md:w-[45%]">
                     <label className="block text-xs font-mono text-zinc-500 mb-2 font-bold uppercase">To Network</label>
                     <div className="agency-panel p-3 border border-cyan-500/30 bg-black/80 flex items-center gap-3">
-                      <div className={`w-10 h-10  ${DESTINATION.bg} flex items-center justify-center border border-cyan-500/50`}>
-                        <span className="text-xl font-bold font-mono text-cyan-500">{DESTINATION.icon}</span>
+                      <div className={`w-11 h-11 ${DESTINATION.bg} flex items-center justify-center border border-cyan-500/50 p-1`}>
+                        <FCChainNetworkSeal className="h-full w-full" />
                       </div>
                       <div>
                         <div className="text-white font-mono font-bold">{DESTINATION.name}</div>
-                        <div className="text-[10px] text-cyan-500 font-mono tracking-widest font-bold">VANGUARD L1</div>
+                        <div className="text-[10px] text-cyan-500 font-mono tracking-widest font-bold">NETWORK SEAL // L1</div>
                       </div>
                     </div>
                   </div>

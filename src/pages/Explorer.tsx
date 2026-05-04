@@ -4,6 +4,7 @@ import { CosmicBackground } from '../components/CosmicBackground';
 import { DecipherText } from '../components/DecipherText';
 import { HologramModal } from '../components/HologramModal';
 import { NetworkGraph } from '../components/NetworkGraph';
+import { FCChainNetworkSeal } from '../components/BrandMarks';
 const GlobalNodeMap = lazy(() => import('../components/GlobalNodeMap').then(module => ({ default: module.GlobalNodeMap })));
 import type { 
   Block, 
@@ -58,6 +59,15 @@ const Explorer = () => {
       <div className="pt-8 pb-12">
         <div className="max-w-3xl mx-auto text-center relative group">
           <div className="absolute inset-0 bg-cyan-500/5 blur-3xl scale-110 opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+          <div className="mb-5 flex justify-center">
+            <div className="flex items-center gap-3 border border-white/10 bg-[#020617]/85 px-4 py-3 backdrop-blur-xl">
+              <FCChainNetworkSeal className="h-10 w-10" />
+              <div className="text-left">
+                <div className="text-[10px] font-mono uppercase tracking-[0.24em] text-fc-gold/80">FC Chain</div>
+                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-500">Network explorer</div>
+              </div>
+            </div>
+          </div>
           <h1 className="text-4xl md:text-5xl text-vanguard mb-8 text-white relative z-10 uppercase tracking-widest font-bold">
             Network <span className="text-cyan-400 tracking-tight">Telemetry</span>
           </h1>

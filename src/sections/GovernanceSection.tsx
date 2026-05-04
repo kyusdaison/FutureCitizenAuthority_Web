@@ -19,7 +19,7 @@ export const GovernanceSection = () => {
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.018] rotate-180 pointer-events-none vertical-text">
          <h2 className="text-[7rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
-	           <GlitchText text="04 GOVERNANCE" isActive={true} />
+	           <GlitchText text="05 GOVERNANCE" isActive={true} />
          </h2>
       </div>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-center relative z-10">
@@ -34,7 +34,7 @@ export const GovernanceSection = () => {
              <div className="flex items-center gap-4 mb-6">
                <div className="w-8 h-px bg-white/30"></div>
               <h2 className="text-[10px] font-bold tracking-[0.5em] text-white/50 uppercase">
-	                <CipherHeading text="04 // Governance Access" />
+	                <CipherHeading text="05 // Governance Access" />
               </h2>
             </div>
              <h3 className="text-5xl md:text-7xl font-serif font-light tracking-tight drop-shadow-lg mb-8 text-white">

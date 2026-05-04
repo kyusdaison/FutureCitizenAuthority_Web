@@ -3,6 +3,7 @@ import { TiltCard } from '../components/TiltCard';
 import { FadeInUp } from '../components/FadeInUp';
 import { CipherHeading } from '../components/CipherHeading';
 import { GlitchText } from '../components/GlitchText';
+import { FCCTokenMark } from '../components/BrandMarks';
 
 export const TokenomicsSection = () => {
   const { scrollYProgress } = useScroll();
@@ -22,7 +23,7 @@ export const TokenomicsSection = () => {
       </motion.div>
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text">
          <h2 className="text-[8rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
-	           <GlitchText text="08 ECONOMICS" isActive={true} />
+	           <GlitchText text="09 ECONOMICS" isActive={true} />
          </h2>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
@@ -30,7 +31,7 @@ export const TokenomicsSection = () => {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-12 h-px bg-fc-gold/50"></div>
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-fc-gold uppercase">
-              <CipherHeading text="08 // Network Economics" />
+              <CipherHeading text="09 // Network Economics" />
             </h2>
             <div className="w-12 h-px bg-fc-gold/50"></div>
           </div>
@@ -49,13 +50,17 @@ export const TokenomicsSection = () => {
               <TiltCard intensity={10} className="h-full">
                 <div className="w-full h-[300px] md:h-[400px] mb-6 relative overflow-hidden flex items-center justify-center border border-white/10 bg-[#040508]">
                    <div className="absolute inset-0 bg-fc-gold/10 blur-[80px] group-hover:bg-fc-gold/20 transition-colors duration-1000"></div>
-                   <motion.img 
+                   <motion.div
                      animate={{ y: [0, -15, 0] }} 
                      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }} 
-                     src="/fcc_token_asset.webp" 
-                     alt="FCC Token" 
-                     className="w-[85%] h-auto object-contain relative z-10 drop-shadow-[0_0_50px_rgba(197,154,69,0.3)] group-hover:scale-110 transition-transform duration-1000" 
-                   />
+                     className="relative z-10 flex h-44 w-44 items-center justify-center rounded-[2rem] border border-fc-gold/20 bg-[#07111f]/90 p-5 shadow-[0_0_50px_rgba(197,154,69,0.22)] transition-transform duration-1000 group-hover:scale-110 md:h-56 md:w-56"
+                   >
+                     <FCCTokenMark className="h-full w-full" />
+                   </motion.div>
+                   <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between border-t border-white/10 pt-4">
+                     <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500">FCC token mark</span>
+                     <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-fc-gold/80">Native denomination</span>
+                   </div>
                 </div>
               </TiltCard>
               <div className="agency-panel p-10 pr-12 flex-1 flex flex-col justify-center border-l-4 border-fc-gold relative z-20 md:-mt-16 mx-4 md:mx-6 bg-[#020306]/95 backdrop-blur-2xl">

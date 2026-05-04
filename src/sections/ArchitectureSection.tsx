@@ -22,18 +22,18 @@ export const ArchitectureSection = () => {
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.018] rotate-180 pointer-events-none vertical-text z-0">
          <h2 className="text-[7rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>03 WALLET RAIL</span>
+           <span>04 WALLET RAIL</span>
          </h2>
       </div>
 
-      {/* Telemetry Bar */}
+      {/* Review indicators */}
       <div className="w-full max-w-7xl mx-auto mb-16 border-y border-slate-800 bg-slate-900/40 backdrop-blur-md px-6 py-2 flex items-center justify-between relative z-20">
          <div className="flex gap-4 md:gap-8 overflow-hidden text-[9px] font-mono tracking-widest text-slate-300 uppercase whitespace-nowrap">
-	            <span className="flex items-center gap-2"><div className="w-2 h-2 bg-green-500/80 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></div> [REVIEW.ENV.LIVE]</span>
-            <span className="opacity-80">TPS: 142,881 <span className="text-cyan-500 animate-[pulse_1s_infinite]">↑</span></span>
-            <span className="opacity-80">LATENCY: 398ms</span>
-	            <span className="opacity-80 hidden md:block">VALIDATOR GROUPS: 2048 / ONLINE</span>
-	            <span className="opacity-80 hidden lg:block">AUDIT SEQUENCE: 489211</span>
+	            <span className="flex items-center gap-2"><div className="w-2 h-2 bg-green-500/70 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.45)]"></div> [REVIEW ENVIRONMENT]</span>
+            <span className="opacity-80">SETTLEMENT TARGET: SUB-SECOND</span>
+            <span className="opacity-80">CONTROL MODEL: IDENTITY-GATED</span>
+	            <span className="opacity-80 hidden md:block">VALIDATOR LAYER: REVIEWABLE</span>
+	            <span className="opacity-80 hidden lg:block">AUDIT SURFACE: EVENT-BASED</span>
          </div>
       </div>
 
@@ -47,7 +47,7 @@ export const ArchitectureSection = () => {
             <FadeInUp>
               <div className="flex items-center gap-4 mb-8">
                 <h2 className="text-[10px] font-bold tracking-[0.5em] text-cyan-600 uppercase">
-                  <CipherHeading text="03 // Wallet & Settlement Rail" />
+                  <CipherHeading text="04 // Wallet & Settlement Rail" />
                 </h2>
                 <div className="w-24 h-px bg-slate-700"></div>
               </div>
@@ -63,7 +63,7 @@ export const ArchitectureSection = () => {
             <FadeInUp delay={0.2}>
               <div className="absolute top-0 left-[-1px] w-[2px] h-12 bg-fc-gold"></div>
               <p className="text-[11px] md:text-[13px] font-mono tracking-[0.1em] text-slate-400 uppercase leading-[2.5] mb-10">
-                Verified identity is only useful when it can instantly open a working wallet. The <strong className="text-white font-bold">HTTS settlement rail</strong> provisions seedless access, sub-second execution, and auto-gas treasury logic so institutions and citizens can move from verification into real payments without operational friction.
+                Verified identity is only useful when it can open a working wallet and a controlled payment path. The <strong className="text-white font-bold">HTTS settlement rail</strong> is presented here as the execution layer for seedless access, sub-second settlement targets, and auto-gas treasury logic. In review language, it connects verified users to payments without making operators manage token mechanics.
               </p>
             </FadeInUp>
             
@@ -83,8 +83,8 @@ export const ArchitectureSection = () => {
               className="w-full h-full group-hover:opacity-100 transition-all duration-1000"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent pointer-events-none"></div>
-            <div className="absolute top-6 left-6 flex items-center gap-4 z-10 pointer-events-none agency-panel px-4 py-2">
-              <div className="w-2 h-2 bg-red-500 animate-pulse shadow-[0_0_10px_#ef4444]"></div>
+              <div className="absolute top-6 left-6 flex items-center gap-4 z-10 pointer-events-none agency-panel px-4 py-2">
+              <div className="w-2 h-2 bg-fc-gold shadow-[0_0_10px_rgba(212,175,55,0.35)]"></div>
               <span className="text-[10px] font-bold text-slate-300 tracking-[0.4em] uppercase">Executive Briefing // Wallet & Settlement</span>
             </div>
           </div>

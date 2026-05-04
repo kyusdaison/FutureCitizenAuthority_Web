@@ -113,15 +113,14 @@ export const VanguardOrb = () => {
     if (recentMegaTx && recentMegaTx !== lastMegaTx.current) {
       lastMegaTx.current = recentMegaTx;
       const msg = `Market telemetry update: ${recentMegaTx}. Updating the monitoring view for review...`;
-      
-      const vanguardMsg: Message = { id: Date.now().toString(), role: 'vanguard', content: msg };
-      setMessages(prev => [...prev, vanguardMsg]);
-      
-      if (!isOpen) {
-        setIsOpen(true);
+
+      // Keep live telemetry quiet unless the evaluator has intentionally opened the assistant.
+      if (isOpen) {
+        const vanguardMsg: Message = { id: Date.now().toString(), role: 'vanguard', content: msg };
+        setMessages(prev => [...prev, vanguardMsg]);
+        playTypewriter();
+        speak(msg);
       }
-      playTypewriter();
-      speak(msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recentMegaTx]);
@@ -184,14 +183,14 @@ export const VanguardOrb = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+    <div className="fixed bottom-12 right-5 z-40 flex flex-col items-end pointer-events-none">
       <AnimatePresence>
         {isOpen && (
           <motion.div 
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="mb-4 w-80 pointer-events-auto origin-bottom-right"
+            className="mb-3 w-72 pointer-events-auto origin-bottom-right md:w-80"
           >
             <div className="agency-panel border border-vanguard/30 bg-black/80 backdrop-blur-xl p-4 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
                <div className="flex justify-between items-center mb-3 pb-2 border-b border-white/10">
@@ -255,13 +254,13 @@ export const VanguardOrb = () => {
         )}
       </AnimatePresence>
 
-      <div 
-        className="w-20 h-20 md:w-24 md:h-24 cursor-pointer pointer-events-auto relative group"
+      <div
+        className="w-12 h-12 md:w-14 md:h-14 cursor-pointer pointer-events-auto relative group"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setIsHovered(false)}
         onClick={handleClick}
       >
-        <div className={`absolute inset-0 rounded-full bg-vanguard/20 blur-xl transition-opacity duration-500 max-w-[500px] overflow-hidden ${isHovered ? 'opacity-100 scale-110' : 'opacity-40 scale-100'}`}></div>
+        <div className={`absolute inset-0 rounded-full bg-vanguard/15 blur-xl transition-opacity duration-500 max-w-[500px] overflow-hidden ${isHovered ? 'opacity-80 scale-110' : 'opacity-25 scale-100'}`}></div>
         {hasInteracted ? (
           <Canvas camera={{ position: [0, 0, 3], fov: 45 }} className="!w-full !h-full max-w-[500px] overflow-hidden">
             <ambientLight intensity={0.5} />

@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { TiltCard } from '../components/TiltCard';
 import { FadeInUp } from '../components/FadeInUp';
 import { CipherHeading } from '../components/CipherHeading';
+import { FCChainNetworkSeal } from '../components/BrandMarks';
 
 export const MatrixSection = () => {
   const { scrollYProgress } = useScroll();
@@ -22,7 +23,7 @@ export const MatrixSection = () => {
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.018] rotate-180 pointer-events-none vertical-text">
          <h2 className="text-[5.5rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>07 STACK</span>
+           <span>08 STACK</span>
          </h2>
       </div>
       <div className="max-w-5xl mx-auto relative z-10">
@@ -33,7 +34,7 @@ export const MatrixSection = () => {
         <FadeInUp>
           <div className="flex items-center gap-4 mb-8">
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-cyan-600 uppercase">
-              <CipherHeading text="07 // Identity To State Stack" />
+              <CipherHeading text="08 // Identity To State Stack" />
             </h2>
             <div className="w-24 h-px bg-slate-700"></div>
           </div>
@@ -81,7 +82,10 @@ export const MatrixSection = () => {
                 {/* Sub-surface Scan Sweep */}
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/[0.04] via-fc-gold/[0.015] to-transparent opacity-0 group-hover/inner:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
-                <div className="text-2xl md:text-5xl font-serif font-light text-slate-700 group-hover/inner:text-white transition-colors duration-500 w-24 relative z-10">{layer.level}</div>
+                <div className="relative z-10 flex w-24 items-center gap-3">
+                  {layer.level === 'L1' && <FCChainNetworkSeal className="h-10 w-10 shrink-0" />}
+                  <span className="text-2xl md:text-5xl font-serif font-light text-slate-700 group-hover/inner:text-white transition-colors duration-500">{layer.level}</span>
+                </div>
                 <div className="flex-1 border-b border-slate-800 pb-2 group-hover/inner:border-transparent transition-colors duration-500 relative z-10">
                   <h4 className="text-[13px] font-bold tracking-[0.3em] uppercase text-white mb-3 group-hover/inner:text-cyan-600 transition-colors">{layer.name}</h4>
                   <p className="text-[11px] md:text-[13px] font-mono tracking-[0.1em] text-slate-400 uppercase leading-relaxed">{layer.desc}</p>

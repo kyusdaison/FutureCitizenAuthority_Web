@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { mockDataService, type ProposalData } from '../services/mockDataService';
+import { FCCTokenMark } from '../components/BrandMarks';
 
 export default function Tokenomics() {
   const [supply, setSupply] = useState(1000000000);
@@ -46,6 +47,7 @@ export default function Tokenomics() {
           className="mb-12"
         >
           <div className="flex items-center space-x-4 mb-4">
+            <FCCTokenMark className="h-12 w-12 shrink-0" />
             <div className="h-px w-12 bg-yellow-500/50" />
             <span className="text-telemetry text-yellow-500 tracking-[0.2em] text-sm font-bold">L1 FINANCIAL TELEMETRY</span>
           </div>

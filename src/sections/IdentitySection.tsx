@@ -26,7 +26,7 @@ export const IdentitySection = () => {
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text z-0">
          <h2 className="text-[8rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>02 IDENTITY</span>
+           <span>03 IDENTITY</span>
          </h2>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
@@ -45,9 +45,15 @@ export const IdentitySection = () => {
                <h3 className="text-3xl font-serif font-light text-white mb-6 border-b border-slate-800 pb-6">
                  <CipherHeading text="Identity Verification Layer" />
                </h3>
-               <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-8">
-	                 A W3C-compliant Decentralized Identity (DID) architecture that binds verified identity primitives to the blockchain using <strong className="text-white font-medium">zk-SNARKs</strong>. This is the access layer for every wallet, treasury, governance, and service flow across the FC network without exposing raw personal records on the public ledger.
+               <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
+	                 A W3C-compliant Decentralized Identity (DID) architecture that binds verified identity primitives to the blockchain using <strong className="text-white font-medium">zk-SNARKs</strong>. In plain terms: a person or institution can prove eligibility without publishing raw personal records on the public ledger.
                </p>
+               <div className="mb-8 border border-white/10 bg-white/[0.025] p-4">
+                 <p className="text-[10px] font-mono uppercase tracking-[0.24em] text-slate-500">Reviewer focus</p>
+                 <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                   The identity layer should show who issued a credential, what it proves, what data stays private, and which services it can unlock.
+                 </p>
+               </div>
                <div className="flex flex-wrap gap-3 mb-8">
 	                 {['Verified Enrollment', 'zk-KYC Proofs', 'Seedless Wallets', 'Governance Access'].map((item) => (
                    <span
@@ -59,20 +65,19 @@ export const IdentitySection = () => {
                  ))}
                </div>
                <div className="mt-auto border-t border-slate-800 pt-6 relative overflow-hidden bg-slate-900/40 p-4 border-l border-slate-800">
-                 {/* Scanning laser background */}
-                 <div className="absolute top-0 left-0 w-full h-[20px] bg-gradient-to-b from-transparent via-fc-gold/10 to-transparent animate-[scan_3s_ease-in-out_infinite_alternate] pointer-events-none"></div>
+                 <div className="absolute inset-x-0 top-0 h-px bg-fc-gold/25 pointer-events-none"></div>
                  <ul className="space-y-4 text-[9px] font-mono tracking-widest uppercase text-fc-gold/70 relative z-10">
                    <li className="flex items-center gap-4">
-                     <span className="w-2 h-2 bg-fc-gold/50 animate-pulse [animation-delay:0s]"></span>
-	                     [REVIEW] ZK_SNARK_VERIFICATION: APPROVED
+                     <span className="w-2 h-2 bg-fc-gold/50"></span>
+	                     [REVIEW FILE] ZK PROOF MODEL: DOCUMENTED
                    </li>
                    <li className="flex items-center gap-4">
-                     <span className="w-2 h-2 bg-fc-gold/50 animate-pulse [animation-delay:0.5s]"></span>
-	                     [REVIEW] GOVERNANCE_STATE_SYNC: ESTABLISHED
+                     <span className="w-2 h-2 bg-fc-gold/50"></span>
+	                     [REVIEW FILE] GOVERNANCE ACCESS: ROLE-BOUND
                    </li>
                    <li className="flex items-center gap-4">
-                     <span className="w-2 h-2 bg-fc-gold/50 animate-pulse [animation-delay:1s]"></span>
-	                     [REVIEW] GLOBAL_IDENTITY_CREDENTIAL: ACTIVE
+                     <span className="w-2 h-2 bg-fc-gold/50"></span>
+	                     [REVIEW FILE] RAW DATA EXPOSURE: MINIMIZED
                    </li>
                  </ul>
                 </div>
@@ -105,11 +110,11 @@ export const IdentitySection = () => {
                  <CipherHeading text="Seedless Identity Wallet" />
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
-	                 Complete self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet splits key authority across device enclaves, validator infrastructure, and encrypted offline recovery so identity access remains resilient without sacrificing control.
+	                 Complete self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet splits key authority across device enclaves, validator infrastructure, and encrypted offline recovery so identity access remains resilient without turning a help desk into the single point of control.
                </p>
                <div className="p-4 border border-slate-800 bg-slate-900/50">
                  <p className="text-[9px] font-mono tracking-widest text-cyan-300 uppercase">System Notice:</p>
-	                 <p className="text-xs font-serif italic text-white mt-1">"Credential recovery and wallet custody remain separated, auditable, and resilient against single points of failure."</p>
+	                 <p className="text-xs font-serif italic text-white mt-1">"Credential recovery, wallet custody, and service approval remain separated so each control can be reviewed independently."</p>
                </div>
               </div>
               </TiltCard>
