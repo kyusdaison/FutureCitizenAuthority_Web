@@ -8,6 +8,7 @@ import { useToast } from '../contexts/ToastContext';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 import { mockDataService, type IdentityStat, type ActivityLog } from '../services/mockDataService';
 import { ConnectWalletModal } from '../components/ConnectWalletModal';
+import { IssuerDemo } from '../components/IssuerDemo';
 import { lazy, Suspense } from 'react';
 const IdentityAvatar = lazy(() => import('../components/IdentityAvatar').then(module => ({ default: module.IdentityAvatar })));
 
@@ -279,6 +280,8 @@ export default function Identity() {
           Issuer view is the institutional brief. Holder preview below is a sample wallet experience, not a procurement artifact.
         </p>
       </section>
+
+      <IssuerDemo />
 
       {/* Holder view divider */}
       <div className="mb-10 border-b border-white/10 pb-6">
