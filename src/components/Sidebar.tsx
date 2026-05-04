@@ -125,8 +125,8 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                  <svg className="w-4 h-4 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
              </div>
              <div>
-               <div className="text-[10px] font-bold tracking-widest uppercase text-slate-500">Jurisdiction</div>
-               <div className="text-xs font-mono font-bold text-slate-300 tracking-wider">FCC-MAINNET</div>
+               <div className="text-[10px] font-bold tracking-widest uppercase text-slate-500">Network</div>
+               <div className="text-xs font-mono font-bold text-slate-300 tracking-wider">FC Network · Sample</div>
              </div>
           </div>
         </div>

@@ -65,6 +65,7 @@ export default function Identity() {
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const [showHolderPreview, setShowHolderPreview] = useState(false);
   const { playSuccess } = useSoundEffects();
   
   // 使用 ref 存储所有 timeout ID
@@ -286,10 +287,21 @@ export default function Identity() {
           What a verified holder sees.
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-500">
-          Holder preview only — sample wallet view. The flow below shows the credential issuance and management surface a verified participant interacts with, with placeholder data and a representative wallet balance for illustration.
+          Holder preview only — sample wallet view. Optional. Click below to expand a representative credential issuance and wallet experience.
         </p>
+        <button
+          type="button"
+          onClick={() => setShowHolderPreview((prev) => !prev)}
+          className="mt-5 inline-flex items-center gap-3 border border-white/10 bg-white/[0.02] px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-fc-gold/40 hover:bg-fc-gold/5 hover:text-white"
+          aria-expanded={showHolderPreview}
+        >
+          <span aria-hidden>{showHolderPreview ? '▼' : '▶'}</span>
+          {showHolderPreview ? 'Hide holder preview' : 'Show holder preview'}
+        </button>
       </div>
 
+      {showHolderPreview && (
+        <>
       {!isMinted ? (
         <div className="flex flex-col items-center justify-center py-20">
           {/* Minting Flow Visualization */}
@@ -658,6 +670,8 @@ export default function Identity() {
             </div>
           </div>
         </div>
+      )}
+        </>
       )}
       <ConnectWalletModal
         isOpen={isWalletModalOpen}
