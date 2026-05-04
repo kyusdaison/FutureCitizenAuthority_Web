@@ -17,7 +17,7 @@ export const IdentitySection = () => {
       
       {/* Giant Watermark */}
       <motion.div style={{ y: yParallaxSlow }} className="absolute left-[80%] top-[40%] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.015] font-display font-black text-[40vw] tracking-tighter text-white mix-blend-overlay z-0">
-         ZKP
+         PROOF
       </motion.div>
       <div className="absolute inset-0 z-0">
         <HexGridBackground />
@@ -46,7 +46,7 @@ export const IdentitySection = () => {
                  <CipherHeading text="Identity Verification Layer" />
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
-	                 A W3C-compliant Decentralized Identity (DID) architecture that binds verified identity primitives to the blockchain using <strong className="text-white font-medium">zk-SNARKs</strong>. In plain terms: a person or institution can prove eligibility without publishing raw personal records on the public ledger.
+	                 A standards-aligned credential architecture that binds verified identity primitives to service access, wallet permissions, and governance rules using <strong className="text-white font-medium">privacy-preserving proofs</strong>. In plain terms: a person or institution can prove eligibility without publishing raw personal records on public rails.
                </p>
                <div className="mb-8 border border-white/10 bg-white/[0.025] p-4">
                  <p className="text-[10px] font-mono uppercase tracking-[0.24em] text-slate-500">Reviewer focus</p>
@@ -55,7 +55,7 @@ export const IdentitySection = () => {
                  </p>
                </div>
                <div className="flex flex-wrap gap-3 mb-8">
-	                 {['Verified Enrollment', 'zk-KYC Proofs', 'Seedless Wallets', 'Governance Access'].map((item) => (
+	                 {['Verified Enrollment', 'Private Proofs', 'Seedless Wallets', 'Governance Access'].map((item) => (
                    <span
                      key={item}
                      className="border border-fc-gold/20 bg-fc-gold/5 px-3 py-2 text-[9px] font-mono tracking-[0.3em] text-fc-gold uppercase"
@@ -69,7 +69,7 @@ export const IdentitySection = () => {
                  <ul className="space-y-4 text-[9px] font-mono tracking-widest uppercase text-fc-gold/70 relative z-10">
                    <li className="flex items-center gap-4">
                      <span className="w-2 h-2 bg-fc-gold/50"></span>
-	                     [REVIEW FILE] ZK PROOF MODEL: DOCUMENTED
+	                     [REVIEW FILE] PRIVACY PROOF MODEL: DOCUMENTED
                    </li>
                    <li className="flex items-center gap-4">
                      <span className="w-2 h-2 bg-fc-gold/50"></span>

@@ -10,6 +10,7 @@ const operatingSteps = [
     copy: 'Issue a reusable identity credential that can gate services, wallets, permissions, and governance participation.',
     plain: 'This answers: who is allowed to act?',
     proof: 'Credential model',
+    evidence: 'Issuer, eligibility rule, proof type, revocation path',
   },
   {
     icon: WalletCards,
@@ -17,6 +18,7 @@ const operatingSteps = [
     copy: 'Connect verified users to seedless MPC wallets, recovery boundaries, stablecoin routing, and settlement status.',
     plain: 'This answers: how do they transact safely?',
     proof: 'Custody boundary',
+    evidence: 'Operator roles, recovery process, signing policy, limit rules',
   },
   {
     icon: ShieldCheck,
@@ -24,6 +26,7 @@ const operatingSteps = [
     copy: 'Route approvals through committee ownership, policy gates, treasury rules, and inspectable audit events.',
     plain: 'This answers: who approves sensitive actions?',
     proof: 'Approval trail',
+    evidence: 'Decision owner, quorum rule, audit event, escalation path',
   },
   {
     icon: Landmark,
@@ -31,6 +34,7 @@ const operatingSteps = [
     copy: 'Start with a controlled public service, treasury, or builder workflow before scaling into the full operating stack.',
     plain: 'This answers: what proves value first?',
     proof: 'Pilot scope',
+    evidence: 'Use case, success metric, data boundary, go / pause decision',
   },
 ];
 
@@ -123,8 +127,12 @@ export const OperatingModelSection = () => {
                         </div>
                         <h4 className="text-2xl font-serif font-light text-white mb-4">{step.title}</h4>
                         <p className="text-sm text-slate-400 leading-[1.8] mb-5">{step.copy}</p>
-                        <div className="mb-8 border border-white/10 bg-white/[0.025] px-4 py-3">
+                        <div className="mb-5 border border-white/10 bg-white/[0.025] px-4 py-3">
                           <p className="text-xs leading-relaxed text-slate-300">{step.plain}</p>
+                        </div>
+                        <div className="mb-8 border border-fc-gold/15 bg-fc-gold/[0.035] px-4 py-3">
+                          <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-fc-gold/80">Evidence to review</p>
+                          <p className="text-xs leading-relaxed text-slate-400">{step.evidence}</p>
                         </div>
                         <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-5">
                           <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Proof</span>

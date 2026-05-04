@@ -3,11 +3,8 @@ import { ArrowRight, BadgeCheck, ChevronDown, FileCheck2, Landmark, Network, Shi
 import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { MagneticButton } from '../components/MagneticButton';
-import { lazy, Suspense } from 'react';
 import { HexGridBackground } from '../components/HexGridBackground';
 import { FCChainNetworkSeal } from '../components/BrandMarks';
-
-const NetworkMatrix = lazy(() => import('../components/NetworkMatrix').then(module => ({ default: module.NetworkMatrix })));
 
 const institutionalSignals = [
   {
@@ -55,6 +52,13 @@ const reviewPacket = [
   },
 ];
 
+const reviewOutputs = [
+  'Pilot scope memo',
+  'Identity proof model',
+  'Custody boundary',
+  'Approval matrix',
+];
+
 export const HeroSection = () => {
   const { scrollYProgress } = useScroll();
   const opacityHeroText = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
@@ -78,9 +82,6 @@ export const HeroSection = () => {
       
       {/* Hex Grid and Node Network Layer */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <Suspense fallback={<div className="absolute inset-0 bg-transparent" />}>
-          <NetworkMatrix />
-        </Suspense>
         <HexGridBackground />
       </div>
 
@@ -142,6 +143,14 @@ export const HeroSection = () => {
             <p className="mt-5 text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500">
               Designed for control review, pilot authorization, and institutional procurement conversations.
             </p>
+            <div className="mt-6 grid max-w-3xl grid-cols-2 gap-2 sm:grid-cols-4">
+              {reviewOutputs.map((output) => (
+                <div key={output} className="border border-white/10 bg-white/[0.025] px-3 py-2">
+                  <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-slate-500">Output</div>
+                  <div className="mt-1 text-xs text-slate-200">{output}</div>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           <div className="mt-10 hidden max-w-4xl grid-cols-1 gap-3 xl:grid xl:grid-cols-3">
@@ -217,7 +226,7 @@ export const HeroSection = () => {
       {/* Infinite Marquee Ticker */}
       <div className="absolute bottom-0 w-[200vw] left-0 h-10 border-t border-white/5 bg-[#020306] flex items-center overflow-hidden z-20">
         <div className="hairline-divider-h absolute top-0 left-0"></div>
-        <div className="animate-marquee flex gap-16 text-[9px] font-mono tracking-[0.4em] text-slate-500 uppercase">
+        <div className="animate-marquee motion-reduce:animate-none flex gap-16 text-[9px] font-mono tracking-[0.4em] text-slate-500 uppercase">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="flex gap-16 whitespace-nowrap">
               <span>// IDENTITY PROOF: REVIEWABLE CREDENTIAL</span>

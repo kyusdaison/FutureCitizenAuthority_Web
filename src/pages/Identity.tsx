@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { CipherHeading } from '../components/CipherHeading';
 import { useWallet } from '../contexts/WalletContext';
 import { useToast } from '../contexts/ToastContext';
@@ -18,6 +19,39 @@ const generateHash = (length = 16) => {
   }
   return hash;
 };
+
+const issuerPillars = [
+  {
+    kicker: 'Schema',
+    title: 'Credential schemas and proof types',
+    copy: 'Issue W3C-aligned verifiable credentials with jurisdiction-specific templates, role-based fields, and selective disclosure paths. Eligibility checks can be performed without exposing every underlying record.',
+    reviewerQuestion: 'Which credential types must be reviewable, and which fields can stay private?',
+  },
+  {
+    kicker: 'Issuance',
+    title: 'Issuance and revocation flow',
+    copy: 'Define enrollment, attestation, signing, delivery, and revocation as named steps with explicit owners and inspectable audit events. Failed issuances and revoked credentials remain inspectable for the program lifetime.',
+    reviewerQuestion: 'Who signs an issuance, who can revoke it, and how is each action recorded?',
+  },
+  {
+    kicker: 'Custody',
+    title: 'Custody and recovery boundary',
+    copy: 'MPC-backed wallets allow signing and recovery to be split across approved controls instead of relying on a single seed phrase. The recovery process itself is reviewable rather than informal.',
+    reviewerQuestion: 'What roles exist, who can recover a holder, and what evidence is left behind?',
+  },
+  {
+    kicker: 'Audit',
+    title: 'Audit surface and reporting',
+    copy: 'Every issuance, revocation, custody change, and credential presentation produces an inspectable record that can be filtered by jurisdiction, role, time window, or specific holder.',
+    reviewerQuestion: 'Can a procurement audit reproduce the full lifecycle of a credential within minutes?',
+  },
+  {
+    kicker: 'Privacy',
+    title: 'Data and privacy boundary',
+    copy: 'Underlying participant records do not need to be placed on a public settlement chain. Eligibility checks can be performed against zero-knowledge proofs or selectively disclosed fields.',
+    reviewerQuestion: 'Where does the data physically live, and what leaves the issuer environment?',
+  },
+];
 
 export default function Identity() {
   const navigate = useNavigate();
@@ -47,11 +81,11 @@ export default function Identity() {
     
     setMintPhase(1); // Establishing Secure Uplink
     
-    const t1 = setTimeout(() => setMintPhase(2), 2000); // Scanning Biometrics
+    const t1 = setTimeout(() => setMintPhase(2), 2000); // Checking credential factors
     timeoutsRef.current.push(t1);
     
     const t2 = setTimeout(() => {
-      setMintPhase(3); // Generating Quantum Hash
+      setMintPhase(3); // Generating review hash
       let hash = '';
       for(let i=0; i<32; i++) {
           hash += Math.floor(Math.random()*16).toString(16).toUpperCase();
@@ -83,7 +117,7 @@ export default function Identity() {
   // 16-segment radar stats (mock)
   const stats = [85, 92, 78, 65, 88, 95];
   const maxStat = 100;
-  const labels = ['TRUST', 'YIELD', 'VOLUME', 'GOVERNANCE', 'ARTIFACTS', 'NODE OPS'];
+  const labels = ['TRUST', 'ACCESS', 'ACTIVITY', 'GOVERNANCE', 'RECORDS', 'OPERATIONS'];
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -175,9 +209,9 @@ export default function Identity() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-serif font-light text-white mb-2">
-            <CipherHeading text="Citizen Identity" />
+            <CipherHeading text="Identity Layer" />
           </h1>
-          <p className="text-slate-400 font-mono text-xs tracking-widest">VERIFIED ACCESS CREDENTIAL</p>
+          <p className="text-slate-400 font-mono text-xs tracking-widest">ISSUER BRIEF + HOLDER PREVIEW</p>
         </div>
         {level >= 2 && (
           <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
@@ -185,6 +219,75 @@ export default function Identity() {
             <span className="text-xs font-bold text-yellow-500 tracking-widest uppercase">Premium</span>
           </div>
         )}
+      </div>
+
+      {/* Issuer view — institutional brief */}
+      <section className="mb-12 border-b border-white/5 pb-12">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Issuer view</p>
+            <h2 className="text-3xl md:text-5xl font-serif font-light text-white leading-tight">
+              What an institution issuing credentials sees.
+            </h2>
+            <p className="mt-4 text-sm leading-[1.85] text-slate-400">
+              Identity infrastructure for governments and regulated institutions to issue verifiable credentials, define recovery boundaries, and inspect every issuance and revocation event without moving sensitive participant data into public settlement.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 self-start border border-white/10 bg-white/[0.02] px-3 py-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-fc-gold" />
+            <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-slate-400">Brief — sample data</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          {issuerPillars.map((pillar, index) => (
+            <article key={pillar.title} className="border border-white/10 bg-[#020617]/70 p-5">
+              <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">
+                0{index + 1} // {pillar.kicker}
+              </p>
+              <h3 className="mb-3 text-lg font-serif font-light text-white">{pillar.title}</h3>
+              <p className="mb-4 text-sm leading-relaxed text-slate-400">{pillar.copy}</p>
+              <div className="border-t border-white/5 pt-4">
+                <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-slate-500">Reviewer question</p>
+                <p className="text-sm leading-relaxed text-slate-300">{pillar.reviewerQuestion}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <button
+            type="button"
+            onClick={() => navigate('/#deployment')}
+            className="group inline-flex flex-1 items-center justify-between border border-fc-gold/30 bg-fc-gold/5 px-6 py-4 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/10"
+          >
+            <span className="flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4" />
+              Map to a deployment path
+            </span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </button>
+          <a
+            href="mailto:pilots@fca.ms?subject=Identity%20pilot%20review"
+            className="inline-flex flex-1 items-center justify-center gap-2 border border-white/10 bg-white/[0.02] px-6 py-4 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+          >
+            Discuss a pilot
+          </a>
+        </div>
+        <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-slate-600">
+          Issuer view is the institutional brief. Holder preview below is a sample wallet experience, not a procurement artifact.
+        </p>
+      </section>
+
+      {/* Holder view divider */}
+      <div className="mb-10 border-b border-white/10 pb-6">
+        <p className="mb-2 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Holder view</p>
+        <h2 className="text-2xl md:text-3xl font-serif font-light text-white leading-tight">
+          What a verified holder sees.
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-500">
+          Holder preview only — sample wallet view. The flow below shows the credential issuance and management surface a verified participant interacts with, with placeholder data and a representative wallet balance for illustration.
+        </p>
       </div>
 
       {!isMinted ? (
@@ -225,7 +328,7 @@ export default function Identity() {
                   {connectedIdentity ? 'Initialize Verification' : 'Authorize Identity'}
                 </button>
                 <p className="mt-4 text-[10px] font-mono tracking-[0.3em] uppercase text-slate-500 text-center">
-                  {connectedIdentity ? 'Authorization complete. Verification sequence available.' : 'Connect a sovereign identity before issuing credentials.'}
+                  {connectedIdentity ? 'Authorization complete. Verification sequence available.' : 'Authorize an identity credential before issuing access.'}
                 </p>
               </>
             ) : (
@@ -252,13 +355,13 @@ export default function Identity() {
 
                 <div className="space-y-2 text-center">
                   <div className={`text-sm font-mono transition-colors ${mintPhase >= 1 ? 'text-cyan-400' : 'text-slate-600'}`}>
-                    {mintPhase > 1 ? '✓' : mintPhase === 1 ? '⟳' : '○'} Establishing Secure Uplink...
+                    {mintPhase > 1 ? '✓' : mintPhase === 1 ? '⟳' : '○'} Establishing secure session...
                   </div>
                   <div className={`text-sm font-mono transition-colors ${mintPhase >= 2 ? 'text-cyan-400' : 'text-slate-600'}`}>
-                    {mintPhase > 2 ? '✓' : mintPhase === 2 ? '⟳' : '○'} Scanning Biometrics...
+                    {mintPhase > 2 ? '✓' : mintPhase === 2 ? '⟳' : '○'} Checking credential factors...
                   </div>
                   <div className={`text-sm font-mono transition-colors ${mintPhase >= 3 ? 'text-cyan-400' : 'text-slate-600'}`}>
-                    {mintPhase > 3 ? '✓' : mintPhase === 3 ? '⟳' : '○'} Generating Quantum Hash...
+                    {mintPhase > 3 ? '✓' : mintPhase === 3 ? '⟳' : '○'} Generating review hash...
                   </div>
                   <div className={`text-sm font-mono transition-colors ${mintPhase >= 4 ? 'text-cyan-400' : 'text-slate-600'}`}>
                     {mintPhase > 4 ? '✓' : mintPhase === 4 ? '⟳' : '○'} Issuing Credential...
@@ -365,17 +468,10 @@ export default function Identity() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => navigate('/staking')}
-                      className="border border-cyan-500/20 bg-cyan-500/5 px-4 py-3 text-[10px] font-mono tracking-[0.32em] text-cyan-300 uppercase transition-colors hover:border-cyan-500/40 hover:bg-cyan-500/10"
+                      onClick={() => navigate('/#deployment')}
+                      className="border border-fc-gold/30 bg-fc-gold/5 px-4 py-3 text-[10px] font-mono tracking-[0.32em] text-fc-gold uppercase transition-colors hover:border-fc-gold/50 hover:bg-fc-gold/10"
                     >
-                      Go To Staking
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => navigate('/sentinel')}
-                      className="border border-yellow-500/20 bg-yellow-500/5 px-4 py-3 text-[10px] font-mono tracking-[0.32em] text-yellow-300 uppercase transition-colors hover:border-yellow-500/40 hover:bg-yellow-500/10"
-                    >
-                      Security Ops
+                      Map to deployment path
                     </button>
                   </div>
                 </div>
@@ -389,14 +485,15 @@ export default function Identity() {
                  </div>
               </div>
 
-              {/* --- 2. THE SOVEREIGN VAULT --- */}
+              {/* --- 2. THE CONTROL VAULT --- */}
               <div className="pt-8">
                 <div className="flex items-center gap-3 mb-6 relative">
                   <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-yellow-500/30 to-transparent" />
                   <svg className="w-5 h-5 text-yellow-600 drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  <h3 className="text-xl font-bold text-white tracking-[0.2em] uppercase text-shadow-gold">Sovereign Vault</h3>
+                  <h3 className="text-xl font-bold text-white tracking-[0.2em] uppercase text-shadow-gold">Control Vault</h3>
+                  <span className="ml-auto border border-fc-gold/25 bg-fc-gold/5 px-3 py-1 text-[9px] font-mono uppercase tracking-[0.28em] text-fc-gold/80">Sample preview</span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
@@ -438,7 +535,7 @@ export default function Identity() {
                    <div className="flex-1 space-y-4 relative z-10 w-full">
                      <h4 className="text-sm font-bold text-white tracking-widest uppercase">Trust Metrics</h4>
                      <p className="text-xs text-slate-400 leading-relaxed">
-                       Your physical identity bindings grant a multiplied governance and trust rating across the Future Citizen blockchain. Cryptographic scoring evaluates ongoing node operations.
+                       Credential status, wallet activity, governance permissions, and operational records are presented as reviewable indicators. These values are representative until connected to a production identity data source.
                      </p>
                      <div className="pt-4 space-y-2">
                        {stats.slice(0, 3).map((stat, idx) => (

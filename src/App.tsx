@@ -253,8 +253,8 @@ export default function App() {
     },
     {
       id: 'action-connect-wallet',
-      title: 'Connect Digital Identity',
-      subtitle: 'Secure connection to FC Chain',
+      title: 'Open Identity Preview',
+      subtitle: 'Representative identity connection flow',
       action: () => { setIsWalletModalOpen(true); closeCommandPalette(); }
     },
     {
@@ -320,32 +320,42 @@ export default function App() {
       )}
 
       {/* Global CSS background effects */}
-      <div className="fixed inset-0 pointer-events-none z-[1] mouse-spotlight mix-blend-screen opacity-70" />
-      <div className="scanline-overlay" />
-      <div className="noise-overlay" />
+      {currentView !== 'home' && (
+        <>
+          <div className="fixed inset-0 pointer-events-none z-[1] mouse-spotlight mix-blend-screen opacity-70" />
+          <div className="scanline-overlay" />
+          <div className="noise-overlay" />
+        </>
+      )}
 
       {/* Avant-Garde Central Data Spine */}
       <div className="fixed top-0 bottom-0 left-[50%] -translate-x-1/2 w-px bg-gradient-to-b from-transparent via-white/[0.04] to-transparent z-0 pointer-events-none hidden md:block" />
       
       {/* Global Foreground Scanline */}
-      <div className="fixed top-0 left-0 w-full h-[15vh] bg-gradient-to-b from-transparent via-white/[0.015] to-transparent z-[100] pointer-events-none animate-[scan_8s_linear_infinite]" />
+      {currentView !== 'home' && (
+        <div className="fixed top-0 left-0 w-full h-[15vh] bg-gradient-to-b from-transparent via-white/[0.015] to-transparent z-[100] pointer-events-none animate-[scan_8s_linear_infinite]" />
+      )}
 
       {/* Ambient Volumetric Orbs - Muted for Authority */}
       <div className="fixed top-[10%] left-[-15%] w-[50vw] h-[50vw] rounded-full bg-cyan-700/[0.02] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
       <div className="fixed bottom-[-15%] right-[-15%] w-[60vw] h-[60vw] rounded-full bg-slate-500/[0.02] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
 
       {/* Avant-Garde Geometric Primitives */}
-      <div className="fixed top-[30%] left-[5%] w-32 h-32 animate-[spin_40s_linear_infinite] pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.03] will-change-transform">
-         <FCChainLink />
-      </div>
-      <div className="fixed top-[45%] right-[8%] w-32 h-32 animate-[spin_30s_linear_infinite_reverse] pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.04] will-change-transform">
-         <AbstractNodeCrest />
-      </div>
-      <div className="fixed bottom-[20%] left-[10%] w-40 h-40 animate-pulse pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.02] -rotate-12 will-change-transform">
-         <FCChainLink />
-      </div>
+      {currentView !== 'home' && (
+        <>
+          <div className="fixed top-[30%] left-[5%] w-32 h-32 animate-[spin_40s_linear_infinite] pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.03] will-change-transform">
+             <FCChainLink />
+          </div>
+          <div className="fixed top-[45%] right-[8%] w-32 h-32 animate-[spin_30s_linear_infinite_reverse] pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.04] will-change-transform">
+             <AbstractNodeCrest />
+          </div>
+          <div className="fixed bottom-[20%] left-[10%] w-40 h-40 animate-pulse pointer-events-none z-0 mix-blend-screen hidden xl:block opacity-[0.02] -rotate-12 will-change-transform">
+             <FCChainLink />
+          </div>
+        </>
+      )}
 
-      {currentView === 'home' && <div className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 hidden md:block mouse-spotlight" />}
+      {currentView !== 'home' && <div className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 hidden md:block mouse-spotlight" />}
 
       {/* The Immersive 8K Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden scale-105">

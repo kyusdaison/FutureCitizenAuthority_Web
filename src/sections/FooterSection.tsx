@@ -36,7 +36,7 @@ export const FooterSection = () => {
             className="inline-flex w-full sm:w-auto items-center justify-center gap-3 border border-white/10 bg-white/[0.02] px-8 md:px-12 py-5 text-xs font-bold uppercase text-slate-300 transition-colors hover:border-cyan-400/40 hover:text-white"
           >
             <Gauge className="w-4 h-4 text-cyan-300" />
-            Open Dashboard
+            Preview Dashboard
           </button>
         </div>
         <MagneticButton className="mt-8">
@@ -59,6 +59,7 @@ export const FooterSection = () => {
           <div className="flex gap-10 mt-6 md:mt-0">
             <button type="button" onClick={() => navigate('/identity')} className="hover:text-white transition-colors duration-300 uppercase">Identity</button>
             <button type="button" onClick={() => navigate('/#deployment')} className="hover:text-white transition-colors duration-300 uppercase">Deployment</button>
+            <button type="button" onClick={() => navigate('/explorer')} className="hover:text-white transition-colors duration-300 uppercase">Network</button>
             <button type="button" onClick={() => navigate('/developer')} className="hover:text-white transition-colors duration-300 uppercase">Developers</button>
           </div>
         </div>

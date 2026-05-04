@@ -97,6 +97,14 @@ const supportingMaterials = [
   },
 ];
 
+const firstMeetingPackage = [
+  'Responsible owner and decision sponsor',
+  'First service or treasury workflow',
+  'Data that must stay private',
+  'Operator and approval roles',
+  'Success metric for a 60-90 day pilot',
+];
+
 export const ConversionSection = () => {
   const navigate = useNavigate();
 
@@ -130,7 +138,7 @@ export const ConversionSection = () => {
                 <span className="text-sm font-medium">Evaluation rule</span>
               </div>
               <p className="text-sm text-slate-400 leading-relaxed">
-                Lead with the deployment path, then show the protocol, economics, and governance system as supporting infrastructure.
+                Lead with the buyer's first deployment path. Treat protocol, economics, and network telemetry as supporting appendix material.
               </p>
             </div>
           </div>
@@ -239,31 +247,45 @@ export const ConversionSection = () => {
         </FadeInUp>
 
         <FadeInUp delay={0.32}>
-          <div className="mt-10 border border-white/10 bg-[#020617]/75 p-6 md:p-8">
-            <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="mb-3 text-xs uppercase tracking-[0.25em] text-slate-500">Technical appendix</p>
-                <h4 className="text-2xl md:text-3xl font-serif font-light text-white">Deeper material lives off the institutional homepage.</h4>
-              </div>
-              <p className="max-w-md text-sm leading-relaxed text-slate-500">
-                The homepage should close the review conversation. Token, explorer, and developer material remain available as depth pages for specialist audiences.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
-              {supportingMaterials.map((item) => (
-                <button
-                  key={item.label}
-                  type="button"
-                  onClick={() => navigate(item.route)}
-                  className="group border border-white/10 bg-white/[0.02] p-5 text-left transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/[0.04]"
-                >
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="text-sm font-medium text-white">{item.label}</span>
-                    <ArrowRight className="h-3.5 w-3.5 text-fc-gold transition-transform group-hover:translate-x-1" />
+          <div className="mt-10 grid grid-cols-1 gap-6 xl:grid-cols-[0.82fr_1.18fr]">
+            <div className="border border-fc-gold/20 bg-fc-gold/[0.035] p-6 md:p-8">
+              <p className="mb-3 text-xs uppercase tracking-[0.25em] text-fc-gold">First meeting package</p>
+              <h4 className="mb-6 text-2xl md:text-3xl font-serif font-light text-white">What we should define before a formal pilot.</h4>
+              <div className="space-y-3">
+                {firstMeetingPackage.map((item, index) => (
+                  <div key={item} className="flex items-start gap-4 border border-white/10 bg-[#020617]/55 px-4 py-3">
+                    <span className="mt-0.5 text-[10px] font-mono text-fc-gold/80">0{index + 1}</span>
+                    <span className="text-sm leading-relaxed text-slate-300">{item}</span>
                   </div>
-                  <p className="text-xs leading-relaxed text-slate-500">{item.copy}</p>
-                </button>
-              ))}
+                ))}
+              </div>
+            </div>
+            <div className="border border-white/10 bg-[#020617]/75 p-6 md:p-8">
+              <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <p className="mb-3 text-xs uppercase tracking-[0.25em] text-slate-500">Technical appendix</p>
+                  <h4 className="text-2xl md:text-3xl font-serif font-light text-white">Deeper material lives off the institutional homepage.</h4>
+                </div>
+                <p className="max-w-md text-sm leading-relaxed text-slate-500">
+                  The homepage should close the review conversation. Token, explorer, and developer material remain available as depth pages for specialist audiences.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                {supportingMaterials.map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => navigate(item.route)}
+                    className="group border border-white/10 bg-white/[0.02] p-5 text-left transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/[0.04]"
+                  >
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <span className="text-sm font-medium text-white">{item.label}</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-fc-gold transition-transform group-hover:translate-x-1" />
+                    </div>
+                    <p className="text-xs leading-relaxed text-slate-500">{item.copy}</p>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </FadeInUp>
