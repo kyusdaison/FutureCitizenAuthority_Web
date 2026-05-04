@@ -28,12 +28,18 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
+      <div className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Representative preview</span>
+        <span className="mx-3 text-slate-600">/</span>
+        Sample operating data for institutional walkthroughs. Production pilots should connect this dashboard to verified identity, treasury, validator, and audit-event sources.
+      </div>
+
       {/* Top Stats Bar Vercel Style */}
       <div className="w-full flex justify-center mb-10 mt-4">
           <div className="vercel-stats-bar w-full grid grid-cols-1 md:grid-cols-4 text-center divide-y md:divide-y-0 md:divide-x divide-white/10 overflow-hidden">
               <div className="flex flex-col py-6 px-6 relative group">
                   <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none"></div>
-                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">TOTAL VALUE LOCKED</span>
+                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">SAMPLE VALUE LOCKED</span>
                   <span className="text-4xl text-vanguard text-white">$842.5M</span>
                   <div className="flex justify-center items-center text-xs mt-2 text-slate-400 font-bold">
                       <svg className="w-3 h-3 mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
@@ -42,7 +48,7 @@ const Dashboard = () => {
               </div>
               <div className="flex flex-col py-6 px-6 relative group">
                   <div className="absolute inset-0 bg-white/0 group-hover:bg-cyan-500/5 transition-colors pointer-events-none"></div>
-                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">TOTAL FCC STAKED</span>
+                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">SAMPLE FCC STAKED</span>
                   <div className="text-4xl text-vanguard text-white">1.2B <span className="text-xl text-slate-500 tracking-normal font-bold">FCC</span></div>
                   <div className="flex justify-center items-center text-xs mt-2 w-full max-w-[150px] mx-auto">
                      <div className="w-full bg-slate-800 h-1.5 mr-2">
@@ -59,7 +65,7 @@ const Dashboard = () => {
               </div>
               <div className="flex flex-col py-6 px-6 relative group">
                   <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none"></div>
-                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">ACTIVE NODES</span>
+                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">SAMPLE NODES</span>
                   <span className="text-4xl text-vanguard text-white">{telemetry.activeNodes.toLocaleString()}<span className="text-xl text-slate-500 tracking-normal">/25,000</span></span>
                   <div className="mt-2 text-center">
                     <span className="text-xs text-white font-bold bg-white/10 border border-white/20 px-3 py-1 inline-block">
@@ -76,7 +82,7 @@ const Dashboard = () => {
           <h2 className="text-xl md:text-2xl text-vanguard text-white uppercase">Global Node Topology</h2>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 bg-cyan-500 animate-[pulse_2s_infinite]"></span>
-            <span className="text-[10px] text-telemetry text-cyan-500 tracking-widest uppercase font-bold">Live Network</span>
+            <span className="text-[10px] text-telemetry text-cyan-500 tracking-widest uppercase font-bold">Representative Preview</span>
           </div>
         </div>
         <div className="h-[300px] md:h-[450px]">
@@ -108,7 +114,7 @@ const Dashboard = () => {
                 <svg className="w-16 h-16 mx-auto mb-2 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
                 </svg>
-                Telemetry Syncing...
+                Representative chart preview
               </div>
               {/* Synthetic visual line representing a climbing chart */}
               <svg className="absolute inset-x-0 bottom-0 w-full h-[80%] opacity-60" preserveAspectRatio="none" viewBox="0 0 100 100">

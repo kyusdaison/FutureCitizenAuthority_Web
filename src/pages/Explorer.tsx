@@ -54,6 +54,11 @@ const Explorer = () => {
   return (
     <div className="mt-16 space-y-6 relative z-10 max-w-7xl mx-auto w-full pb-20 px-4 sm:px-6 lg:px-8">
       <CosmicBackground />
+      <div className="border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Representative explorer preview</span>
+        <span className="mx-3 text-slate-600">/</span>
+        Blocks, transactions, prices, and validator activity on this page are generated sample data until connected to a production FC Chain data pipeline.
+      </div>
 
       {/* Omni-Search Terminal */}
       <div className="pt-8 pb-12">
@@ -69,7 +74,7 @@ const Explorer = () => {
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl text-vanguard mb-8 text-white relative z-10 uppercase tracking-widest font-bold">
-            Network <span className="text-cyan-400 tracking-tight">Telemetry</span>
+            Network <span className="text-cyan-400 tracking-tight">Explorer Preview</span>
           </h1>
           <div className="relative z-10 flex border focus-within:border-cyan-500/50 border-white/10 bg-black shadow-none transition-colors overflow-hidden">
             <div className="pl-6 flex items-center justify-center flex-shrink-0">
@@ -92,24 +97,24 @@ const Explorer = () => {
       {/* Live Stats HUD */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
          <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">FC PRICE</div>
+            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">SAMPLE FC PRICE</div>
             <div className="text-2xl text-vanguard text-white font-bold">${telemetry.fcPrice}</div>
             <div className="text-xs text-cyan-500 mt-1 font-mono">{telemetry.fcPriceChange} (24h)</div>
          </div>
          <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">LATEST BLOCK</div>
+            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">SAMPLE BLOCK</div>
             <div className="text-2xl text-vanguard text-white font-bold">{telemetry.blockHeight.toLocaleString()}</div>
-            <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Syncing live...</div>
+            <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Sample stream</div>
          </div>
          <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">NETWORK TPS</div>
+            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">SAMPLE TPS</div>
             <div className="text-2xl text-vanguard text-white font-bold">{telemetry.tps.toLocaleString()}</div>
             <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Max: {telemetry.maxTps.toLocaleString()}</div>
          </div>
          <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">AVG BLOCK TIME</div>
+            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">TARGET BLOCK TIME</div>
             <div className="text-2xl text-vanguard text-white font-bold">{telemetry.finality}<span className="text-base text-slate-500 ml-1">s</span></div>
-            <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Real-time finality</div>
+            <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Target finality</div>
          </div>
       </div>
 
@@ -140,7 +145,7 @@ const Explorer = () => {
         <div className="flex items-center justify-between mb-4 relative z-10 font-bold tracking-widest uppercase">
           <div className="text-[10px] text-telemetry text-slate-500 flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-cyan-500 animate-pulse shadow-none"></div>
-            LIVE NETWORK LOAD (TPS)
+            SAMPLE NETWORK LOAD (TPS)
           </div>
           <div className="text-[10px] text-telemetry text-cyan-500/50">SYNCED</div>
         </div>

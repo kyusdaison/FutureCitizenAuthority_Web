@@ -95,7 +95,7 @@ export const AssuranceSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-cyan-300/45" />
                 <h2 className="text-xs font-bold text-cyan-300 uppercase">
-                  <CipherHeading text="06 // Institutional Assurance" />
+                  <CipherHeading text="04 // Institutional Assurance" />
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-8">

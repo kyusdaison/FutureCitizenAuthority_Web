@@ -45,8 +45,8 @@ const audiencePaths = [
 ];
 
 const reviewFit = [
-  'A named operating owner',
   'A bounded first use case',
+  'A named operating owner',
   'A measurable service outcome',
   'A documented privacy and custody boundary',
 ];
@@ -93,6 +93,25 @@ export const AudiencePathsSection = () => {
                     </div>
                   ))}
                 </div>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById('deployment')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                    className="group inline-flex flex-1 items-center justify-between border border-fc-gold/30 bg-fc-gold/5 px-5 py-3.5 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/10"
+                  >
+                    <span>Map to a deployment path</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </button>
+                  <a
+                    href="mailto:pilots@fca.ms?subject=Pilot%20readiness%20review"
+                    className="inline-flex flex-1 items-center justify-center gap-2 border border-white/10 bg-white/[0.02] px-5 py-3.5 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+                  >
+                    Discuss a pilot
+                  </a>
+                </div>
+                <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-slate-600">
+                  Self-check first. We do not run open evaluations.
+                </p>
               </div>
               <BrandSystemPanel />
             </div>

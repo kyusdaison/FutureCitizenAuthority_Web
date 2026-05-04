@@ -9,7 +9,7 @@ export default function Tokenomics() {
   const [proposals, setProposals] = useState<ProposalData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Simulate live burn mechanics
+  // Representative preview mechanics until a production economics feed is connected.
   useEffect(() => {
     let mounted = true;
     mockDataService.getActiveProposals().then(data => {
@@ -40,6 +40,12 @@ export default function Tokenomics() {
       <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none mix-blend-screen" />
 
       <div className="max-w-7xl mx-auto relative z-10">
+        <div className="mb-8 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
+          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Representative economics preview</span>
+          <span className="mx-3 text-slate-600">/</span>
+          Supply, burn, governance, and market figures are sample data for explaining FCC utility. Production disclosures should use verified treasury and network data.
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -49,7 +55,7 @@ export default function Tokenomics() {
           <div className="flex items-center space-x-4 mb-4">
             <FCCTokenMark className="h-12 w-12 shrink-0" />
             <div className="h-px w-12 bg-yellow-500/50" />
-            <span className="text-telemetry text-yellow-500 tracking-[0.2em] text-sm font-bold">L1 FINANCIAL TELEMETRY</span>
+            <span className="text-telemetry text-yellow-500 tracking-[0.2em] text-sm font-bold">FCC ECONOMICS APPENDIX</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-vanguard mb-6">
             TOKENOMICS <br />
@@ -58,7 +64,7 @@ export default function Tokenomics() {
             </span>
           </h1>
           <p className="text-zinc-400 max-w-2xl text-lg leading-relaxed font-mono">
-            Real-time monitoring of the FC Chain macroeconomic state. Tracking programmed deflation, treasury allocation, and decentralized governance proposals.
+            Representative overview of the FCC utility model: gas, validator incentives, treasury reserves, and governance context. This page is depth material, not the primary institutional homepage story.
           </p>
         </motion.div>
 
@@ -67,7 +73,7 @@ export default function Tokenomics() {
           {[
             { label: 'TOTAL SUPPLY', value: supply.toLocaleString(), unit: 'FCC', highlight: false },
             { label: 'TOTAL BURNED', value: burned.toLocaleString(), unit: 'FCC', highlight: true },
-            { label: 'MARKET CAP (MOCK)', value: '$' + ((supply * 2.45) / 1000000000).toFixed(2) + 'B', unit: 'USD', highlight: false },
+            { label: 'SAMPLE MARKET CAP', value: '$' + ((supply * 2.45) / 1000000000).toFixed(2) + 'B', unit: 'USD', highlight: false },
             { label: 'STAKING RATIO', value: '68.4', unit: '%', highlight: false },
           ].map((stat, i) => (
             <motion.div

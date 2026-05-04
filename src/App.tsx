@@ -12,9 +12,7 @@ import { ConnectWalletModal } from './components/ConnectWalletModal';
 import { HeroSection } from './sections/HeroSection';
 import { AudiencePathsSection } from './sections/AudiencePathsSection';
 import { OperatingModelSection } from './sections/OperatingModelSection';
-import { ArchitectureSection } from './sections/ArchitectureSection';
 import { IdentitySection } from './sections/IdentitySection';
-import { GovernanceSection } from './sections/GovernanceSection';
 import { AssuranceSection } from './sections/AssuranceSection';
 import { ConversionSection } from './sections/ConversionSection';
 import { FooterSection } from './sections/FooterSection';
@@ -303,8 +301,8 @@ export default function App() {
       </div>
 
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-      {!isLowPowerMode && <NoiseOverlay />}
-      <BootSequence />
+      {currentView !== 'home' && !isLowPowerMode && <NoiseOverlay />}
+      {currentView !== 'home' && <BootSequence />}
 
       {isCommandPaletteOpen && (
         <CommandPalette 
@@ -441,8 +439,6 @@ export default function App() {
         <AudiencePathsSection />
         <OperatingModelSection />
         <IdentitySection />
-        <ArchitectureSection />
-        <GovernanceSection />
         <AssuranceSection />
         <ConversionSection />
         <FooterSection />
@@ -498,10 +494,14 @@ export default function App() {
         </div>
       )}
 
-      <Suspense fallback={null}>
-        <VanguardOrb />
-      </Suspense>
-      <LiveTelemetryFooter />
+      {currentView !== 'home' && (
+        <>
+          <Suspense fallback={null}>
+            <VanguardOrb />
+          </Suspense>
+          <LiveTelemetryFooter />
+        </>
+      )}
     </div>
     </MotionConfig>
   );

@@ -100,7 +100,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fc-gold to-transparent -translate-x-full group-hover:translate-x-full duration-1000 ease-in-out"></div>
               <div className="relative bg-[#020306] px-8 py-4 flex items-center justify-center">
-                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-fc-gold group-hover:text-white transition-colors z-10">Open Identity</span>
+                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-fc-gold group-hover:text-white transition-colors z-10">Review Identity</span>
               </div>
             </button>
           </motion.div>

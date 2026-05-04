@@ -74,6 +74,29 @@ const pilotCadence = [
   { window: '61-90 days', focus: 'Scale, pause, or revise decision' },
 ];
 
+const supportingMaterials = [
+  {
+    label: 'Identity specification',
+    copy: 'Credential issuance, recovery, and service permission detail.',
+    route: '/identity',
+  },
+  {
+    label: 'Network explorer',
+    copy: 'Representative FC Chain blocks, transactions, and validator telemetry.',
+    route: '/explorer',
+  },
+  {
+    label: 'FCC economics',
+    copy: 'Gas, validator incentives, reserves, and treasury utility.',
+    route: '/tokenomics',
+  },
+  {
+    label: 'Developer portal',
+    copy: 'SDKs, proof hooks, policy surfaces, and integration tooling.',
+    route: '/developer',
+  },
+];
+
 export const ConversionSection = () => {
   const navigate = useNavigate();
 
@@ -89,7 +112,7 @@ export const ConversionSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  <CipherHeading text="07 // Deployment Paths" />
+                  <CipherHeading text="05 // Deployment Paths" />
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-6">
@@ -211,6 +234,36 @@ export const ConversionSection = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </FadeInUp>
+
+        <FadeInUp delay={0.32}>
+          <div className="mt-10 border border-white/10 bg-[#020617]/75 p-6 md:p-8">
+            <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="mb-3 text-xs uppercase tracking-[0.25em] text-slate-500">Technical appendix</p>
+                <h4 className="text-2xl md:text-3xl font-serif font-light text-white">Deeper material lives off the institutional homepage.</h4>
+              </div>
+              <p className="max-w-md text-sm leading-relaxed text-slate-500">
+                The homepage should close the review conversation. Token, explorer, and developer material remain available as depth pages for specialist audiences.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+              {supportingMaterials.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => navigate(item.route)}
+                  className="group border border-white/10 bg-white/[0.02] p-5 text-left transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/[0.04]"
+                >
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <span className="text-sm font-medium text-white">{item.label}</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-fc-gold transition-transform group-hover:translate-x-1" />
+                  </div>
+                  <p className="text-xs leading-relaxed text-slate-500">{item.copy}</p>
+                </button>
+              ))}
             </div>
           </div>
         </FadeInUp>
