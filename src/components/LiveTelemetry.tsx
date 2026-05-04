@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
 
 const INITIAL_LOGS = [
-  "nexus@fcc-core:~$ init_htts_engine --production",
-  "[OK] HTTS Consensus Engine Booted",
-  "[OK] Connecting to Shards: ALPHA-1 to ALPHA-64",
-  "[OK] Validating ZKP Identity Proofs: 0x8f9c...a1"
+  "fca-review:~$ open settlement-readiness-brief",
+  "[OK] HTTS settlement layer available",
+  "[OK] Regional validator groups online",
+  "[OK] Sample ZK identity proof verified: 0x8f9c...a1"
 ];
 
 export const LiveTelemetry: React.FC = () => {
@@ -12,9 +12,9 @@ export const LiveTelemetry: React.FC = () => {
 
   const addLog = useCallback(() => {
     const hash = Math.random().toString(16).substring(2, 10);
-    const shard = Math.floor(Math.random() * 64) + 1;
+    const region = Math.floor(Math.random() * 64) + 1;
     const ms = (Math.random() * 0.1 + 0.3).toFixed(3);
-    setLogs(prev => [...prev.slice(-5), `[htts-sync] Shard_${shard} verified block 0x${hash} in ${ms}s`]);
+    setLogs(prev => [...prev.slice(-5), `[audit-sync] region-${region} verified event 0x${hash} in ${ms}s`]);
   }, []);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const LiveTelemetry: React.FC = () => {
   }, [addLog]);
 
   return (
-    <div className="font-mono text-[10px] text-green-500/80 bg-[#010203] p-6 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,1)] w-full max-w-lg hidden lg:flex flex-col relative overflow-hidden h-[220px]">
+    <div className="font-mono text-[10px] text-slate-300/85 bg-[#010203] p-6 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,1)] w-full max-w-lg hidden lg:flex flex-col relative overflow-hidden h-[220px]">
       <div className="flex gap-2 mb-4 border-b border-white/5 pb-4 absolute top-6 left-6 right-6 bg-[#010203] z-10 w-[calc(100%-48px)]">
         <div className="w-2 h-2 border border-red-500/50 bg-red-500/20" />
         <div className="w-2 h-2 border border-yellow-500/50 bg-yellow-500/20" />
@@ -40,8 +40,8 @@ export const LiveTelemetry: React.FC = () => {
             {log}
           </div>
         ))}
-        <div className="text-cyan-400 mt-2 flex items-center gap-2">
-          &gt; SYSTEM ACTIVE <span className="w-2 h-3 bg-cyan-400 animate-pulse" />
+        <div className="text-cyan-300 mt-2 flex items-center gap-2">
+          &gt; REVIEW TELEMETRY ACTIVE <span className="w-2 h-3 bg-cyan-300 animate-pulse" />
         </div>
       </div>
     </div>

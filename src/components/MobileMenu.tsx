@@ -13,8 +13,8 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   
   const links = [
+    { label: "Model", href: "#model" },
     { label: "Identity", href: "#identity" },
-    { label: "Wallet Rail", href: "#architecture" },
     { label: "Governance", href: "#governance" },
     { label: "Assurance", href: "#assurance" },
     { label: "Deployment", href: "#deployment" },

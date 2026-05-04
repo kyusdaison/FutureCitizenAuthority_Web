@@ -17,7 +17,7 @@ export const ConnectWalletModal = ({ isOpen, onClose }: ConnectWalletModalProps)
   const fakeIdentity = 'FC-94A2-B7F1';
 
   useEffect(() => {
-    // Transition to Decrypting
+    // Transition to signature verification
     const t1 = setTimeout(() => {
       setPhase(1);
     }, 1500);
@@ -56,7 +56,7 @@ export const ConnectWalletModal = ({ isOpen, onClose }: ConnectWalletModalProps)
            <div className="scan-line opacity-30"></div>
         </div>
 
-        {/* Phase 0: Scanning */}
+	        {/* Phase 0: Preparing credential check */}
         <div className={`flex flex-col items-center transition-all duration-500 absolute ${phase === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
           <div className="relative w-24 h-24 mb-6">
             <div className="absolute inset-0 border-2 border-cyan-500 rounded-full animate-ping opacity-20"></div>
@@ -68,18 +68,18 @@ export const ConnectWalletModal = ({ isOpen, onClose }: ConnectWalletModalProps)
                </svg>
             </div>
           </div>
-          <h3 className="text-lg text-white font-medium tracking-widest mb-2">AWAITING BIOMETRICS</h3>
-          <p className="text-xs text-cyan-400 font-mono text-telemetry animate-pulse">Scanning sector grid for identity protocols...</p>
+	          <h3 className="text-lg text-white font-medium tracking-widest mb-2">PREPARING IDENTITY REVIEW</h3>
+	          <p className="text-xs text-cyan-400 font-mono text-telemetry animate-pulse">Checking local credential path...</p>
         </div>
 
-        {/* Phase 1: Decrypting Handshake */}
+	        {/* Phase 1: Verifying signature */}
         <div className={`flex flex-col items-center w-full transition-all duration-500 absolute ${phase === 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
           <div className="w-16 h-16 mb-6 bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center">
             <svg className="w-8 h-8 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
           </div>
-          <h3 className="text-lg text-yellow-500 font-medium tracking-widest mb-4">DECRYPTING HANDSHAKE</h3>
+	          <h3 className="text-lg text-yellow-500 font-medium tracking-widest mb-4">VERIFYING SIGNATURE</h3>
           
           <div className="w-full bg-black/50 border border-white/5 p-3 text-center overflow-hidden">
              {phase >= 1 && (
@@ -100,7 +100,7 @@ export const ConnectWalletModal = ({ isOpen, onClose }: ConnectWalletModalProps)
                </svg>
              </div>
           </div>
-          <h3 className="text-lg text-white font-medium tracking-widest mb-2">IDENTITY SECURED</h3>
+	          <h3 className="text-lg text-white font-medium tracking-widest mb-2">IDENTITY VERIFIED</h3>
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full mt-2">
             <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></div>
             <span className="text-sm font-mono text-green-400 tracking-wider font-bold">{fakeIdentity}</span>

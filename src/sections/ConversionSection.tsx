@@ -32,8 +32,8 @@ const deploymentPaths = [
     audience: 'Ecosystem Builders',
     title: 'Identity-aware applications',
     summary: 'Build services that consume identity proofs, wallet permissions, governance events, and settlement rails without rebuilding trust infrastructure.',
-    proof: 'SDK access, oracle hooks, compliance gates',
-    action: 'Developer Console',
+    proof: 'SDK access, policy data hooks, compliance gates',
+    action: 'Developer Portal',
     route: '/developer',
     accent: 'text-emerald-300',
     border: 'hover:border-emerald-400/45',
@@ -59,7 +59,7 @@ const evaluationSteps = [
 ];
 
 const proofSignals = [
-  { value: '3', label: 'buyer paths' },
+  { value: '3', label: 'entry paths' },
   { value: '0.4s', label: 'target finality' },
   { value: 'MPC', label: 'custody model' },
   { value: 'ZK', label: 'compliance proof' },
@@ -80,7 +80,7 @@ export const ConversionSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  <CipherHeading text="05 // Deployment Paths" />
+                  <CipherHeading text="06 // Deployment Paths" />
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-6">
@@ -95,10 +95,10 @@ export const ConversionSection = () => {
             <div className="border border-white/10 bg-white/[0.02] px-6 py-5 max-w-sm">
               <div className="flex items-center gap-3 text-white mb-3">
                 <ShieldCheck className="w-5 h-5 text-fc-gold" />
-                <span className="text-sm font-medium">Conversion rule</span>
+                <span className="text-sm font-medium">Evaluation rule</span>
               </div>
               <p className="text-sm text-slate-400 leading-relaxed">
-                Lead with the deployment path, then show the chain, token, and governance system as supporting infrastructure.
+                Lead with the deployment path, then show the protocol, economics, and governance system as supporting infrastructure.
               </p>
             </div>
           </div>

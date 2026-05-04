@@ -22,7 +22,7 @@ export const MatrixSection = () => {
       {/* Vertical Label */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] rotate-180 pointer-events-none vertical-text">
          <h2 className="text-[6rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>06 STACK</span>
+           <span>07 STACK</span>
          </h2>
       </div>
       <div className="max-w-5xl mx-auto relative z-10">
@@ -33,7 +33,7 @@ export const MatrixSection = () => {
         <FadeInUp>
           <div className="flex items-center gap-4 mb-8">
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-cyan-600 uppercase">
-              <CipherHeading text="06 // Identity To State Stack" />
+              <CipherHeading text="07 // Identity To State Stack" />
             </h2>
             <div className="w-24 h-px bg-slate-700"></div>
           </div>
@@ -43,7 +43,7 @@ export const MatrixSection = () => {
             <CipherHeading text=" Stack." className="inline-block" />
           </h3>
           <p className="text-slate-400 font-mono text-[11px] md:text-[13px] tracking-[0.1em] max-w-2xl leading-[2] mb-16 text-center mx-auto uppercase">
-            After identity, wallet, and governance access are established, the FC operating stack expands into custody, payments, assets, protocol intelligence, and digital public infrastructure. Each layer compounds the one before it.
+            After identity, wallet, and governance access are established, the FC operating stack expands into custody, payments, assets, policy intelligence, and digital public infrastructure. Each layer compounds the one before it.
           </p>
         </FadeInUp>
         <div className="relative pl-0 md:pl-12">
@@ -59,11 +59,11 @@ export const MatrixSection = () => {
           
           <div className="space-y-4 lg:space-y-6">
           {[
-            { level: 'L7', name: 'Intelligence & Protocols', desc: 'Agentic wallet copilots, risk automation, policy engines, and SDKs for sovereign application services.', color: 'border-slate-600' },
-            { level: 'L6', name: 'Government & Statecraft', desc: 'Digital resident registries, benefit workflows, committee execution, and public service portals.', color: 'border-slate-700' },
+	            { level: 'L7', name: 'Policy Intelligence & SDKs', desc: 'Agentic wallet copilots, risk automation, policy engines, and SDKs for digital public services.', color: 'border-slate-600' },
+            { level: 'L6', name: 'Government Operations', desc: 'Digital resident registries, benefit workflows, committee execution, and public service portals.', color: 'border-slate-700' },
             { level: 'L5', name: 'Asset & Capital Markets', desc: 'Stablecoin issuance, bond rails, land tokenization, and institutional-grade programmable assets.', color: 'border-slate-800' },
             { level: 'L4', name: 'Payments & Treasury', desc: 'Treasury sweeps, merchant rails, payout operations, ATM integrations, and programmable settlement flows.', color: 'border-slate-800' },
-            { level: 'L3', name: 'Sovereign Custody', desc: 'Seedless MPC wallets, deep cold storage, offline cards, and recovery layers bound to verified access.', color: 'border-fc-gold/30' },
+	            { level: 'L3', name: 'Institutional Custody', desc: 'Seedless MPC wallets, deep cold storage, offline cards, and recovery layers bound to verified access.', color: 'border-fc-gold/30' },
             { level: 'L2', name: 'Identity & Compliance', desc: 'Global identity credentials, zk-KYC proofs, cryptographic signatures, policy gates, and reputation graphs.', color: 'border-cyan-600/30' },
             { level: 'L1', name: 'Execution Base Layer', desc: 'FC Chain HTTS consensus, validator sequencing, and parallel execution state for sub-second finality.', color: 'border-cyan-600/30' }
           ].map((layer, index) => (

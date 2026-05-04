@@ -4,11 +4,11 @@ import Globe from 'react-globe.gl';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
 const HUBS = [
-  { lat: 35.6895, lng: 139.6917, name: 'Vanguard DEX', route: 'swap', color: '#0ea5e9' },
+  { lat: 35.6895, lng: 139.6917, name: 'Liquidity Rail', route: 'swap', color: '#0ea5e9' },
   { lat: 40.7128, lng: -74.0060, name: 'Node Operators', route: 'staking', color: '#eab308' },
   { lat: 51.5074, lng: -0.1278, name: 'Cross-Chain Bridge', route: 'bridge', color: '#8b5cf6' },
-  { lat: 1.3521, lng: 103.8198, name: 'Whisper Relay', route: 'whisper', color: '#ec4899' },
-  { lat: 50.1109, lng: 8.6821, name: 'Sentinel Grid', route: 'sentinel', color: '#22c55e' },
+  { lat: 1.3521, lng: 103.8198, name: 'Secure Messaging', route: 'whisper', color: '#ec4899' },
+  { lat: 50.1109, lng: 8.6821, name: 'Security Operations', route: 'sentinel', color: '#22c55e' },
   { lat: 37.7749, lng: -122.4194, name: 'Developer Hub', route: 'developer', color: '#f97316' },
 ];
 
@@ -39,11 +39,11 @@ export const GlobalNodeMap = () => {
     const globe = globeEl.current;
     if (globe) {
       globe.controls().autoRotate = true;
-      globe.controls().autoRotateSpeed = 0.15; // Slow down for massive scale mystery
+      globe.controls().autoRotateSpeed = 0.15; // Slow down for an institutional infrastructure view
       globe.controls().enableZoom = false;
       
       // Cinematic Entrance: Start massive (close-up) and slowly pull back
-      globe.pointOfView({ altitude: 0.05 }); // Start extremely close
+      globe.pointOfView({ altitude: 0.05 }); // Start close for a deliberate reveal
       setTimeout(() => {
         // Animate out to full altitude over 8 seconds for a majestic reveal
         globe.pointOfView({ altitude: 2.2 }, 8000); 

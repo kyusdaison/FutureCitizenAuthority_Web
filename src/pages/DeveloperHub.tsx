@@ -18,7 +18,7 @@ contract GlobalIdentityToken is FCC20, Ownable {
         _mint(to, amount);
     }
     
-    // Vanguard verification routine
+    // FCA verification routine
     function verifyCitizen(address account) external view returns (bool) {
         return balanceOf(account) > 0;
     }
@@ -26,15 +26,15 @@ contract GlobalIdentityToken is FCC20, Ownable {
 `;
 
 const getDeploymentSequence = (identity: string, balance: number) => [
-  "> vanguard-cli compile --network mainnet",
+  "> fca-cli compile --network mainnet",
   "[INFO] Compiling 2 contract files...",
   "[INFO] Optimizing Bytecode (Runs: 200)",
   "Compiling @futurecitizen/contracts/token/FCC20.sol",
   "Compiling GlobalIdentityToken.sol",
   "[SUCCESS] Compilation successful. Output artifacts saved.",
-  "> vanguard-cli deploy GlobalIdentityToken --network mainnet",
-  "[INFO] Initializing deployment matrix...",
-  "[INFO] Connecting to Vanguard RPC Node (ws://rpc.fc-chain.network)...",
+  "> fca-cli deploy GlobalIdentityToken --network mainnet",
+  "[INFO] Initializing deployment review...",
+  "[INFO] Connecting to FCA RPC Node (ws://rpc.fc-chain.network)...",
   "Connection established. Sync status: SYNCHRONIZED",
   `Account: ${identity.substring(0, 6)}...${identity.substring(identity.length - 4)}`,
   `Balance: ${balance.toFixed(2)} FCC`,
@@ -69,12 +69,12 @@ const DeveloperHub = () => {
     if (isDeploying) return;
     
     if (!connectedIdentity) {
-      setLogs(prev => [...prev, '> vanguard-cli deploy GlobalIdentityToken --network mainnet', '[ERROR] Vanguard Core Neural Link required. Identity missing.']);
+      setLogs(prev => [...prev, '> fca-cli deploy GlobalIdentityToken --network mainnet', '[ERROR] Verified FC-ID credential required. Identity missing.']);
       return;
     }
     
     if (balances.fcc < 150) {
-      setLogs(prev => [...prev, '> vanguard-cli deploy GlobalIdentityToken --network mainnet', `[ERROR] Insufficient computation credits. Required: 150 FCC. Available: ${balances.fcc.toFixed(2)} FCC.`]);
+      setLogs(prev => [...prev, '> fca-cli deploy GlobalIdentityToken --network mainnet', `[ERROR] Insufficient computation credits. Required: 150 FCC. Available: ${balances.fcc.toFixed(2)} FCC.`]);
       return;
     }
 
@@ -113,14 +113,14 @@ const DeveloperHub = () => {
     if (command === 'clear') {
       setLogs([]);
     } else if (command === 'help') {
-      setLogs(prev => [...prev, '[INFO] Available Commands:', '  vanguard-cli compile', '  vanguard-cli deploy', '  clear', '  help']);
-    } else if (command.startsWith('vanguard-cli compile')) {
+      setLogs(prev => [...prev, '[INFO] Available Commands:', '  fca-cli compile', '  fca-cli deploy', '  clear', '  help']);
+    } else if (command.startsWith('fca-cli compile')) {
       // Simulate quick compile
       setTimeout(() => {
         setLogs(prev => [...prev, "[INFO] Compiling 2 contract files...", "Compiling GlobalIdentityToken.sol", "[SUCCESS] Compilation successful."]);
         if (connectedIdentity) gainXP(100);
       }, 500);
-    } else if (command.startsWith('vanguard-cli deploy')) {
+    } else if (command.startsWith('fca-cli deploy')) {
       handleDeploy();
     } else {
       setTimeout(() => {
@@ -138,8 +138,8 @@ const DeveloperHub = () => {
         className="mb-10 flex justify-between items-end"
       >
         <div>
-          <h1 className="text-4xl font-mono font-bold uppercase text-white mb-2 tracking-wider">Developer Command Center</h1>
-          <p className="font-mono text-slate-400">Compile, test, and deploy decentralized logic to the FC Engine.</p>
+	          <h1 className="text-4xl font-mono font-bold uppercase text-white mb-2 tracking-wider">Developer Portal</h1>
+	          <p className="font-mono text-slate-400">Compile, test, and deploy identity-aware logic to the FC Engine.</p>
         </div>
         <div className="hidden lg:flex gap-4">
            <div className="px-4 py-2 border border-cyan-500/20 bg-cyan-500/10 flex items-center gap-2">
@@ -216,7 +216,7 @@ const DeveloperHub = () => {
                disabled={isDeploying}
                className={`bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/50 text-cyan-500 px-8 py-2  font-mono font-bold text-xs tracking-widest transition-colors shadow-none ${isDeploying ? 'opacity-50 cursor-not-allowed' : ''}`}
              >
-                {isDeploying ? 'DEPLOYING...' : 'DECRYPT & DEPLOY'}
+	                {isDeploying ? 'DEPLOYING...' : 'VERIFY & DEPLOY'}
              </button>
           </div>
         </motion.div>
@@ -231,11 +231,11 @@ const DeveloperHub = () => {
              transition={{ delay: 0.3 }}
              className="agency-panel border-white/10 p-6 relative overflow-hidden group"
            >
-              <h3 className="text-sm font-mono font-bold text-white mb-2 uppercase tracking-widest">Vanguard CLI Instructions</h3>
+	              <h3 className="text-sm font-mono font-bold text-white mb-2 uppercase tracking-widest">FCA CLI Instructions</h3>
               <p className="text-xs text-slate-400 leading-relaxed font-mono">
-                Deploying directly to the FC Core Engine requires a validated <span className="text-cyan-500 font-bold">FC-ID</span> token.
-                Transactions are inherently parallelized resulting in sub-second finality.
-                Gas fees are optimized using atomic synthesis.
+	                Deploying directly to the FC Core Engine requires a validated <span className="text-cyan-500 font-bold">FC-ID</span> credential.
+	                Transactions are inherently parallelized resulting in sub-second finality.
+	                Gas fees are routed through the platform liquidity layer.
               </p>
            </motion.div>
            

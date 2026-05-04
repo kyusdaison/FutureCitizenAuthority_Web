@@ -25,7 +25,7 @@ export const FooterSection = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fc-gold to-transparent -translate-x-full group-hover:translate-x-full duration-1000 ease-in-out pointer-events-none"></div>
               <div className="relative bg-[#010204] px-8 md:px-12 py-5 flex items-center justify-center gap-3 border border-white/5 w-full h-full">
                 <ShieldCheck className="w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
-                <span className="text-xs font-bold uppercase text-fc-gold group-hover:text-white transition-colors z-10 drop-shadow-md">Start Identity Activation</span>
+	                <span className="text-xs font-bold uppercase text-fc-gold group-hover:text-white transition-colors z-10 drop-shadow-md">Review Identity Layer</span>
                 <ArrowRight className="w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
               </div>
             </button>
@@ -49,7 +49,7 @@ export const FooterSection = () => {
             <div className="relative bg-[#010204] px-10 py-4 flex items-center justify-center border border-white/5 w-full h-full">
               <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-fc-gold/50 group-hover:border-fc-gold transition-colors"></div>
               <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-fc-gold/50 group-hover:border-fc-gold transition-colors"></div>
-              <span className="text-xs font-bold uppercase text-slate-300 group-hover:text-white transition-colors z-10 drop-shadow-md">Developer Console</span>
+	              <span className="text-xs font-bold uppercase text-slate-300 group-hover:text-white transition-colors z-10 drop-shadow-md">Developer Portal</span>
             </div>
           </button>
         </MagneticButton>

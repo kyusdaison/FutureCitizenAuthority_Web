@@ -12,12 +12,12 @@ interface Message {
 }
 
 const PREDICTIONS = [
-  "[TELEMETRY] 4,192 active nodes. Byzantine fault tolerance optimal. Quantum-resistant shielding active.",
-  "[PREDICTION] Gas fee volatility at 4.2%. Projected optimal execution window: Block #902441. Confidence: 98.4%.",
-  "[SECURITY] Scanning mempool... 0 anomalies detected. MEV protection layer functioning at 100% efficiency.",
-  "[ANALYSIS] Liquidity fragmentation in routing matrix resolved. Yield pathways optimized.",
-  "[SYSTEM] The architecture is evolving. Predictive models suggest a 12% increase in cross-chain volume within 4 cycles.",
-  "[WARNING] Minor temporal sync drift in node cluster 7. Auto-correction algorithm deployed. Resolution in T-minus 4 seconds."
+  "[TELEMETRY] 4,192 active nodes. Byzantine fault tolerance within target range. Security posture normal.",
+  "[ANALYSIS] Gas fee volatility at 4.2%. Suggested execution window: Block #902441. Confidence: 98.4%.",
+  "[SECURITY] Scanning settlement queue... 0 anomalies detected. Protection layer functioning within policy.",
+  "[ANALYSIS] Liquidity fragmentation resolved. Routing pathways optimized.",
+  "[SYSTEM] Predictive models suggest a 12% increase in cross-chain volume within 4 reporting cycles.",
+  "[NOTICE] Minor sync drift in node cluster 7. Auto-correction scheduled. Resolution expected in 4 seconds."
 ];
 
 export default function Oracle() {
@@ -25,7 +25,7 @@ export default function Oracle() {
     {
       id: 'msg-0',
       sender: 'oracle',
-      text: 'SYSTEM ONLINE. FC-CHAIN OMNI-ORACLE READY. AWAITING QUERY...',
+	      text: 'POLICY INTELLIGENCE ONLINE. FCA REVIEW MODEL READY. AWAITING QUERY...',
       timestamp: new Date().toISOString()
     }
   ]);
@@ -65,7 +65,7 @@ export default function Oracle() {
       const cmd = inputValue.trim().toLowerCase();
       
       if (cmd === 'help') {
-        responseText = "[SYS_HELP] AVAILABLE COMMANDS:\n> PING: Check lattice latency\n> SCAN [target]: Scan network for anomalies\n> DEPLOY: Simulate contract deployment\n> AUTH: Verify biometric signature\n> PREDICT: Run oracle matrix";
+	        responseText = "[SYS_HELP] AVAILABLE COMMANDS:\n> PING: Check network latency\n> SCAN [target]: Review network anomalies\n> DEPLOY: Simulate contract deployment\n> AUTH: Review identity credential\n> PREDICT: Run policy model";
       } else if (cmd === 'ping') {
         responseText = `[PONG] Network Latency: ${latency}ms. Node connection STABLE.`;
         if (connectedIdentity) gainXP(5);
@@ -78,12 +78,12 @@ export default function Oracle() {
         responseText = `[DEPLOYMENT] Simulating deployment of ${target}...\nSTATUS: SUCCESS. Gas optimization: +12%.`;
         if (connectedIdentity) gainXP(50);
       } else if (cmd === 'auth') {
-        responseText = "[AUTH] Biometric signature required. Please proceed to PASSPORT terminal.";
+	        responseText = "[AUTH] Verified identity credential required. Please proceed to the Identity layer.";
       } else if (cmd === 'predict') {
         responseText = PREDICTIONS[Math.floor(Math.random() * PREDICTIONS.length)];
         if (connectedIdentity) gainXP(20);
       } else {
-        responseText = `[UNRECOGNIZED_QUERY] Command '${cmd.split(' ')[0]}' not found in Omni-V4.2 directive. Fallback to random matrix insight:\n${PREDICTIONS[Math.floor(Math.random() * PREDICTIONS.length)]}`;
+	        responseText = `[UNRECOGNIZED_QUERY] Command '${cmd.split(' ')[0]}' not found in the policy model. Returning a relevant telemetry insight:\n${PREDICTIONS[Math.floor(Math.random() * PREDICTIONS.length)]}`;
       }
 
       const newOracleMsg: Message = {
@@ -111,11 +111,11 @@ export default function Oracle() {
       >
         <div className="flex items-center justify-center space-x-4 mb-4">
           <div className="w-12 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-          <h2 className="text-cyan-500 font-mono font-bold text-sm tracking-widest uppercase">Predictive Sub-System</h2>
+	          <h2 className="text-cyan-500 font-mono font-bold text-sm tracking-widest uppercase">Policy Review Sub-System</h2>
           <div className="w-12 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
         </div>
         <CipherHeading 
-          text="OMNI-ORACLE" 
+	          text="POLICY INTELLIGENCE" 
           className="text-5xl md:text-7xl font-light text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-800 tracking-tight"
         />
       </motion.div>
@@ -173,10 +173,10 @@ export default function Oracle() {
 
           <div className="mt-12 text-center relative z-20">
             <div className="font-mono text-cyan-400 font-bold mb-2 tracking-widest">
-              {isProcessing ? 'ANALYZING MULTIVERSE...' : 'READY FOR INPUT'}
+	              {isProcessing ? 'ANALYZING POLICY DATA...' : 'READY FOR INPUT'}
             </div>
             <div className="font-mono text-xs text-zinc-500">
-              UPTIME: 99.999% | MODEL: OMNI-V4.2
+	              UPTIME: 99.999% | MODEL: POLICY-V1
             </div>
             <div className="font-mono text-xs text-zinc-500 mt-1">
               LATENCY: {latency}ms
@@ -197,7 +197,7 @@ export default function Oracle() {
                <div className="w-2 h-2 bg-cyan-500 animate-[pulse_2s_infinite]" />
                <span className="font-mono text-xs font-bold text-cyan-400 tracking-wider">SECURE CHANNEL ESTABLISHED</span>
              </div>
-             <div className="font-mono text-xs text-zinc-500">ROOT@ORACLE:~#</div>
+	             <div className="font-mono text-xs text-zinc-500">REVIEW@POLICY:~#</div>
           </div>
 
           {/* Chat History */}
@@ -239,10 +239,10 @@ export default function Oracle() {
                   >
                     <div className="max-w-[80%] flex flex-col items-start">
                       <span className="text-[10px] font-mono text-zinc-500 mb-1">
-                        ORACLE
+	                        POLICY
                       </span>
                       <div className="font-mono font-bold text-sm p-4 bg-cyan-900/40 text-cyan-300 border border-cyan-500/30">
-                        <span className="animate-[pulse_1s_infinite]">▌ PROCESSING MATRIX...</span>
+	                        <span className="animate-[pulse_1s_infinite]">| PROCESSING REVIEW...</span>
                       </div>
                     </div>
                   </motion.div>
@@ -261,7 +261,7 @@ export default function Oracle() {
                  value={inputValue}
                  onChange={(e) => setInputValue(e.target.value)}
                  disabled={isProcessing}
-                 placeholder="QUERY ORACLE..."
+	                 placeholder="ASK POLICY INTELLIGENCE..."
                  className="w-full bg-black/40 border border-white/10 py-4 pl-10 pr-24 font-mono font-bold text-white text-sm focus:outline-none focus:border-cyan-400 transition-all disabled:opacity-50"
                />
                <button

@@ -59,8 +59,8 @@ const Ecosystem = () => {
         <div className="text-center mb-16 relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-500/5 blur-[10px] pointer-events-none -z-10"></div>
             <h1 className="text-4xl md:text-6xl text-vanguard mb-4 text-white uppercase tracking-widest font-bold">Future Citizen Authority Core Infrastructure</h1>
-            <p className="text-cyan-500 text-telemetry text-[10px] md:text-xs mb-4 font-bold tracking-widest uppercase">Series III: Geometric Expansion</p>
-            <p className="text-slate-400 text-sm max-w-2xl mx-auto font-medium">Absolute sovereignty encapsulated in precision-engineered cryptographic hardware and digital primitives.</p>
+            <p className="text-cyan-500 text-telemetry text-[10px] md:text-xs mb-4 font-bold tracking-widest uppercase">Institutional Product Surfaces</p>
+            <p className="text-slate-400 text-sm max-w-2xl mx-auto font-medium">Identity, custody, compliance, and settlement components designed for reviewable digital governance deployments.</p>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
@@ -92,7 +92,7 @@ const Ecosystem = () => {
         </div>
       </motion.div>
 
-      {/* Web3 Ecosystem Directory */}
+      {/* Integration Directory */}
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -102,13 +102,13 @@ const Ecosystem = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
           <div>
-            <h2 className="text-3xl md:text-4xl text-vanguard text-white mb-2 uppercase tracking-widest font-bold">Web3 Ecosystem Directory</h2>
-            <p className="text-slate-400 text-sm font-medium">Discover 150+ DApps, protocols, and tools built on Future Citizen Chain.</p>
+	            <h2 className="text-3xl md:text-4xl text-vanguard text-white mb-2 uppercase tracking-widest font-bold">Integration Directory</h2>
+	            <p className="text-slate-400 text-sm font-medium">Discover payment, asset, identity, governance, and developer integrations built on Future Citizen Chain.</p>
           </div>
           <div className="relative w-full md:w-72">
             <input 
               type="text" 
-              placeholder="Search DApps..." 
+	              placeholder="Search integrations..." 
               className="w-full input-neon pl-10 bg-black/40 border-white/10 focus:border-cyan-500/50 font-mono text-sm"
             />
             <svg className="w-4 h-4 text-slate-400 absolute left-4 top-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,7 +119,7 @@ const Ecosystem = () => {
 
         {/* Filter Tags */}
         <div className="flex space-x-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-          {['All', 'DeFi', 'NFTs', 'Gaming', 'Bridges', 'DAO', 'Tools'].map((tag, i) => (
+	          {['All', 'Payments', 'Assets', 'Identity', 'Bridges', 'Governance', 'Tools'].map((tag, i) => (
             <button key={tag} className={`px-5 py-2  text-xs font-bold transition-colors whitespace-nowrap border uppercase tracking-widest ${i === 0 ? 'bg-white text-black border-white' : 'bg-black/40 text-slate-300 hover:bg-white/10 hover:text-white border-white/10'}`}>
               {tag}
             </button>
@@ -156,11 +156,11 @@ const Ecosystem = () => {
                
                <div className="flex justify-between items-center mt-auto border-t border-white/5 pt-4 relative z-10 group-hover:border-cyan-500/20 transition-colors">
                   <div>
-                     <div className="text-[9px] text-slate-500 uppercase tracking-[0.2em] mb-1 font-bold">Protocol Stats</div>
+	                     <div className="text-[9px] text-slate-500 uppercase tracking-[0.2em] mb-1 font-bold">Operational Signal</div>
                      <div className="text-sm font-mono text-white font-medium">{app.tvl}</div>
                   </div>
                   <button onClick={() => { setSelectedApp(app); playSuccess(); }} className="text-cyan-500 text-xs font-bold hover:text-black hover:bg-cyan-500 border border-cyan-500/50 px-5 py-2 uppercase tracking-widest transition-colors">
-                    Deep Scan
+	                    Review
                   </button>
                </div>
             </motion.div>
@@ -168,7 +168,7 @@ const Ecosystem = () => {
         </div>
         
         <div className="flex justify-center mt-12">
-           <button className="btn-vercel-outline px-8">Load More DApps</button>
+	           <button className="btn-vercel-outline px-8">Load More Integrations</button>
         </div>
       </motion.div>
 
@@ -182,7 +182,7 @@ const Ecosystem = () => {
           Category: selectedApp?.category,
           Description: selectedApp?.description,
           TotalValueLocked: selectedApp?.tvl,
-          SecurityAudit: 'Verified by Vanguard Sentinel',
+	          SecurityAudit: 'Verified by Security Operations',
           DeploymentBlock: Math.floor(Math.random() * 5000000 + 10000000),
           ContractAddress: `0xFC${Math.random().toString(16).slice(2, 10).toUpperCase()}...${Math.random().toString(16).slice(2, 6).toUpperCase()}`,
         }}

@@ -18,7 +18,7 @@ export const CollectiveSection = () => {
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text z-0">
          <h2 className="text-[8rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>08 OPERATIONS</span>
+	           <span>09 OPERATIONS</span>
          </h2>
       </div>
 
@@ -31,7 +31,7 @@ export const CollectiveSection = () => {
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-px bg-slate-700"></div>
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-slate-500 uppercase">
-              <CipherHeading text="08 // Architecture & Operations" />
+	              <CipherHeading text="09 // Architecture & Operations" />
             </h2>
           </div>
           <h3 className="text-5xl md:text-7xl font-serif font-light tracking-tight drop-shadow-lg mb-8 text-white">
@@ -39,7 +39,7 @@ export const CollectiveSection = () => {
             <span className="italic text-slate-500 font-serif"><CipherHeading text="&amp; Operations." /></span>
           </h3>
           <p className="text-gray-400 font-light leading-[1.8] tracking-wide text-lg max-w-2xl">
-            A globally distributed, phantom-tier collective of protocol cryptographic mathematicians, scalable systems specialists, and spatial UX engineers charting the absolute Sovereign Interface.
+	            A globally distributed engineering and operations group covering applied cryptography, scalable systems, institutional UX, and deployment support for the identity, wallet, and governance stack.
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export const CollectiveSection = () => {
               <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none mix-blend-overlay"></div>
               
               <div className="relative z-10">
-                <h4 className="text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase text-cyan-600 mb-4 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">ACTIVE AUTHORITY NODES</h4>
+	                <h4 className="text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase text-cyan-600 mb-4 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">ACTIVE OPERATING GROUPS</h4>
                 <div className="text-7xl md:text-9xl font-serif font-light tracking-tighter text-white mb-2 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">36</div>
                 <div className="text-[11px] md:text-xs tracking-widest uppercase text-slate-400 font-mono">Core Contributors</div>
               </div>
@@ -64,7 +64,7 @@ export const CollectiveSection = () => {
                 </div>
                 <div>
                   <div className="text-3xl md:text-4xl font-serif text-white mb-2">0</div>
-                  <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-fc-gold font-bold">Compromises</div>
+	                  <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-fc-gold font-bold">Critical Incidents</div>
                 </div>
               </div>
 
@@ -83,7 +83,7 @@ export const CollectiveSection = () => {
               <div className="absolute top-8 right-8 text-4xl md:text-5xl font-display font-black tracking-tighter text-white/10 group-hover:text-white/30 transition-colors">12</div>
               <div className="relative z-10">
                 <h5 className="text-white text-lg font-serif mb-2 group-hover:text-fc-gold transition-colors">Cryptography</h5>
-                <p className="text-xs text-gray-400 leading-relaxed font-light">ZKP Protocol Mathematicians & Advanced Consensus Researchers resolving the scalability trilemma.</p>
+	                <p className="text-xs text-gray-400 leading-relaxed font-light">ZKP and consensus researchers focused on privacy-preserving verification, finality, and scalable public infrastructure.</p>
               </div>
             </div>
           </TiltCard>
@@ -94,7 +94,7 @@ export const CollectiveSection = () => {
               <div className="absolute top-8 right-8 text-4xl md:text-5xl font-display font-black tracking-tighter text-white/10 group-hover:text-white/30 transition-colors">14</div>
               <div className="relative z-10">
                 <h5 className="text-white text-lg font-serif mb-2">Core Systems</h5>
-                <p className="text-xs text-gray-400 leading-relaxed font-light">Elite Rust & Distributed Go Engineers deploying massive multi-threaded EVM execution shards.</p>
+	                <p className="text-xs text-gray-400 leading-relaxed font-light">Rust and Go engineers deploying regional execution services, validator tooling, and operational reliability systems.</p>
               </div>
             </div>
           </TiltCard>
@@ -105,7 +105,7 @@ export const CollectiveSection = () => {
               <div className="absolute top-8 right-8 text-4xl md:text-5xl font-serif font-light tracking-tighter text-cyan-500/10 group-hover:text-cyan-500/30 transition-colors">10</div>
               <div className="relative z-10">
                 <h5 className="text-white text-lg font-serif mb-2 group-hover:text-cyan-600 transition-colors">Human-Machine Interfaces</h5>
-                <p className="text-xs text-gray-400 leading-relaxed font-light">Creative Technologists mapping fluid sub-millisecond interaction graphs onto spatial OS interfaces.</p>
+	                <p className="text-xs text-gray-400 leading-relaxed font-light">Product and interface specialists designing secure operator workflows for institutional users.</p>
               </div>
               
               {/* Horizontal scanning laser line */}

@@ -8,6 +8,13 @@ import { HexGridBackground } from '../components/HexGridBackground';
 
 const NetworkMatrix = lazy(() => import('../components/NetworkMatrix').then(module => ({ default: module.NetworkMatrix })));
 
+const institutionalSignals = [
+  'Reviewable identity',
+  'Audit trails',
+  'Data boundaries',
+  'Pilot readiness',
+];
+
 export const HeroSection = () => {
   const { scrollYProgress } = useScroll();
   const opacityHeroText = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
@@ -15,7 +22,7 @@ export const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="vision" className="min-h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden">
+    <section id="hero" className="min-h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden">
       {/* HUD Elements */}
       <div className="absolute top-1/4 left-12 hidden xl:flex flex-col gap-2 text-left opacity-80">
          <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">SYS.COORD <span className="text-slate-600">//</span> 45.92.110</div>
@@ -69,7 +76,7 @@ export const HeroSection = () => {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2, delay: 0.6 }} className="mt-4 max-w-2xl flex flex-col items-center relative z-20">
           <div className="w-px h-16 bg-gradient-to-b from-fc-gold/20 to-transparent mb-8"></div>
           <p className="text-[11px] md:text-[13px] font-mono tracking-[0.3em] text-slate-300 uppercase leading-[2.5] text-center max-w-2xl auth-glass-panel border-t border-[rgba(212,175,55,0.15)] p-8 rounded-sm">
-            The <span className="text-gold-gradient font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">Sovereign Digital Infrastructure</span> ecosystem. Identity-first rails for wallets, programmable finance, compliance proofs, and sovereign digital services.
+            The <span className="text-gold-gradient font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">Digital Governance Infrastructure</span> ecosystem. Identity-first rails for wallets, programmable finance, compliance proofs, and verifiable public services.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
             <MagneticButton intensity={0.18}>
@@ -78,23 +85,30 @@ export const HeroSection = () => {
                 onClick={() => navigate('/identity')}
                 className="premium-btn px-10 py-4 auth-glass-panel rounded-sm"
               >
-                <span className="relative z-10 text-[11px] font-mono tracking-[0.4em] text-gold-gradient uppercase">Enter Identity</span>
+	                <span className="relative z-10 text-[11px] font-mono tracking-[0.4em] text-gold-gradient uppercase">Review Identity</span>
               </button>
             </MagneticButton>
             <MagneticButton intensity={0.14}>
               <button
                 type="button"
-                onClick={() => navigate('/ecosystem')}
+                onClick={() => document.getElementById('model')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 className="px-10 py-4 border border-white/10 bg-[#020617]/80 text-[11px] font-mono tracking-[0.4em] text-slate-300 uppercase transition-colors hover:border-cyan-500/40 hover:text-white"
               >
-                Explore Network
+	                See Operating Model
               </button>
             </MagneticButton>
           </div>
-          <p className="mt-4 text-[10px] font-mono tracking-[0.35em] uppercase text-slate-500 text-center">
-            Identity onboarding for access, governance, and verifiable services.
-          </p>
-        </motion.div>
+	          <p className="mt-4 text-[10px] font-mono tracking-[0.35em] uppercase text-slate-500 text-center">
+	            Identity onboarding for access, governance, and verifiable services.
+	          </p>
+            <div className="mt-8 grid w-full max-w-3xl grid-cols-2 gap-3 md:grid-cols-4">
+              {institutionalSignals.map((signal) => (
+                <div key={signal} className="border border-white/10 bg-[#020617]/75 px-4 py-3 text-center backdrop-blur-md">
+                  <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-slate-400">{signal}</span>
+                </div>
+              ))}
+            </div>
+	        </motion.div>
 
       </motion.div>
 
@@ -111,11 +125,11 @@ export const HeroSection = () => {
         <div className="animate-marquee flex gap-16 text-[9px] font-mono tracking-[0.4em] text-slate-500 uppercase">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="flex gap-16 whitespace-nowrap">
-              <span>// MAINNET TPS: 50,000+ (HTTS)</span>
-              <span>// TTF: 0.5 - 2.0 SECONDS</span>
-              <span>// CORE PROTOCOLS: WEB3 ID & ZKP-MPC</span>
-              <span>// EXECUTION: SOVEREIGN ENCLAVE</span>
-              <span>// CLASSIFICATION: UNRESTRICTED <span className="text-fc-gold opacity-50 ml-2">// NATIVE ASSET: $FCC</span></span>
+              <span>// SETTLEMENT CAPACITY: 50,000+ TPS</span>
+              <span>// TARGET FINALITY: 0.5 - 2.0 SECONDS</span>
+              <span>// CORE CONTROLS: IDENTITY & ZKP-MPC</span>
+              <span>// EXECUTION: GOVERNANCE ENCLAVE</span>
+              <span>// CLASSIFICATION: UNRESTRICTED <span className="text-fc-gold opacity-50 ml-2">// NATIVE DENOMINATION: $FCC</span></span>
             </div>
           ))}
         </div>

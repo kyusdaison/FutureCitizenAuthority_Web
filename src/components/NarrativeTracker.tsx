@@ -2,15 +2,16 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 
 const SECTIONS = [
   { id: 'hero', name: '00 // INITIALIZE' },
-  { id: 'identity', name: '01 // IDENTITY' },
-  { id: 'architecture', name: '02 // WALLET RAIL' },
-  { id: 'governance', name: '03 // GOVERNANCE' },
-  { id: 'assurance', name: '04 // ASSURANCE' },
-  { id: 'deployment', name: '05 // DEPLOYMENT' },
-  { id: 'matrix', name: '06 // STACK' },
-  { id: 'tokenomics', name: '07 // ECONOMICS' },
-  { id: 'collective', name: '08 // OPERATIONS' },
-  { id: 'roadmap', name: '09 // GENESIS' }
+  { id: 'model', name: '01 // MODEL' },
+  { id: 'identity', name: '02 // IDENTITY' },
+  { id: 'architecture', name: '03 // WALLET RAIL' },
+  { id: 'governance', name: '04 // GOVERNANCE' },
+  { id: 'assurance', name: '05 // ASSURANCE' },
+  { id: 'deployment', name: '06 // DEPLOYMENT' },
+  { id: 'matrix', name: '07 // STACK' },
+  { id: 'tokenomics', name: '08 // ECONOMICS' },
+  { id: 'collective', name: '09 // OPERATIONS' },
+  { id: 'roadmap', name: '10 // ROADMAP' }
 ];
 
 export const NarrativeTracker: React.FC = () => {

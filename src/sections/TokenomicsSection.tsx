@@ -22,7 +22,7 @@ export const TokenomicsSection = () => {
       </motion.div>
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text">
          <h2 className="text-[8rem] font-display font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <GlitchText text="07 ECONOMICS" isActive={true} />
+	           <GlitchText text="08 ECONOMICS" isActive={true} />
          </h2>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
@@ -30,14 +30,14 @@ export const TokenomicsSection = () => {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-12 h-px bg-fc-gold/50"></div>
             <h2 className="text-[10px] font-bold tracking-[0.5em] text-fc-gold uppercase">
-              <CipherHeading text="07 // Network Economics" />
+              <CipherHeading text="08 // Network Economics" />
             </h2>
             <div className="w-12 h-px bg-fc-gold/50"></div>
           </div>
           <h3 className="text-5xl md:text-7xl font-serif font-light tracking-tight mb-24 text-center drop-shadow-lg text-white">
             <CipherHeading text="The " className="inline-block" />
-            <span className="text-gradient-gold italic font-serif"><CipherHeading text="5 Billion" /></span>
-            <CipherHeading text=" Asset." className="inline-block" />
+	            <span className="text-gradient-gold italic font-serif"><CipherHeading text="Economic" /></span>
+	            <CipherHeading text=" Layer." className="inline-block" />
           </h3>
         </FadeInUp>
 
@@ -62,7 +62,7 @@ export const TokenomicsSection = () => {
                 <span className="text-[10px] font-bold tracking-[0.4em] text-gray-500 uppercase mb-6 block border-b border-white/10 pb-4">Native Denomination</span>
                 <h4 className="text-5xl lg:text-7xl font-serif font-light text-white mb-6">$FCC</h4>
                 <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide">
-                  The solitary, foundational native token powering the entire distributed network. No convoluted dual-token arbitrage structures. FCC intrinsically fuels transaction gas computationally, establishes node staking rewards, and drives absolute on-chain decentralized governance voting logic.
+	                  FCC is the native denomination for gas, validator incentives, treasury operations, and on-chain governance. The model keeps the economic layer simple so institutional reviewers can follow supply, utility, and control surfaces without dual-token ambiguity.
                 </p>
               </div>
             </FadeInUp>
@@ -80,7 +80,7 @@ export const TokenomicsSection = () => {
                     <div className="text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase text-gray-400">Ecosystem Incentive</div>
                   </div>
                   <div className="hidden md:block w-px h-16 bg-white/10"></div>
-                  <div className="text-xs text-gray-500 md:max-w-[280px] md:text-right font-light leading-relaxed">3.7 Billion FCC. Reserved entirely as a cryptographic reward pool for active L1 node miners. 800 million released Year 1, algorithmic halving strict schedule every 3 years.</div>
+	                  <div className="text-xs text-gray-500 md:max-w-[280px] md:text-right font-light leading-relaxed">3.7 Billion FCC. Reserved as an incentive pool for active L1 validator operators. 800 million released Year 1, followed by a scheduled halving cycle every 3 years.</div>
                 </div>
               </TiltCard>
             </FadeInUp>
@@ -94,8 +94,8 @@ export const TokenomicsSection = () => {
                     <div className="w-1.5 h-1.5 border border-cyan-500 bg-cyan-500/20 glow glow-cyan-500/50"></div>
                   </div>
                   <div className="text-4xl md:text-5xl font-serif text-white mb-2 mt-12 md:mt-24">10%</div>
-                  <div className="text-[9px] md:text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-4">Early Presale</div>
-                  <p className="text-[10px] text-gray-500 font-light leading-relaxed">500 Million FCC. Allocated to immediately fund core fundamental zero-knowledge technical research, physical data center hardware deployments, and sovereign structural operations.</p>
+	                  <div className="text-[9px] md:text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-4">Early Program Reserve</div>
+	                  <p className="text-[10px] text-gray-500 font-light leading-relaxed">500 Million FCC. Allocated to fund zero-knowledge research, physical infrastructure deployment, and institutional operating readiness.</p>
                 </div>
               </TiltCard>
             </FadeInUp>
@@ -110,7 +110,7 @@ export const TokenomicsSection = () => {
                      <div className="absolute top-0 right-0 w-24 h-24 bg-fc-gold/5 blur-[40px] rounded-full pointer-events-none"></div>
                      <div className="text-3xl md:text-4xl font-serif text-white mb-1">8%</div>
                      <div className="text-[8px] md:text-[9px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-2">R&D Team</div>
-                     <p className="text-[9px] text-gray-500 font-light leading-relaxed drop-shadow-sm">400M. Subject to an extreme, uncompromising 5-year mathematical lock-in contract.</p>
+	                     <p className="text-[9px] text-gray-500 font-light leading-relaxed drop-shadow-sm">400M. Subject to a 5-year vesting and lockup schedule for long-term technical alignment.</p>
                   </div>
                 </TiltCard>
               </FadeInUp>
@@ -122,7 +122,7 @@ export const TokenomicsSection = () => {
                      <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 blur-[40px] rounded-full pointer-events-none"></div>
                      <div className="text-3xl md:text-4xl font-serif text-white mb-1">8%</div>
                      <div className="text-[8px] md:text-[9px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-2">Management Fund</div>
-                     <p className="text-[9px] text-gray-500 font-light leading-relaxed drop-shadow-sm">400M. On-chain reserve treasury to systematically incentivize late-joining elite engineering talent.</p>
+	                     <p className="text-[9px] text-gray-500 font-light leading-relaxed drop-shadow-sm">400M. On-chain reserve treasury for long-term engineering, partner operations, and ecosystem continuity.</p>
                   </div>
                 </TiltCard>
               </FadeInUp>

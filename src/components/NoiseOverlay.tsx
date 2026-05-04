@@ -3,7 +3,7 @@ import React from 'react';
 export const NoiseOverlay: React.FC = () => {
   return (
     <>
-      <div className="fixed inset-0 pointer-events-none z-50 mix-blend-soft-light opacity-[0.25]">
+      <div className="fixed inset-0 pointer-events-none z-50 mix-blend-soft-light opacity-[0.12]">
         <svg className="w-full h-full">
           <filter id="noiseFilter">
             <feTurbulence 
@@ -18,7 +18,7 @@ export const NoiseOverlay: React.FC = () => {
       </div>
       {/* Cinematic CRT Scanline */}
       <div className="fixed inset-0 pointer-events-none z-[45] overflow-hidden">
-        <div className="w-full h-screen scanline mix-blend-screen"></div>
+        <div className="w-full h-screen scanline mix-blend-screen opacity-40"></div>
       </div>
     </>
   );

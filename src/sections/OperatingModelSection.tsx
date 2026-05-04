@@ -1,0 +1,114 @@
+import { ArrowRight, BadgeCheck, ClipboardCheck, Landmark, ShieldCheck, WalletCards } from 'lucide-react';
+import { CipherHeading } from '../components/CipherHeading';
+import { FadeInUp } from '../components/FadeInUp';
+import { TiltCard } from '../components/TiltCard';
+
+const operatingSteps = [
+  {
+    icon: BadgeCheck,
+    title: 'Verify the participant',
+    copy: 'Issue a reusable identity credential that can gate services, wallets, permissions, and governance participation.',
+    proof: 'Credential model',
+  },
+  {
+    icon: WalletCards,
+    title: 'Activate the wallet rail',
+    copy: 'Connect verified users to seedless MPC wallets, recovery boundaries, stablecoin routing, and settlement status.',
+    proof: 'Custody boundary',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Apply governance controls',
+    copy: 'Route approvals through committee ownership, policy gates, treasury rules, and inspectable audit events.',
+    proof: 'Approval trail',
+  },
+  {
+    icon: Landmark,
+    title: 'Deploy one service path',
+    copy: 'Start with a controlled public service, treasury, or builder workflow before scaling into the full operating stack.',
+    proof: 'Pilot scope',
+  },
+];
+
+const reviewQuestions = [
+  'Who is being verified?',
+  'What data stays private?',
+  'Who can approve actions?',
+  'Which pilot proves value first?',
+];
+
+export const OperatingModelSection = () => {
+  return (
+    <section id="model" className="py-24 px-6 lg:px-12 bg-[#020617] border-y border-white/5 relative overflow-hidden">
+      <div className="absolute inset-0 bg-tactical-grid opacity-15 pointer-events-none" />
+      <div className="absolute right-0 top-0 w-[720px] h-[720px] rounded-full bg-cyan-500/[0.035] blur-[150px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <FadeInUp>
+          <div className="grid grid-cols-1 lg:grid-cols-[0.82fr_1.18fr] gap-12 lg:gap-20 items-start">
+            <div className="lg:sticky lg:top-32">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-10 h-px bg-fc-gold/45" />
+                <h2 className="text-xs font-bold text-fc-gold uppercase">
+                  <CipherHeading text="01 // Operating Model" />
+                </h2>
+              </div>
+              <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-8">
+                <CipherHeading text="One Clear " className="inline-block" />
+                <span className="italic text-fc-gold font-serif"><CipherHeading text="Logic." /></span>
+              </h3>
+              <p className="text-base md:text-lg text-slate-400 leading-[1.85] max-w-xl mb-8">
+                Future Citizen is easiest to evaluate as a control plane: identity proves who can act, wallets let them transact, governance defines what is allowed, and deployment turns that into one measurable service path.
+              </p>
+
+              <div className="border border-white/10 bg-white/[0.02] p-5">
+                <div className="flex items-center gap-3 text-white mb-4">
+                  <ClipboardCheck className="w-5 h-5 text-cyan-300" />
+                  <span className="text-sm font-medium">First-review questions</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {reviewQuestions.map((question, index) => (
+                    <div key={question} className="border border-white/10 bg-[#020617]/80 px-4 py-3">
+                      <div className="text-[10px] uppercase tracking-[0.3em] text-slate-600 mb-2">0{index + 1}</div>
+                      <div className="text-sm text-slate-200">{question}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {operatingSteps.map((step, index) => {
+                const Icon = step.icon;
+
+                return (
+                  <FadeInUp key={step.title} delay={0.12 + index * 0.08} className="h-full">
+                    <TiltCard intensity={5} className="h-full">
+                      <article className="agency-panel h-full p-6 md:p-8 bg-[#05070b]/90 border border-slate-800 transition-colors hover:border-fc-gold/30 flex flex-col">
+                        <div className="flex items-start justify-between gap-6 mb-10">
+                          <div className="w-12 h-12 border border-white/10 bg-white/[0.03] flex items-center justify-center">
+                            <Icon className="w-6 h-6 text-fc-gold" />
+                          </div>
+                          <span className="text-xs text-slate-600">0{index + 1}</span>
+                        </div>
+                        <h4 className="text-2xl font-serif font-light text-white mb-4">{step.title}</h4>
+                        <p className="text-sm text-slate-400 leading-[1.8] mb-8">{step.copy}</p>
+                        <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-5">
+                          <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Proof</span>
+                          <span className="inline-flex items-center gap-2 text-sm text-cyan-200">
+                            {step.proof}
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
+                      </article>
+                    </TiltCard>
+                  </FadeInUp>
+                );
+              })}
+            </div>
+          </div>
+        </FadeInUp>
+      </div>
+    </section>
+  );
+};

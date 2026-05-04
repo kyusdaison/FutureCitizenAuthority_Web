@@ -12,6 +12,7 @@ import { CommandPalette, type Command } from './components/CommandPalette';
 import { ConnectWalletModal } from './components/ConnectWalletModal';
 
 import { HeroSection } from './sections/HeroSection';
+import { OperatingModelSection } from './sections/OperatingModelSection';
 import { ArchitectureSection } from './sections/ArchitectureSection';
 import { IdentitySection } from './sections/IdentitySection';
 import { MatrixSection } from './sections/MatrixSection';
@@ -53,8 +54,8 @@ import { useSoundEffects } from './hooks/useSoundEffects';
 type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper';
 
 const homeNavItems = [
+  { label: 'Model', target: 'model' },
   { label: 'Identity', target: 'identity' },
-  { label: 'Wallet Rail', target: 'architecture' },
   { label: 'Governance', target: 'governance' },
   { label: 'Assurance', target: 'assurance' },
   { label: 'Deployment', target: 'deployment' },
@@ -152,19 +153,19 @@ export default function App() {
     {
       id: 'nav-dashboard',
       title: 'Go to Dashboard',
-      subtitle: 'Application Matrix / Core Analytics',
+      subtitle: 'Operating metrics and institutional review dashboards',
       action: () => { navigate('dashboard'); closeCommandPalette(); }
     },
     {
       id: 'nav-ecosystem',
-      title: 'Go to Ecosystem',
-      subtitle: 'Explore the FC Network',
+      title: 'Go to Integration Directory',
+      subtitle: 'Payment, asset, identity, and governance integrations',
       action: () => { navigate('ecosystem'); closeCommandPalette(); }
     },
     {
       id: 'nav-explorer',
-      title: 'Go to Block Explorer',
-      subtitle: 'Real-time Network Telemetry',
+      title: 'Go to Network Explorer',
+      subtitle: 'Audit events and network telemetry',
       action: () => { navigate('explorer'); closeCommandPalette(); }
     },
     {
@@ -172,6 +173,12 @@ export default function App() {
       title: 'Go to Home Page',
       subtitle: 'Institutional landing page',
       action: () => { navigate('home'); closeCommandPalette(); }
+    },
+    {
+      id: 'nav-model',
+      title: 'Review Operating Model',
+      subtitle: 'Identity, wallet, governance, and pilot flow',
+      action: () => { navigateToHomeSection('model'); closeCommandPalette(); }
     },
     {
       id: 'nav-deployment',
@@ -187,14 +194,14 @@ export default function App() {
     },
     {
       id: 'nav-staking',
-      title: 'Go to Validator Staking',
+      title: 'Go to Validator Operations',
       subtitle: 'Manage validator delegation and yields',
       action: () => { navigate('staking'); closeCommandPalette(); }
     },
     {
       id: 'nav-developer',
-      title: 'Go to Developer Command Center',
-      subtitle: 'Compile and Deploy via Terminal',
+      title: 'Go to Developer Portal',
+      subtitle: 'SDKs, integration paths, and deployment tooling',
       action: () => { navigate('developer'); closeCommandPalette(); }
     },
     {
@@ -206,43 +213,43 @@ export default function App() {
     {
       id: 'nav-swap',
       title: 'Go to Liquidity Router',
-      subtitle: 'Decentralized Token Exchange',
+      subtitle: 'Stablecoin and liquidity routing',
       action: () => { navigate('swap'); closeCommandPalette(); }
     },
     {
       id: 'nav-whisper',
-      title: 'Go to Whisper Protocol',
-      subtitle: 'Encrypted ZK-Comms',
+      title: 'Go to Secure Messaging',
+      subtitle: 'Encrypted communications and proof exchange',
       action: () => { navigate('whisper'); closeCommandPalette(); }
     },
     {
       id: 'nav-sentinel',
-      title: 'Go to FC Sentinel',
+      title: 'Go to Security Operations',
       subtitle: 'Network Security Operations',
       action: () => { navigate('sentinel'); closeCommandPalette(); }
     },
     {
       id: 'nav-identity',
       title: 'Go to Identity',
-      subtitle: 'Unified Identity Command Center',
+      subtitle: 'Verified identity review layer',
       action: () => { navigate('identity'); closeCommandPalette(); }
     },
     {
       id: 'nav-artifacts',
-      title: 'Go to Digital Artifacts',
-      subtitle: 'NFT Identity & Asset Gallery',
+      title: 'Go to Digital Assets',
+      subtitle: 'Credential and asset records',
       action: () => { navigate('artifacts'); closeCommandPalette(); }
     },
     {
       id: 'nav-oracle',
-      title: 'Go to A.I. Oracle',
+      title: 'Go to Policy Intelligence',
       subtitle: 'Network intelligence and policy telemetry',
       action: () => { navigate('oracle'); closeCommandPalette(); }
     },
     {
       id: 'nav-tokenomics',
-      title: 'Go to Tokenomics & Governance',
-      subtitle: 'FCC Economic Model',
+      title: 'Go to Network Economics',
+      subtitle: 'FCC utility, supply, and reserve model',
       action: () => { navigate('tokenomics'); closeCommandPalette(); }
     },
     {
@@ -406,7 +413,7 @@ export default function App() {
             </button>
           ) : (
             <button onClick={() => setIsWalletModalOpen(true)} className="hidden md:block btn-vercel-primary px-8 py-3 text-[10px] font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-              Authorize Identity
+              Connect Identity
             </button>
           )}
         </div>
@@ -423,6 +430,7 @@ export default function App() {
       {currentView === 'home' ? (
       <motion.main style={{ y: yContent }} className="relative z-10 w-full will-change-transform">
         <HeroSection />
+        <OperatingModelSection />
         <IdentitySection />
         <ArchitectureSection />
         <GovernanceSection />

@@ -6,24 +6,24 @@ const generateHash = () => {
 
 export const LiveTelemetryFooter = () => {
   const [telemetry, setTelemetry] = useState({
-    block: '00000000',
+    auditEvent: '00000000',
     latency: 0,
-    txPool: 0,
-    hashRate: '0.00'
+    serviceQueue: 0,
+    finalityScore: '0.00'
   });
 
   useEffect(() => {
     const updateTelemetry = () => {
       setTelemetry({
-        block: generateHash(),
+        auditEvent: generateHash(),
         latency: Math.floor(Math.random() * 20 + 5), // 5ms - 25ms
-        txPool: Math.floor(Math.random() * 50000 + 10000),
-        hashRate: (Math.random() * 20 + 80).toFixed(2)
+        serviceQueue: Math.floor(Math.random() * 50000 + 10000),
+        finalityScore: (Math.random() * 0.2 + 0.3).toFixed(2)
       });
     };
 
     updateTelemetry(); // initial update
-    const interval = setInterval(updateTelemetry, 2800); // Terminal-like sporadic update timing
+    const interval = setInterval(updateTelemetry, 2800); // Calm live-status cadence
     
     return () => clearInterval(interval);
   }, []);
@@ -36,19 +36,19 @@ export const LiveTelemetryFooter = () => {
         <div className="flex items-center gap-4 sm:gap-6">
           <span className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-cyan-500 animate-[pulse_2s_infinite]"></span>
-            SYS_ONLINE
+            REVIEW_ONLINE
           </span>
           <span className="opacity-50 hidden md:inline-block">/</span>
-          <span className="hidden md:inline-block">LATEST_BLOCK: 0x{telemetry.block}...</span>
+          <span className="hidden md:inline-block">AUDIT_EVENT: 0x{telemetry.auditEvent}...</span>
           <span className="opacity-50 hidden md:inline-block">/</span>
           <span className="hidden lg:inline-block">LATENCY: {telemetry.latency}ms</span>
         </div>
         
         {/* Right Stats */}
         <div className="flex items-center gap-4 sm:gap-6">
-           <span className="hidden md:inline-block">TX_POOL: {telemetry.txPool.toLocaleString()}</span>
+           <span className="hidden md:inline-block">SERVICE_QUEUE: {telemetry.serviceQueue.toLocaleString()}</span>
            <span className="opacity-50 hidden md:inline-block">/</span>
-           <span>ALGO_DIFF: {telemetry.hashRate}TH/s</span>
+           <span>FINALITY_TARGET: {telemetry.finalityScore}s</span>
         </div>
         
       </div>
