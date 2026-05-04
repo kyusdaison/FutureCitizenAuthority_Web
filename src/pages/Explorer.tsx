@@ -1,270 +1,315 @@
-import { useState, useEffect, useRef, Suspense, lazy } from 'react';
-import { useTelemetryContext } from '../contexts/TelemetryContext';
-import { CosmicBackground } from '../components/CosmicBackground';
-import { DecipherText } from '../components/DecipherText';
-import { HologramModal } from '../components/HologramModal';
-import { NetworkGraph } from '../components/NetworkGraph';
-import { FCChainNetworkSeal } from '../components/BrandMarks';
-const GlobalNodeMap = lazy(() => import('../components/GlobalNodeMap').then(module => ({ default: module.GlobalNodeMap })));
-import type { 
-  Block, 
-  Transaction 
-} from '../data/mockExplorerData';
-import { 
-  generateInitialBlocks, 
-  generateInitialTransactions,
-  generateInitialBlocks as genMoreBlocks, // alias
-  generateInitialTransactions as genMoreTxs
-} from '../data/mockExplorerData';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  ArrowRight,
+  ShieldCheck,
+  Activity,
+  AlertTriangle,
+  Globe2,
+  Gauge,
+  ScrollText,
+  Server,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+
+type KpiTile = {
+  icon: LucideIcon;
+  kicker: string;
+  label: string;
+  value: string;
+  delta?: string;
+  sub: string;
+};
+
+const kpiTiles: KpiTile[] = [
+  {
+    icon: Activity,
+    kicker: 'Network',
+    label: 'Network uptime · 30d',
+    value: '99.97%',
+    delta: '+0.04 vs prior 30d',
+    sub: '0 SEV-1 incidents · 2 SEV-3 (resolved)',
+  },
+  {
+    icon: ScrollText,
+    kicker: 'Audit',
+    label: 'Audit log integrity · 24h',
+    value: '14,902',
+    delta: '0 missing · 0 tamper alerts',
+    sub: 'Sealed events with reference hash',
+  },
+  {
+    icon: Gauge,
+    kicker: 'Latency',
+    label: 'Settlement latency',
+    value: '180ms',
+    sub: 'p50 · p95 450ms · p99 720ms',
+  },
+  {
+    icon: AlertTriangle,
+    kicker: 'Anomalies',
+    label: 'Anomaly flags · 24h',
+    value: '3',
+    sub: '1 active · 2 resolved · 0 escalated',
+  },
+  {
+    icon: Server,
+    kicker: 'Throughput',
+    label: 'Events per minute · 1h avg',
+    value: '424',
+    sub: 'peak 1.2k · baseline 110',
+  },
+  {
+    icon: Globe2,
+    kicker: 'Coverage',
+    label: 'Jurisdiction coverage',
+    value: '12',
+    sub: '4 active pilots · 8 observer regions',
+  },
+];
+
+type EventRow = {
+  time: string;
+  type: 'Issuance' | 'Revocation' | 'Approval' | 'Recovery' | 'Settlement';
+  jurisdiction: string;
+  refHash: string;
+  status: 'Sealed' | 'Pending' | 'Flagged';
+};
+
+const eventStream: EventRow[] = [
+  { time: '14:21:08', type: 'Issuance', jurisdiction: 'JUR-04 · Civic', refHash: '0x83a9…d214', status: 'Sealed' },
+  { time: '14:20:55', type: 'Settlement', jurisdiction: 'JUR-02 · Treasury', refHash: '0xf012…91ee', status: 'Sealed' },
+  { time: '14:20:31', type: 'Approval', jurisdiction: 'JUR-04 · Council', refHash: '0x44b2…71fa', status: 'Sealed' },
+  { time: '14:20:02', type: 'Issuance', jurisdiction: 'JUR-08 · Civic', refHash: '0xc101…e809', status: 'Sealed' },
+  { time: '14:19:47', type: 'Recovery', jurisdiction: 'JUR-04 · Recovery', refHash: '0x6e90…2bd1', status: 'Pending' },
+  { time: '14:19:18', type: 'Revocation', jurisdiction: 'JUR-08 · Civic', refHash: '0x95cc…0a17', status: 'Flagged' },
+  { time: '14:18:54', type: 'Settlement', jurisdiction: 'JUR-02 · Treasury', refHash: '0xa7e3…c912', status: 'Sealed' },
+  { time: '14:18:21', type: 'Approval', jurisdiction: 'JUR-04 · Council', refHash: '0x21fd…5b88', status: 'Sealed' },
+];
+
+type AnomalyRow = {
+  time: string;
+  category: 'Settlement' | 'Audit' | 'Identity' | 'Custody';
+  severity: 'Critical' | 'Warn' | 'Info';
+  description: string;
+  status: 'Active' | 'Resolved' | 'Acknowledged';
+};
+
+const anomalies: AnomalyRow[] = [
+  {
+    time: '10:14',
+    category: 'Settlement',
+    severity: 'Critical',
+    description: 'Settlement reconciliation diff exceeded threshold (JUR-04, +2 events)',
+    status: 'Active',
+  },
+  {
+    time: '08:42',
+    category: 'Identity',
+    severity: 'Warn',
+    description: 'Issuance rate spike on JUR-08 · Civic (3.4× baseline, 14 min)',
+    status: 'Acknowledged',
+  },
+  {
+    time: '06:01',
+    category: 'Custody',
+    severity: 'Warn',
+    description: 'MPC role rotation drift detected on Recovery Council key set',
+    status: 'Resolved',
+  },
+  {
+    time: '00:33',
+    category: 'Audit',
+    severity: 'Info',
+    description: 'Audit backfill threshold reached for window 2026-05-03 22:00–24:00',
+    status: 'Resolved',
+  },
+];
 
 const Explorer = () => {
-  const currentHeightRef = useRef(18459200);
-  const [blocks, setBlocks] = useState<Block[]>(() => generateInitialBlocks(10, 18459200));
-  const [transactions, setTransactions] = useState<Transaction[]>(() => generateInitialTransactions(10));
-  
-  const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
-  const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
-
-  const telemetry = useTelemetryContext();
-
-  // Simulate Live Network Telemetry synced with global hook
-  useEffect(() => {
-    if (telemetry.blockHeight > currentHeightRef.current) {
-      const heightToUse = telemetry.blockHeight;
-      currentHeightRef.current = heightToUse;
-      
-      setTimeout(() => {
-        // Create 1 new block corresponding to the telemetry height
-        setBlocks(prev => {
-          const newBlock = genMoreBlocks(1, heightToUse)[0];
-          // Keep only top 15 to prevent DOM bloat
-          return [newBlock, ...prev].slice(0, 15);
-        });
-
-        // Create 1-3 new transactions mimicking network activity for this block
-        setTransactions(prev => {
-          const txCount = Math.floor(Math.random() * 3) + 1;
-          const newTxs = genMoreTxs(txCount);
-          return [...newTxs, ...prev].slice(0, 15);
-        });
-      }, 0);
-    }
-  }, [telemetry.blockHeight]);
+  const navigate = useNavigate();
+  // Static sample timestamp; production wires this to real network telemetry.
+  const [now] = useState(() => new Date().toISOString().slice(11, 16));
 
   return (
-    <div className="mt-16 space-y-6 relative z-10 max-w-7xl mx-auto w-full pb-20 px-4 sm:px-6 lg:px-8">
-      <CosmicBackground />
-      <div className="border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Representative explorer preview</span>
+    <div className="space-y-8 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
+      {/* Sample preview banner */}
+      <div className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Sample preview</span>
         <span className="mx-3 text-slate-600">/</span>
-        Blocks, transactions, prices, and validator activity on this page are generated sample data until connected to a production FC Chain data pipeline.
+        Network telemetry surface for institutional walkthroughs. Production deployments connect this
+        view to real audit-event streams, settlement integrity checks, and anomaly detectors. Numbers
+        are representative.
       </div>
 
-      {/* Omni-Search Terminal */}
-      <div className="pt-8 pb-12">
-        <div className="max-w-3xl mx-auto text-center relative group">
-          <div className="absolute inset-0 bg-cyan-500/5 blur-3xl scale-110 opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-          <div className="mb-5 flex justify-center">
-            <div className="flex items-center gap-3 border border-white/10 bg-[#020617]/85 px-4 py-3 backdrop-blur-xl">
-              <FCChainNetworkSeal className="h-10 w-10" />
-              <div className="text-left">
-                <div className="text-[10px] font-mono uppercase tracking-[0.24em] text-fc-gold/80">FC Chain</div>
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-500">Network explorer</div>
-              </div>
-            </div>
-          </div>
-          <h1 className="text-4xl md:text-5xl text-vanguard mb-8 text-white relative z-10 uppercase tracking-widest font-bold">
-            Network <span className="text-cyan-400 tracking-tight">Explorer Preview</span>
+      {/* Header */}
+      <header className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Network telemetry</p>
+          <h1 className="text-3xl md:text-5xl font-serif font-light text-white leading-tight">
+            What the network is doing right now.
           </h1>
-          <div className="relative z-10 flex border focus-within:border-cyan-500/50 border-white/10 bg-black shadow-none transition-colors overflow-hidden">
-            <div className="pl-6 flex items-center justify-center flex-shrink-0">
-               <svg className="w-5 h-5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-               </svg>
+          <p className="mt-3 max-w-2xl text-sm leading-[1.85] text-slate-400">
+            One screen for auditors, technical reviewers, and operations leads. Tracks uptime,
+            audit-log integrity, settlement latency, anomaly flags, throughput, and jurisdictional
+            coverage.
+          </p>
+        </div>
+        <div className="flex items-center gap-3 self-start md:self-end">
+          <span className="border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.24em] text-slate-400">
+            {now} UTC · live
+          </span>
+          <button
+            type="button"
+            onClick={() => navigate('/dashboard')}
+            className="border border-white/10 bg-white/[0.02] px-4 py-2 text-[11px] font-mono uppercase tracking-[0.22em] text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+          >
+            Operating dashboard
+          </button>
+        </div>
+      </header>
+
+      {/* KPI tiles */}
+      <section aria-label="Network telemetry KPIs" className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {kpiTiles.map((tile, i) => {
+          const Icon = tile.icon;
+          return (
+            <article key={tile.label} className="border border-white/10 bg-[#020617]/70 p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <Icon className="h-5 w-5 text-cyan-300" />
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-600">
+                  0{i + 1} // {tile.kicker}
+                </span>
+              </div>
+              <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500">{tile.label}</p>
+              <p className="mt-3 text-3xl md:text-4xl font-serif font-light text-white">{tile.value}</p>
+              {tile.delta && <p className="mt-1 text-[11px] font-mono text-cyan-300/80">{tile.delta}</p>}
+              <p className="mt-3 border-t border-white/5 pt-3 text-[12px] leading-relaxed text-slate-400">
+                {tile.sub}
+              </p>
+            </article>
+          );
+        })}
+      </section>
+
+      {/* Main grid: live event stream + anomaly feed */}
+      <section className="grid grid-cols-1 gap-3 lg:grid-cols-[1.5fr_1fr]">
+        {/* Live event stream */}
+        <article className="border border-white/10 bg-[#020617]/70 p-5">
+          <header className="mb-5 flex items-center justify-between">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">Stream · last 3 min</p>
+              <h2 className="mt-2 text-xl font-serif font-light text-white">Sealed audit events</h2>
             </div>
-            <input 
-              type="text" 
-              placeholder="Search by Txn Hash / Block / Address..." 
-              className="w-full bg-transparent border-none text-white px-4 py-5 focus:outline-none focus:ring-0 text-sm font-mono placeholder-slate-500 uppercase tracking-widest"
-            />
-            <button className="px-8 bg-white/5 hover:bg-cyan-500/20 text-cyan-500 text-sm font-bold tracking-widest uppercase transition-colors border-l border-white/10">
-              Scan
+            <span className="text-[9px] font-mono uppercase tracking-[0.28em] text-slate-600">Sample data</span>
+          </header>
+          <div className="space-y-1 overflow-x-auto">
+            <div className="grid min-w-[680px] grid-cols-[80px_1fr_1.4fr_1fr_80px] gap-3 px-3 py-2 text-[9px] font-mono uppercase tracking-[0.22em] text-slate-600">
+              <span>Time</span>
+              <span>Type</span>
+              <span>Jurisdiction</span>
+              <span>Reference hash</span>
+              <span className="text-right">Status</span>
+            </div>
+            {eventStream.map((row) => (
+              <div
+                key={`${row.time}-${row.refHash}`}
+                className="grid min-w-[680px] grid-cols-[80px_1fr_1.4fr_1fr_80px] gap-3 border border-white/5 bg-white/[0.015] px-3 py-3 text-[12px] text-slate-300"
+              >
+                <span className="font-mono text-slate-500">{row.time}</span>
+                <span>{row.type}</span>
+                <span className="text-slate-400">{row.jurisdiction}</span>
+                <span className="font-mono text-slate-500">{row.refHash}</span>
+                <span
+                  className={
+                    'text-right font-mono text-[10px] uppercase tracking-[0.24em] ' +
+                    (row.status === 'Flagged'
+                      ? 'text-red-400/80'
+                      : row.status === 'Pending'
+                        ? 'text-fc-gold/80'
+                        : 'text-cyan-300/80')
+                  }
+                >
+                  {row.status}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-[11px] font-mono text-slate-500">
+            Each event is signed and anchored to the audit ledger. Reference hashes are reproducible
+            on demand for procurement / external audit.
+          </p>
+        </article>
+
+        {/* Anomaly feed */}
+        <article className="border border-white/10 bg-[#020617]/70 p-5">
+          <header className="mb-5">
+            <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Detector output</p>
+            <h2 className="mt-2 text-xl font-serif font-light text-white">Anomalies · last 24h</h2>
+          </header>
+          <div className="space-y-2">
+            {anomalies.map((row) => (
+              <div key={`${row.time}-${row.description}`} className="border border-white/5 bg-white/[0.02] p-3">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500">
+                    {row.time} · {row.category} · {row.severity}
+                  </span>
+                  <span
+                    className={
+                      'shrink-0 border px-2 py-0.5 text-[9px] font-mono uppercase tracking-[0.24em] ' +
+                      (row.status === 'Active'
+                        ? 'border-red-400/30 bg-red-400/5 text-red-300/90'
+                        : row.status === 'Acknowledged'
+                          ? 'border-fc-gold/25 bg-fc-gold/5 text-fc-gold/80'
+                          : 'border-white/10 bg-white/[0.02] text-slate-400')
+                    }
+                  >
+                    {row.status}
+                  </span>
+                </div>
+                <p className="text-sm text-slate-200">{row.description}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-[11px] font-mono text-slate-500">
+            Anomalies are detector output, not human-reported tickets. Each can be expanded into the
+            full event chain for review.
+          </p>
+        </article>
+      </section>
+
+      {/* Footer CTA */}
+      <section className="border border-white/10 bg-[#020617]/70 p-6 md:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="h-5 w-5 shrink-0 text-fc-gold" />
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Reviewable observability</p>
+              <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-300">
+                Every metric on this page can be reproduced from sealed audit events. A pilot's
+                operational integrity does not depend on this UI being available — the underlying log
+                is the source of truth.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => navigate('/#deployment')}
+              className="group inline-flex items-center justify-between gap-3 border border-fc-gold/30 bg-fc-gold/5 px-5 py-3 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/10"
+            >
+              <span>Map to a deployment path</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </button>
+            <a
+              href="mailto:pilots@fca.ms?subject=Telemetry%20pilot%20review"
+              className="inline-flex items-center justify-center gap-2 border border-white/10 bg-white/[0.02] px-5 py-3 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+            >
+              Discuss a pilot
+            </a>
           </div>
         </div>
-      </div>
-
-      {/* Live Stats HUD */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-         <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">SAMPLE FC PRICE</div>
-            <div className="text-2xl text-vanguard text-white font-bold">${telemetry.fcPrice}</div>
-            <div className="text-xs text-cyan-500 mt-1 font-mono">{telemetry.fcPriceChange} (24h)</div>
-         </div>
-         <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">SAMPLE BLOCK</div>
-            <div className="text-2xl text-vanguard text-white font-bold">{telemetry.blockHeight.toLocaleString()}</div>
-            <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Sample stream</div>
-         </div>
-         <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">SAMPLE TPS</div>
-            <div className="text-2xl text-vanguard text-white font-bold">{telemetry.tps.toLocaleString()}</div>
-            <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Max: {telemetry.maxTps.toLocaleString()}</div>
-         </div>
-         <div className="bg-black/60 border border-white/5 p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
-            <div className="text-[10px] text-telemetry text-slate-500 mb-2 group-hover:text-cyan-500/70 transition-colors font-bold uppercase tracking-widest">TARGET BLOCK TIME</div>
-            <div className="text-2xl text-vanguard text-white font-bold">{telemetry.finality}<span className="text-base text-slate-500 ml-1">s</span></div>
-            <div className="text-xs text-slate-500 mt-1 font-mono uppercase tracking-widest">Target finality</div>
-         </div>
-      </div>
-
-      {/* Global Node Map */}
-      <div className="mb-8 bg-black/80 border border-white/5 p-6 overflow-hidden relative group h-[500px]">
-        <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-           <div className="w-1/2 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
-        </div>
-        <div className="flex items-center justify-between mb-4 relative z-10 pointer-events-none font-bold tracking-widest uppercase">
-          <div className="text-[10px] text-telemetry text-slate-500 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 bg-cyan-500 animate-pulse shadow-none"></div>
-            GLOBAL NODE TOPOLOGY
-          </div>
-          <div className="text-[10px] text-telemetry text-cyan-500/50">ACTIVE ROUTING</div>
-        </div>
-        <div className="absolute inset-0 top-12 z-0 cursor-move">
-          <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-8 h-8 border-t-2 border-cyan-500 animate-spin"></div></div>}>
-            <GlobalNodeMap />
-          </Suspense>
-        </div>
-      </div>
-
-      {/* Network Activity Graph */}
-      <div className="mb-8 bg-black/80 border border-white/5 p-6 overflow-hidden relative group">
-        <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-           <div className="w-1/2 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
-        </div>
-        <div className="flex items-center justify-between mb-4 relative z-10 font-bold tracking-widest uppercase">
-          <div className="text-[10px] text-telemetry text-slate-500 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 bg-cyan-500 animate-pulse shadow-none"></div>
-            SAMPLE NETWORK LOAD (TPS)
-          </div>
-          <div className="text-[10px] text-telemetry text-cyan-500/50">SYNCED</div>
-        </div>
-        <NetworkGraph />
-      </div>
-
-      {/* Dual Engines */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        {/* Latest Blocks */}
-        <div className="bg-black/80 border border-white/5 overflow-hidden flex flex-col">
-          <div className="p-5 border-b border-white/10 flex justify-between items-center bg-black/40">
-             <h2 className="text-lg text-vanguard text-white flex items-center uppercase tracking-widest font-bold">
-               <div className="w-1.5 h-1.5 bg-cyan-500 mr-3 shadow-none"></div>
-               Latest Blocks
-             </h2>
-             <button className="text-[10px] text-telemetry font-bold text-cyan-500 hover:text-white transition-colors px-3 py-1.5 bg-white/5 border border-white/10 hover:border-cyan-500/30 uppercase tracking-widest">
-               VIEW ALL
-             </button>
-          </div>
-          <div className="flex-1 overflow-hidden relative">
-             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
-             <div className="max-h-[600px] overflow-y-auto scrollbar-hide py-2 px-2 flex flex-col gap-2 relative">
-                {blocks.map((block) => (
-                  <div 
-                    key={block.hash} 
-                    onClick={() => setSelectedBlock(block)}
-                    className="bg-white/[0.02] border border-white/5 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 hover:bg-white/[0.04] hover:border-cyan-500/30 transition-colors cursor-pointer group"
-                  >
-                     <div className="flex items-center gap-4 w-full sm:w-auto">
-                       <div className="w-12 h-12 bg-black/50 border border-white/10 flex items-center justify-center relative overflow-hidden shrink-0">
-                         <div className="absolute inset-0 bg-cyan-500/10 opacity-0 hover:opacity-100 transition-opacity"></div>
-                         <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                         </svg>
-                       </div>
-                       <div className="flex flex-col min-w-0">
-                         <div className="text-sm font-bold text-white font-mono mb-1">{block.height.toLocaleString()}</div>
-                         <div className="text-[10px] text-telemetry text-slate-500 uppercase tracking-widest font-bold flex flex-wrap gap-1">
-                           <span className="text-white/40">Minced by </span>
-                           <span className="text-white hover:text-cyan-400 cursor-pointer transition-colors max-w-[100px] sm:max-w-[120px] truncate inline-block align-bottom"><DecipherText text={block.miner} duration={700} /></span>
-                         </div>
-                       </div>
-                     </div>
-                     <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center w-full sm:w-auto shrink-0 border-t border-white/5 sm:border-0 pt-2 sm:pt-0">
-                       <div className="text-xs text-white font-mono sm:mb-1">{block.txCount} txns</div>
-                       <div className="text-[9px] text-telemetry font-bold text-slate-500 uppercase tracking-widest">{block.timeDelay}s ago</div>
-                     </div>
-                  </div>
-                ))}
-             </div>
-          </div>
-        </div>
-
-        {/* Latest Transactions */}
-        <div className="bg-black/80 border border-white/5 overflow-hidden flex flex-col">
-          <div className="p-5 border-b border-white/10 flex justify-between items-center bg-black/40">
-             <h2 className="text-lg text-vanguard text-white flex items-center uppercase tracking-widest font-bold">
-               <div className="w-1.5 h-1.5 bg-cyan-500 mr-3 shadow-none"></div>
-               Latest Transactions
-             </h2>
-             <button className="text-[10px] text-telemetry font-bold text-cyan-500 hover:text-white transition-colors px-3 py-1.5 bg-white/5 border border-white/10 hover:border-cyan-500/30 uppercase tracking-widest">
-               VIEW ALL
-             </button>
-          </div>
-          <div className="flex-1 overflow-hidden relative">
-             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
-             <div className="max-h-[600px] overflow-y-auto scrollbar-hide py-2 px-2 flex flex-col gap-2 relative">
-                {transactions.map((tx) => (
-                  <div 
-                    key={tx.hash} 
-                    onClick={() => setSelectedTx(tx)}
-                    className="bg-white/[0.02] border border-white/5 p-4 flex items-center justify-between hover:bg-white/[0.04] hover:border-cyan-500/30 transition-colors cursor-pointer group"
-                  >
-                     <div className="flex flex-col gap-2 w-full max-w-[100%] sm:max-w-[70%]">
-                       <div className="flex items-center gap-2">
-                         <div className="w-1.5 h-1.5 bg-cyan-500 shadow-none shrink-0" title="Confirmed"></div>
-                         <span className="text-[10px] sm:text-xs px-2 py-0.5 bg-white/5 text-slate-400 border border-white/10 font-bold font-mono group-hover:bg-cyan-500/10 group-hover:text-cyan-400 transition-colors hidden sm:block">TX#</span>
-                         <span className="text-[10px] sm:text-[11px] text-telemetry text-cyan-400 hover:text-cyan-300 cursor-pointer truncate w-full"><DecipherText text={tx.hash} duration={1000} /></span>
-                       </div>
-                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[9px] sm:text-[10px] text-telemetry font-bold tracking-widest uppercase">
-                         <div className="flex items-center gap-1 min-w-0">
-                           <span className="text-slate-500 shrink-0">FROM</span>
-                           <span className="text-white hover:text-cyan-400 cursor-pointer truncate w-[60px] sm:w-[100px]"><DecipherText text={tx.from} duration={600} /></span>
-                         </div>
-                         <span className="text-slate-600 shrink-0">→</span>
-                         <div className="flex items-center gap-1 min-w-0">
-                           <span className="text-slate-500 shrink-0">TO</span>
-                           <span className="text-white hover:text-cyan-400 cursor-pointer truncate w-[60px] sm:w-[100px]"><DecipherText text={tx.to} duration={600} /></span>
-                         </div>
-                       </div>
-                     </div>
-                     <div className="flex flex-col items-end shrink-0 pl-4">
-                       <span className="text-xs font-bold text-white mb-1"><span className="text-white font-mono">{tx.value}</span> FCC</span>
-                       <span className="text-[9px] text-telemetry text-slate-500 tracking-widest font-bold uppercase">{tx.timeDelay}s ago</span>
-                     </div>
-                  </div>
-                ))}
-             </div>
-          </div>
-        </div>
-
-      </div>
-
-      <HologramModal 
-        isOpen={!!selectedBlock} 
-        onClose={() => setSelectedBlock(null)}
-        title={`Block #${selectedBlock?.height.toLocaleString()}`}
-        data={(selectedBlock as unknown as Record<string, unknown>) || {}}
-        theme="cyan"
-      />
-      
-      <HologramModal 
-        isOpen={!!selectedTx} 
-        onClose={() => setSelectedTx(null)}
-        title="Transaction Details"
-        data={(selectedTx as unknown as Record<string, unknown>) || {}}
-        theme="cyan"
-      />
+      </section>
     </div>
   );
 };
