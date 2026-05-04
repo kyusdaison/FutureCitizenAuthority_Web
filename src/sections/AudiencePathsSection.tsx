@@ -1,6 +1,5 @@
 import { ArrowRight, Building2, Code2, Landmark, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { BrandSystemPanel } from '../components/BrandSystemPanel';
 import { CipherHeading } from '../components/CipherHeading';
 import { FadeInUp } from '../components/FadeInUp';
 import { TiltCard } from '../components/TiltCard';
@@ -113,7 +112,6 @@ export const AudiencePathsSection = () => {
                   Self-check first. We do not run open evaluations.
                 </p>
               </div>
-              <BrandSystemPanel />
             </div>
           </div>
         </FadeInUp>

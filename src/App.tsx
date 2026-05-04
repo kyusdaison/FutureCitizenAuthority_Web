@@ -402,7 +402,7 @@ export default function App() {
           </button>
           <button
             type="button"
-            onClick={() => scrollToSection('matrix')}
+            onClick={() => navigate('/explorer')}
             className="hidden 2xl:flex items-center gap-2 border border-white/10 bg-[#020306]/80 px-3 py-2 transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/5"
           >
             <FCChainNetworkSeal className="h-5 w-5" />
