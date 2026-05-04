@@ -275,7 +275,7 @@ export default function Identity() {
             Discuss a pilot
           </a>
         </div>
-        <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-slate-600">
+        <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-slate-400">
           Issuer view is the institutional brief. Holder preview below is a sample wallet experience, not a procurement artifact.
         </p>
       </section>
@@ -366,16 +366,16 @@ export default function Identity() {
                 </div>
 
                 <div className="space-y-2 text-center">
-                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 1 ? 'text-cyan-400' : 'text-slate-600'}`}>
+                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 1 ? 'text-cyan-400' : 'text-slate-400'}`}>
                     {mintPhase > 1 ? '✓' : mintPhase === 1 ? '⟳' : '○'} Establishing secure session...
                   </div>
-                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 2 ? 'text-cyan-400' : 'text-slate-600'}`}>
+                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 2 ? 'text-cyan-400' : 'text-slate-400'}`}>
                     {mintPhase > 2 ? '✓' : mintPhase === 2 ? '⟳' : '○'} Checking credential factors...
                   </div>
-                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 3 ? 'text-cyan-400' : 'text-slate-600'}`}>
+                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 3 ? 'text-cyan-400' : 'text-slate-400'}`}>
                     {mintPhase > 3 ? '✓' : mintPhase === 3 ? '⟳' : '○'} Generating review hash...
                   </div>
-                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 4 ? 'text-cyan-400' : 'text-slate-600'}`}>
+                  <div className={`text-sm font-mono transition-colors ${mintPhase >= 4 ? 'text-cyan-400' : 'text-slate-400'}`}>
                     {mintPhase > 4 ? '✓' : mintPhase === 4 ? '⟳' : '○'} Issuing Credential...
                   </div>
                   

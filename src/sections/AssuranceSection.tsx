@@ -160,7 +160,7 @@ export const AssuranceSection = () => {
                   <article className="h-full border border-white/10 bg-[#020617]/80 p-6 transition-colors hover:border-cyan-300/30">
                     <div className="flex items-center justify-between mb-8">
                       <Icon className="w-6 h-6 text-cyan-300" />
-                      <span className="text-xs text-slate-600">0{index + 1}</span>
+                      <span className="text-xs text-slate-400">0{index + 1}</span>
                     </div>
                     <h4 className="text-xl font-serif font-light text-white mb-4">{pillar.title}</h4>
                     <p className="text-sm text-slate-400 leading-relaxed">{pillar.copy}</p>
@@ -184,7 +184,7 @@ export const AssuranceSection = () => {
                 <div key={boundary} className="border border-white/10 bg-white/[0.02] p-5">
                   <div className="mb-5 flex items-center justify-between">
                     <span className="text-[10px] uppercase tracking-[0.28em] text-slate-500">Boundary</span>
-                    <span className="text-xs text-slate-600">0{index + 1}</span>
+                    <span className="text-xs text-slate-400">0{index + 1}</span>
                   </div>
                   <p className="text-sm text-slate-300 leading-relaxed">{boundary}</p>
                 </div>
@@ -231,7 +231,7 @@ export const AssuranceSection = () => {
               {reviewPacket.map((item, index) => (
                 <div key={item.file} className="grid grid-cols-1 gap-4 border border-white/10 bg-white/[0.02] p-5 md:grid-cols-[0.24fr_0.38fr_0.38fr] md:items-center">
                   <div>
-                    <div className="mb-2 text-[10px] uppercase tracking-[0.28em] text-slate-600">File 0{index + 1}</div>
+                    <div className="mb-2 text-[10px] uppercase tracking-[0.28em] text-slate-400">File 0{index + 1}</div>
                     <div className="text-sm font-medium text-white">{item.file}</div>
                   </div>
                   <div>

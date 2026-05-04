@@ -37,3 +37,10 @@ preview-home*.png
 # Local deploy scripts (may contain secrets)
 deploy-cloudflare.sh
 deploy-prep.sh
+
+# Internal review / scoping docs — not for public repo
+REVIEW_*.md
+SCOPING_*.md
+NOTES_*.md
+WCAG_AUDIT_*.md
+CLOUDFLARE_SETUP.md

@@ -69,14 +69,14 @@ export const HeroSection = () => {
     <section id="hero" className="min-h-screen w-full px-6 pb-28 pt-36 lg:px-12 relative overflow-hidden flex items-center">
       {/* Institutional review coordinates */}
       <div className="absolute top-1/4 left-12 hidden xl:flex flex-col gap-2 text-left opacity-80">
-         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">REVIEW DESK <span className="text-slate-600">//</span> PUBLIC-SECTOR</div>
-         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]">PILOT STATUS <span className="text-slate-600">//</span> SCOPED</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">REVIEW DESK <span className="text-slate-400">//</span> PUBLIC-SECTOR</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]">PILOT STATUS <span className="text-slate-400">//</span> SCOPED</div>
          <div className="w-32 h-px bg-gradient-to-r from-fc-gold/40 to-transparent mt-2"></div>
       </div>
       
       <div className="absolute bottom-1/3 right-12 hidden xl:flex flex-col gap-2 text-right opacity-80">
-         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]"><span className="text-slate-600">//</span> PRIVACY + CUSTODY</div>
-	         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-600">//</span> ASSURANCE FILE READY</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]"><span className="text-slate-400">//</span> PRIVACY + CUSTODY</div>
+	         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-400">//</span> ASSURANCE FILE READY</div>
          <div className="w-32 h-px bg-gradient-to-l from-fc-gold/40 to-transparent mt-2 ml-auto"></div>
       </div>
       
@@ -193,7 +193,7 @@ export const HeroSection = () => {
                     </div>
                     <div>
                       <div className="mb-2 flex flex-wrap items-center gap-3">
-                        <span className="text-[10px] font-mono text-slate-600">{item.step}</span>
+                        <span className="text-[10px] font-mono text-slate-400">{item.step}</span>
                         <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-cyan-200/80">{item.label}</span>
                       </div>
                       <h3 className="mb-1 text-base font-semibold text-white">{item.title}</h3>

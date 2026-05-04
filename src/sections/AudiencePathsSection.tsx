@@ -87,7 +87,7 @@ export const AudiencePathsSection = () => {
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {reviewFit.map((item, index) => (
                     <div key={item} className="border border-white/10 bg-white/[0.02] px-4 py-3">
-                      <div className="mb-2 text-[10px] uppercase tracking-[0.28em] text-slate-600">0{index + 1}</div>
+                      <div className="mb-2 text-[10px] uppercase tracking-[0.28em] text-slate-400">0{index + 1}</div>
                       <div className="text-sm text-slate-200">{item}</div>
                     </div>
                   ))}
@@ -108,7 +108,7 @@ export const AudiencePathsSection = () => {
                     Discuss a pilot
                   </a>
                 </div>
-                <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-slate-600">
+                <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-slate-400">
                   Self-check first. We do not run open evaluations.
                 </p>
               </div>

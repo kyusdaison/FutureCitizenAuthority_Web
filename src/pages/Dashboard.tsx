@@ -123,7 +123,7 @@ const Dashboard = () => {
       {/* Sample preview banner */}
       <div className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Sample preview</span>
-        <span className="mx-3 text-slate-600">/</span>
+        <span className="mx-3 text-slate-400">/</span>
         Operating dashboard for institutional walkthroughs. Production pilots connect this surface to verified identity, treasury, audit, and recovery sources. Numbers are representative.
       </div>
 
@@ -160,7 +160,7 @@ const Dashboard = () => {
             <article key={tile.label} className="border border-white/10 bg-[#020617]/70 p-5">
               <div className="mb-4 flex items-center justify-between">
                 <Icon className="h-5 w-5 text-cyan-300" />
-                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-600">
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-400">
                   0{i + 1} // {tile.kicker}
                 </span>
               </div>
@@ -184,10 +184,10 @@ const Dashboard = () => {
               <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">Issuance · last 30 min</p>
               <h2 className="mt-2 text-xl font-serif font-light text-white">Recent credential events</h2>
             </div>
-            <span className="text-[9px] font-mono uppercase tracking-[0.28em] text-slate-600">Sample data</span>
+            <span className="text-[9px] font-mono uppercase tracking-[0.28em] text-slate-400">Sample data</span>
           </header>
           <div className="space-y-1 overflow-x-auto">
-            <div className="grid min-w-[640px] grid-cols-[60px_1.4fr_1.2fr_1fr_80px] gap-3 px-3 py-2 text-[9px] font-mono uppercase tracking-[0.22em] text-slate-600">
+            <div className="grid min-w-[640px] grid-cols-[60px_1.4fr_1.2fr_1fr_80px] gap-3 px-3 py-2 text-[9px] font-mono uppercase tracking-[0.22em] text-slate-400">
               <span>Time</span>
               <span>Template</span>
               <span>Issuer</span>

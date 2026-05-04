@@ -87,7 +87,7 @@ const Community = () => {
       {/* Sample preview banner */}
       <div className="mt-4 border border-cyan-300/20 bg-cyan-300/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-cyan-300">Community surfaces</span>
-        <span className="mx-3 text-slate-600">/</span>
+        <span className="mx-3 text-slate-400">/</span>
         Network economics, cross-chain rails, validator operations, and other community-facing
         experiences. These are separate from the institutional pitch — buyers evaluating the
         identity and governance layer should start at <button type="button" onClick={() => navigate('/identity')} className="underline underline-offset-4 decoration-fc-gold/50 hover:decoration-fc-gold transition-colors">Identity</button> and <button type="button" onClick={() => navigate('/dashboard')} className="underline underline-offset-4 decoration-fc-gold/50 hover:decoration-fc-gold transition-colors">Dashboard</button>.
@@ -123,7 +123,7 @@ const Community = () => {
             <article key={path.route} className="border border-white/10 bg-[#020617]/70 p-6">
               <div className="mb-5 flex items-center justify-between">
                 <Icon className="h-5 w-5 text-cyan-300" />
-                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-600">
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-400">
                   0{index + 1} // {path.kicker}
                 </span>
               </div>

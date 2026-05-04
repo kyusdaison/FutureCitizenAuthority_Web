@@ -625,3 +625,25 @@ body.low-power-mode .opacity-10 {
 body.low-power-mode * {
   box-shadow: none !important;
 }
+
+/* =========================================
+   PREFERS-REDUCED-MOTION OVERRIDES (a11y)
+   Catches CSS animations not under framer-motion's MotionConfig.
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee,
+  .stars-1,
+  .stars-2,
+  .scanline-overlay {
+    animation: none !important;
+  }
+}

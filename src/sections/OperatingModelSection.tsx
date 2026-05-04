@@ -103,7 +103,7 @@ export const OperatingModelSection = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {reviewQuestions.map((question, index) => (
                     <div key={question} className="border border-white/10 bg-[#020617]/80 px-4 py-3">
-                      <div className="text-[10px] uppercase tracking-[0.3em] text-slate-600 mb-2">0{index + 1}</div>
+                      <div className="text-[10px] uppercase tracking-[0.3em] text-slate-400 mb-2">0{index + 1}</div>
                       <div className="text-sm text-slate-200">{question}</div>
                     </div>
                   ))}
@@ -123,7 +123,7 @@ export const OperatingModelSection = () => {
                           <div className="w-12 h-12 border border-white/10 bg-white/[0.03] flex items-center justify-center">
                             <Icon className="w-6 h-6 text-fc-gold" />
                           </div>
-                          <span className="text-xs text-slate-600">0{index + 1}</span>
+                          <span className="text-xs text-slate-400">0{index + 1}</span>
                         </div>
                         <h4 className="text-2xl font-serif font-light text-white mb-4">{step.title}</h4>
                         <p className="text-sm text-slate-400 leading-[1.8] mb-5">{step.copy}</p>
@@ -168,7 +168,7 @@ export const OperatingModelSection = () => {
                   <div key={item.phase} className="relative border border-white/10 bg-white/[0.02] p-5 min-h-[190px]">
                     <div className="mb-8 flex items-center justify-between">
                       <span className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Gate</span>
-                      <span className="text-xs text-slate-600">0{index + 1}</span>
+                      <span className="text-xs text-slate-400">0{index + 1}</span>
                     </div>
                     <h5 className="text-lg font-serif font-light text-white mb-4">{item.phase}</h5>
                     <p className="text-sm text-slate-400 leading-relaxed">{item.outcome}</p>
