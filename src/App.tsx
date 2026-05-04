@@ -8,7 +8,6 @@ import { MobileMenu } from './components/MobileMenu';
 import { LiveTelemetryFooter } from './components/LiveTelemetryFooter';
 import { CommandPalette, type Command } from './components/CommandPalette';
 import { ConnectWalletModal } from './components/ConnectWalletModal';
-import { ThemeToggle } from './components/ThemeToggle';
 
 import { HeroSection } from './sections/HeroSection';
 import { AudiencePathsSection } from './sections/AudiencePathsSection';
@@ -286,11 +285,11 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen bg-page-bg text-page-fg font-sans selection:bg-cyan-500/20 selection:text-white pb-8">
+    <div className="min-h-screen bg-[#0b1220] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white pb-8">
       <OfficialBackground />
       
       {/* Official State Banner */}
-      <div className="w-full bg-banner-bg border-b border-white/5 text-[9px] uppercase tracking-[0.3em] text-slate-500 py-2 flex justify-center items-center gap-3 relative z-[60]">
+      <div className="w-full bg-[#0a1019] border-b border-white/5 text-[9px] uppercase tracking-[0.3em] text-slate-500 py-2 flex justify-center items-center gap-3 relative z-[60]">
         <svg className="w-3.5 h-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
@@ -349,7 +348,7 @@ export default function App() {
           className="w-full h-full object-cover opacity-10 mix-blend-screen will-change-transform"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-page-bg/80 via-page-bg/90 to-page-bg" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1220]/80 via-[#0b1220]/90 to-[#0b1220]" />
       </div>
 
       {/* Top Navigation Protocol */}
@@ -375,9 +374,7 @@ export default function App() {
           ))}
         </div>
         <div className="flex items-center gap-4">
-          <ThemeToggle className="hidden md:inline-flex" />
-
-          <button
+          <button 
             onClick={openCommandPalette}
             className="hidden 2xl:flex items-center gap-2 px-3 py-2 bg-[#020306]/80 border border-white/10 overflow-hidden relative group hover:border-cyan-500/30 transition-colors"
           >

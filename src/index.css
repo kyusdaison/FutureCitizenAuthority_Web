@@ -46,12 +46,6 @@ section[id] {
   --color-bg-base: #0b1220; /* Calm-dark: lifted slate-blue, less harsh than near-black */
   --color-bg-sidebar: #0f172a; /* Slate 900 */
 
-  /* Semantic theme tokens — flip via body.theme-light */
-  --color-page-bg: #0b1220;
-  --color-page-fg: #f1f5f9;
-  --color-banner-bg: #0a1019;
-  --color-edge: rgba(255, 255, 255, 0.08);
-
   --color-cyan-neon: #06b6d4; /* Official Cyan */
   --color-red-neon: #dc2626; /* Stark alert crimson */
 
@@ -134,19 +128,6 @@ section[id] {
     --color-blue-400: #f87171;
     --color-blue-500: #ef4444;
     --color-blue-600: #dc2626;
-  }
-
-  /* Light mode — overrides only the semantic theme tokens.
-     Brand accents (gold, cyan) and component-level hardcoded
-     dark surfaces stay as is for now; later passes will move
-     more surfaces onto these tokens. */
-  body.theme-light {
-    --color-page-bg: #f5f7fa;
-    --color-page-fg: #0f172a;
-    --color-banner-bg: #eef1f5;
-    --color-edge: rgba(15, 23, 42, 0.10);
-    background-color: var(--color-page-bg);
-    color: var(--color-page-fg);
   }
 }
 
@@ -643,15 +624,4 @@ body.low-power-mode .opacity-10 {
 
 body.low-power-mode * {
   box-shadow: none !important;
-}
-
-/* =========================================
-   LIGHT THEME OVERLAY OVERRIDES
-   Hide ambient overlays designed for dark surfaces.
-   ========================================= */
-
-body.theme-light .scanline-overlay,
-body.theme-light .noise-overlay,
-body.theme-light .mouse-spotlight {
-  display: none !important;
 }

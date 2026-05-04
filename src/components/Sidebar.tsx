@@ -1,6 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useWallet } from '../contexts/WalletContext';
-import { ThemeToggle } from './ThemeToggle';
 
 interface SidebarProps {
   onConnectClick: () => void;
@@ -134,12 +133,9 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
       </div>
 
       <div className="p-6 border-t border-slate-800 bg-[#020617]">
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-[10px] text-slate-500 flex items-center gap-3 font-mono min-w-0">
-            <span className="truncate">AUTHORITY OS v1.0</span>
-            <span className="flex items-center text-cyan-500/80 shrink-0"><span className="w-1.5 h-1.5 bg-cyan-500 mr-2 shadow-[0_0_5px_rgba(6,182,212,0.5)]"></span> SECURE</span>
-          </div>
-          <ThemeToggle size="sm" className="shrink-0" />
+        <div className="text-[10px] text-slate-500 flex items-center justify-between font-mono">
+          <span>AUTHORITY OS v1.0</span>
+          <span className="flex items-center text-cyan-500/80"><span className="w-1.5 h-1.5 bg-cyan-500 mr-2 shadow-[0_0_5px_rgba(6,182,212,0.5)]"></span> SECURE</span>
         </div>
       </div>
     </aside>
