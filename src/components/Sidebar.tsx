@@ -96,6 +96,18 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
         </nav>
       </div>
 
+      <div className="px-4 pb-3 border-t border-slate-800/60 pt-4">
+        <button
+          onClick={() => onNavigate('community')}
+          className={`w-full flex items-center justify-between px-4 py-2.5 transition-all group ${currentView === 'community' ? 'text-cyan-300 bg-slate-800/40' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900/40'}`}
+        >
+          <span className="text-[10px] font-mono tracking-[0.28em] uppercase">Community surfaces</span>
+          <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </div>
+
       <div className="p-6">
         {connectedIdentity ? (
           <div className="bg-slate-900 border border-slate-800 p-4 flex flex-col gap-3 mb-4 transition-colors hover:border-cyan-900">

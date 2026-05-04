@@ -61,6 +61,7 @@ export const FooterSection = () => {
             <button type="button" onClick={() => navigate('/#deployment')} className="hover:text-white transition-colors duration-300 uppercase">Deployment</button>
             <button type="button" onClick={() => navigate('/explorer')} className="hover:text-white transition-colors duration-300 uppercase">Network</button>
             <button type="button" onClick={() => navigate('/developer')} className="hover:text-white transition-colors duration-300 uppercase">Developers</button>
+            <button type="button" onClick={() => navigate('/community')} className="hover:text-white transition-colors duration-300 uppercase">Community</button>
           </div>
         </div>
       </div>

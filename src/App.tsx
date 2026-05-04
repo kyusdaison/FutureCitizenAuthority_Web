@@ -33,6 +33,7 @@ const Oracle = React.lazy(() => import('./pages/Oracle'));
 const Identity = React.lazy(() => import('./pages/Identity'));
 const Sentinel = React.lazy(() => import('./pages/Sentinel'));
 const Whisper = React.lazy(() => import('./pages/Whisper'));
+const Community = React.lazy(() => import('./pages/Community'));
 
 import { FCChainNetworkSeal } from './components/BrandMarks';
 import { useWallet } from './contexts/WalletContext';
@@ -42,7 +43,7 @@ import { useCommandPalette } from './hooks/useCommandPalette';
 import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
 
-type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper';
+type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper' | 'community';
 
 const homeNavItems = [
   { label: 'Audiences', target: 'audiences' },
@@ -478,6 +479,7 @@ export default function App() {
                        {currentView === 'identity' && <Identity />}
                        {currentView === 'sentinel' && <Sentinel />}
                        {currentView === 'whisper' && <Whisper />}
+                       {currentView === 'community' && <Community />}
                     </motion.div>
                   </AnimatePresence>
                 </Suspense>
