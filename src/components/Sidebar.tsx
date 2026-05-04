@@ -73,61 +73,10 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
               </button>
             </li>
 
-            <li>
-              <button 
-                onClick={() => onNavigate('explorer')} 
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'explorer' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Telemetry</span>
-              </button>
-            </li>
 
-<li>
-              <button
-                onClick={() => onNavigate('tokenomics')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'tokenomics' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="text-xs font-bold tracking-widest uppercase">Economics</span>
-              </button>
-            </li>
 
-            <li>
-              <button
-                onClick={() => onNavigate('bridge')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'bridge' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-                <span className="text-xs font-bold tracking-widest uppercase">Cross-Chain</span>
-              </button>
-            </li>
 
-            <li>
-              <button
-                onClick={() => onNavigate('swap')}
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'swap' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-	                <span className="text-xs font-bold tracking-widest uppercase">Liquidity Rail</span>
-              </button>
-            </li>
 
-<li>
-              <button 
-                onClick={() => onNavigate('staking')} 
-                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'staking' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
-              >
-                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-	                 <span className="text-xs font-bold tracking-widest uppercase">Validator Ops</span>
-              </button>
-            </li>
 
             <li>
               <button 
