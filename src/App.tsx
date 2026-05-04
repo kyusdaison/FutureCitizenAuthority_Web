@@ -35,6 +35,7 @@ const Identity = React.lazy(() => import('./pages/Identity'));
 const Sentinel = React.lazy(() => import('./pages/Sentinel'));
 const Whisper = React.lazy(() => import('./pages/Whisper'));
 const Community = React.lazy(() => import('./pages/Community'));
+const ReviewRoom = React.lazy(() => import('./pages/ReviewRoom'));
 
 import { FCChainNetworkSeal } from './components/BrandMarks';
 import { useWallet } from './contexts/WalletContext';
@@ -44,7 +45,7 @@ import { useCommandPalette } from './hooks/useCommandPalette';
 import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
 
-type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper' | 'community';
+type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper' | 'community' | 'review-room';
 
 const homeNavItems = [
   { label: 'Audiences', target: 'audiences' },
@@ -166,6 +167,12 @@ export default function App() {
       title: 'Go to Home Page',
       subtitle: 'Institutional landing page',
       action: () => { navigate('home'); closeCommandPalette(); }
+    },
+    {
+      id: 'nav-review-room',
+      title: 'Open Review Room',
+      subtitle: 'Pilot packet, control files, and approval matrix',
+      action: () => { navigate('review-room'); closeCommandPalette(); }
     },
     {
       id: 'nav-model',
@@ -389,9 +396,9 @@ export default function App() {
             </span>
           </button>
           
-          <button onClick={() => scrollToSection('deployment')} className="hidden lg:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
+          <button onClick={() => navigate('/review-room')} className="hidden lg:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
             <div className="relative bg-slate-950 px-6 py-2 flex items-center justify-center">
-              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Deployment Paths</span>
+              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Review Room</span>
             </div>
           </button>
           <button
@@ -482,6 +489,7 @@ export default function App() {
                        {currentView === 'sentinel' && <Sentinel />}
                        {currentView === 'whisper' && <Whisper />}
                        {currentView === 'community' && <Community />}
+                       {currentView === 'review-room' && <ReviewRoom />}
                     </motion.div>
                   </AnimatePresence>
                 </Suspense>

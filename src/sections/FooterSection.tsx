@@ -19,13 +19,13 @@ export const FooterSection = () => {
           <MagneticButton className="w-full sm:w-auto">
             <button
               type="button"
-              onClick={() => navigate('/identity')}
+              onClick={() => navigate('/review-room')}
               className="relative p-[1px] bg-white/15 hover:bg-fc-gold transition-colors overflow-hidden group w-full h-full block"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fc-gold to-transparent -translate-x-full group-hover:translate-x-full duration-1000 ease-in-out pointer-events-none"></div>
               <div className="relative bg-[#010204] px-8 md:px-12 py-5 flex items-center justify-center gap-3 border border-white/5 w-full h-full">
                 <ShieldCheck className="w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
-	                <span className="text-xs font-bold uppercase text-fc-gold group-hover:text-white transition-colors z-10 drop-shadow-md">Review Identity Layer</span>
+	                <span className="text-xs font-bold uppercase text-fc-gold group-hover:text-white transition-colors z-10 drop-shadow-md">Open Review Room</span>
                 <ArrowRight className="w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
               </div>
             </button>
@@ -58,6 +58,7 @@ export const FooterSection = () => {
           <span>© {new Date().getFullYear()} Future Citizen Authority</span>
           <div className="flex gap-10 mt-6 md:mt-0">
             <button type="button" onClick={() => navigate('/identity')} className="hover:text-white transition-colors duration-300 uppercase">Identity</button>
+            <button type="button" onClick={() => navigate('/review-room')} className="hover:text-white transition-colors duration-300 uppercase">Review Room</button>
             <button type="button" onClick={() => navigate('/#deployment')} className="hover:text-white transition-colors duration-300 uppercase">Deployment</button>
             <button type="button" onClick={() => navigate('/explorer')} className="hover:text-white transition-colors duration-300 uppercase">Network</button>
             <button type="button" onClick={() => navigate('/developer')} className="hover:text-white transition-colors duration-300 uppercase">Developers</button>

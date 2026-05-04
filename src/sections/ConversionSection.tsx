@@ -76,6 +76,11 @@ const pilotCadence = [
 
 const supportingMaterials = [
   {
+    label: 'Review room',
+    copy: 'Pilot packet, approval matrix, custody boundary, and audit evidence.',
+    route: '/review-room',
+  },
+  {
     label: 'Identity specification',
     copy: 'Credential issuance, recovery, and service permission detail.',
     route: '/identity',
@@ -259,6 +264,14 @@ export const ConversionSection = () => {
                   </div>
                 ))}
               </div>
+              <button
+                type="button"
+                onClick={() => navigate('/review-room')}
+                className="mt-6 inline-flex w-full items-center justify-between border border-fc-gold/30 bg-[#020617]/60 px-5 py-4 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/10"
+              >
+                <span>Open pilot packet</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
             </div>
             <div className="border border-white/10 bg-[#020617]/75 p-6 md:p-8">
               <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">

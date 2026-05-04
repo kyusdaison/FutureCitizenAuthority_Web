@@ -43,6 +43,18 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
           <ul className="space-y-1 px-4">
             <li>
               <button
+                onClick={() => onNavigate('review-room')}
+                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'review-room' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
+              >
+                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6M7 4h7l3 3v13a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
+                 </svg>
+                 <span className="text-xs font-bold tracking-widest uppercase">Review Room</span>
+              </button>
+            </li>
+
+            <li>
+              <button
                 onClick={() => onNavigate('identity')}
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'identity' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
