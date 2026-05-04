@@ -1,234 +1,320 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
-const GlobalNodeMap = lazy(() => import('../components/GlobalNodeMap').then(module => ({ default: module.GlobalNodeMap })));
-import { useTelemetryContext } from '../contexts/TelemetryContext';
-import { useWallet } from '../contexts/WalletContext';
-import { mockDataService, type ProposalData, type ValidatorData } from '../services/mockDataService';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  ArrowRight,
+  ShieldCheck,
+  FileCheck2,
+  Clock,
+  AlertTriangle,
+  KeyRound,
+  ScrollText,
+  Activity,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+
+type KpiTile = {
+  icon: LucideIcon;
+  kicker: string;
+  label: string;
+  value: string;
+  delta?: string;
+  sub: string;
+};
+
+const kpiTiles: KpiTile[] = [
+  {
+    icon: FileCheck2,
+    kicker: 'Issuance',
+    label: 'Credentials issued · 30d',
+    value: '2,418',
+    delta: '+11.4% vs prior 30d',
+    sub: '38 templates · 4 jurisdictions',
+  },
+  {
+    icon: Clock,
+    kicker: 'Approvals',
+    label: 'Approvals pending',
+    value: '47',
+    sub: '6 high-risk · 41 standard',
+  },
+  {
+    icon: AlertTriangle,
+    kicker: 'Policy',
+    label: 'Policy flags · 7d',
+    value: '3',
+    sub: '1 active · 2 resolved this week',
+  },
+  {
+    icon: KeyRound,
+    kicker: 'Recovery',
+    label: 'Recovery cases',
+    value: '5',
+    sub: '2 open · 3 closed · avg 18h',
+  },
+  {
+    icon: ScrollText,
+    kicker: 'Audit',
+    label: 'Audit events · 24h',
+    value: '14,902',
+    sub: 'integrity ✓ · 0 missing',
+  },
+  {
+    icon: Activity,
+    kicker: 'SLA',
+    label: 'Service SLA · 30d',
+    value: '99.6%',
+    sub: 'issuance · recovery · escalation',
+  },
+];
+
+type IssuanceRow = {
+  time: string;
+  template: string;
+  issuer: string;
+  holder: string;
+  status: 'Issued' | 'Revoked' | 'Pending';
+};
+
+const issuanceLog: IssuanceRow[] = [
+  { time: '14:21', template: 'Resident · Tier 2', issuer: 'Civic Office #12', holder: '0x83a9…d214', status: 'Issued' },
+  { time: '14:08', template: 'Operator · Treasury', issuer: 'Operator Console', holder: '0x44b2…71fa', status: 'Issued' },
+  { time: '13:55', template: 'Resident · Tier 1', issuer: 'Civic Office #12', holder: '0xc101…e809', status: 'Issued' },
+  { time: '13:43', template: 'Custodian · Recovery', issuer: 'Recovery Council', holder: '0x6e90…2bd1', status: 'Pending' },
+  { time: '13:21', template: 'Resident · Tier 2', issuer: 'Civic Office #08', holder: '0x95cc…0a17', status: 'Revoked' },
+  { time: '13:02', template: 'Builder · API key', issuer: 'Developer Portal', holder: '0xa7e3…c912', status: 'Issued' },
+];
+
+type ApprovalRow = {
+  id: string;
+  type: string;
+  submitter: string;
+  ageHours: number;
+  risk: 'High' | 'Standard';
+};
+
+const openApprovals: ApprovalRow[] = [
+  { id: 'APR-0481', type: 'Treasury · Settlement', submitter: 'Operator #04', ageHours: 4, risk: 'High' },
+  { id: 'APR-0480', type: 'Identity · Bulk re-issue', submitter: 'Civic Office #12', ageHours: 7, risk: 'Standard' },
+  { id: 'APR-0479', type: 'Custody · Role rotation', submitter: 'Recovery Council', ageHours: 11, risk: 'High' },
+  { id: 'APR-0478', type: 'Identity · Tier upgrade', submitter: 'Civic Office #08', ageHours: 22, risk: 'Standard' },
+];
+
+type PolicyRow = {
+  time: string;
+  rule: string;
+  severity: 'Critical' | 'Warn' | 'Info';
+  status: 'Active' | 'Resolved' | 'Acknowledged';
+};
+
+const policyFeed: PolicyRow[] = [
+  { time: '10:14', rule: 'Treasury · single-actor approval', severity: 'Critical', status: 'Active' },
+  { time: '08:42', rule: 'Issuance · stale operator session', severity: 'Warn', status: 'Acknowledged' },
+  { time: '06:01', rule: 'Custody · split-key drift', severity: 'Warn', status: 'Resolved' },
+  { time: '00:33', rule: 'Audit · backfill threshold', severity: 'Info', status: 'Resolved' },
+];
 
 const Dashboard = () => {
-  const telemetry = useTelemetryContext();
-  const { connectedIdentity, balances } = useWallet();
-  const [proposals, setProposals] = useState<ProposalData[]>([]);
-  const [validators, setValidators] = useState<ValidatorData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let mounted = true;
-    Promise.all([
-      mockDataService.getActiveProposals(),
-      mockDataService.getValidators()
-    ]).then(([propsData, valData]) => {
-      if (mounted) {
-        setProposals(propsData);
-        setValidators(valData.slice(0, 5)); // top 5 validators
-        setIsLoading(false);
-      }
-    });
-    return () => { mounted = false; };
-  }, []);
+  const navigate = useNavigate();
+  // Static sample timestamp; production wires this to a real telemetry source.
+  const [now] = useState(() => new Date().toISOString().slice(11, 16));
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
+    <div className="space-y-8 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
+      {/* Sample preview banner */}
       <div className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Representative preview</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Sample preview</span>
         <span className="mx-3 text-slate-600">/</span>
-        Sample operating data for institutional walkthroughs. Production pilots should connect this dashboard to verified identity, treasury, validator, and audit-event sources.
+        Operating dashboard for institutional walkthroughs. Production pilots connect this surface to verified identity, treasury, audit, and recovery sources. Numbers are representative.
       </div>
 
-      {/* Top Stats Bar Vercel Style */}
-      <div className="w-full flex justify-center mb-10 mt-4">
-          <div className="vercel-stats-bar w-full grid grid-cols-1 md:grid-cols-4 text-center divide-y md:divide-y-0 md:divide-x divide-white/10 overflow-hidden">
-              <div className="flex flex-col py-6 px-6 relative group">
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none"></div>
-                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">SAMPLE VALUE LOCKED</span>
-                  <span className="text-4xl text-vanguard text-white">$842.5M</span>
-                  <div className="flex justify-center items-center text-xs mt-2 text-slate-400 font-bold">
-                      <svg className="w-3 h-3 mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                      12.4% vs last month
-                  </div>
+      {/* Header */}
+      <header className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Operating dashboard</p>
+          <h1 className="text-3xl md:text-5xl font-serif font-light text-white leading-tight">
+            Today&apos;s operating posture.
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm leading-[1.85] text-slate-400">
+            One screen for the people running an institutional pilot. Tracks issuance, approvals, policy flags, recovery, audit integrity, and service SLA.
+          </p>
+        </div>
+        <div className="flex items-center gap-3 self-start md:self-end">
+          <span className="border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.24em] text-slate-400">
+            {now} UTC
+          </span>
+          <button
+            type="button"
+            onClick={() => navigate('/identity')}
+            className="border border-white/10 bg-white/[0.02] px-4 py-2 text-[11px] font-mono uppercase tracking-[0.22em] text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+          >
+            Identity layer
+          </button>
+        </div>
+      </header>
+
+      {/* KPI tiles */}
+      <section aria-label="Operating KPIs" className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {kpiTiles.map((tile, i) => {
+          const Icon = tile.icon;
+          return (
+            <article key={tile.label} className="border border-white/10 bg-[#020617]/70 p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <Icon className="h-5 w-5 text-cyan-300" />
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-600">
+                  0{i + 1} // {tile.kicker}
+                </span>
               </div>
-              <div className="flex flex-col py-6 px-6 relative group">
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-cyan-500/5 transition-colors pointer-events-none"></div>
-                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">SAMPLE FCC STAKED</span>
-                  <div className="text-4xl text-vanguard text-white">1.2B <span className="text-xl text-slate-500 tracking-normal font-bold">FCC</span></div>
-                  <div className="flex justify-center items-center text-xs mt-2 w-full max-w-[150px] mx-auto">
-                     <div className="w-full bg-slate-800 h-1.5 mr-2">
-                        <div className="bg-cyan-500 h-1.5 w-[68%]"></div>
-                     </div>
-                     <span className="text-slate-400 font-medium">68%</span>
-                  </div>
+              <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500">{tile.label}</p>
+              <p className="mt-3 text-3xl md:text-4xl font-serif font-light text-white">{tile.value}</p>
+              {tile.delta && <p className="mt-1 text-[11px] font-mono text-cyan-300/80">{tile.delta}</p>}
+              <p className="mt-3 border-t border-white/5 pt-3 text-[12px] leading-relaxed text-slate-400">
+                {tile.sub}
+              </p>
+            </article>
+          );
+        })}
+      </section>
+
+      {/* Main grid: issuance log + side rails */}
+      <section className="grid grid-cols-1 gap-3 lg:grid-cols-[1.5fr_1fr]">
+        {/* Issuance activity */}
+        <article className="border border-white/10 bg-[#020617]/70 p-5">
+          <header className="mb-5 flex items-center justify-between">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">Issuance · last 30 min</p>
+              <h2 className="mt-2 text-xl font-serif font-light text-white">Recent credential events</h2>
+            </div>
+            <span className="text-[9px] font-mono uppercase tracking-[0.28em] text-slate-600">Sample data</span>
+          </header>
+          <div className="space-y-1 overflow-x-auto">
+            <div className="grid min-w-[640px] grid-cols-[60px_1.4fr_1.2fr_1fr_80px] gap-3 px-3 py-2 text-[9px] font-mono uppercase tracking-[0.22em] text-slate-600">
+              <span>Time</span>
+              <span>Template</span>
+              <span>Issuer</span>
+              <span>Holder</span>
+              <span className="text-right">Status</span>
+            </div>
+            {issuanceLog.map((row) => (
+              <div
+                key={`${row.time}-${row.holder}`}
+                className="grid min-w-[640px] grid-cols-[60px_1.4fr_1.2fr_1fr_80px] gap-3 border border-white/5 bg-white/[0.015] px-3 py-3 text-[12px] text-slate-300"
+              >
+                <span className="font-mono text-slate-500">{row.time}</span>
+                <span>{row.template}</span>
+                <span className="text-slate-400">{row.issuer}</span>
+                <span className="font-mono text-slate-500">{row.holder}</span>
+                <span
+                  className={
+                    'text-right font-mono text-[10px] uppercase tracking-[0.24em] ' +
+                    (row.status === 'Revoked'
+                      ? 'text-red-400/80'
+                      : row.status === 'Pending'
+                        ? 'text-fc-gold/80'
+                        : 'text-cyan-300/80')
+                  }
+                >
+                  {row.status}
+                </span>
               </div>
-              <div className="flex flex-col py-6 px-6 relative group">
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none"></div>
-                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">STAKING APY</span>
-                  <span className="text-4xl text-vanguard text-cyan-500 font-bold">14.2%</span>
-                  <span className="text-xs text-slate-500 mt-2 font-medium">Auto-compounding active</span>
-              </div>
-              <div className="flex flex-col py-6 px-6 relative group">
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none"></div>
-                  <span className="text-[10px] text-telemetry text-slate-500 mb-2">SAMPLE NODES</span>
-                  <span className="text-4xl text-vanguard text-white">{telemetry.activeNodes.toLocaleString()}<span className="text-xl text-slate-500 tracking-normal">/25,000</span></span>
-                  <div className="mt-2 text-center">
-                    <span className="text-xs text-white font-bold bg-white/10 border border-white/20 px-3 py-1 inline-block">
-                        NETWORK HEALTHY
+            ))}
+          </div>
+        </article>
+
+        {/* Side: open approvals + policy feed */}
+        <div className="flex flex-col gap-3">
+          <article className="border border-white/10 bg-[#020617]/70 p-5">
+            <header className="mb-5">
+              <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Awaiting approval</p>
+              <h2 className="mt-2 text-xl font-serif font-light text-white">Open approvals</h2>
+            </header>
+            <div className="space-y-2">
+              {openApprovals.map((row) => (
+                <div key={row.id} className="border border-white/5 bg-white/[0.02] p-3">
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500">
+                      {row.id} · {row.ageHours}h
+                    </span>
+                    <span
+                      className={
+                        'border px-2 py-0.5 text-[9px] font-mono uppercase tracking-[0.24em] ' +
+                        (row.risk === 'High'
+                          ? 'border-red-400/30 bg-red-400/5 text-red-300/90'
+                          : 'border-white/10 bg-white/[0.02] text-slate-400')
+                      }
+                    >
+                      {row.risk}
                     </span>
                   </div>
-              </div>
-          </div>
-      </div>
-
-      {/* Global Node Topology Map */}
-      <div className="mb-6 w-full">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
-          <h2 className="text-xl md:text-2xl text-vanguard text-white uppercase">Global Node Topology</h2>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-cyan-500 animate-[pulse_2s_infinite]"></span>
-            <span className="text-[10px] text-telemetry text-cyan-500 tracking-widest uppercase font-bold">Representative Preview</span>
-          </div>
-        </div>
-        <div className="h-[300px] md:h-[450px]">
-          <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-8 h-8 border-t-2 border-cyan-500 animate-spin"></div></div>}>
-            <GlobalNodeMap />
-          </Suspense>
-        </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Chart Column */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="agency-panel p-6 h-[400px] flex flex-col">
-            <div className="flex justify-between items-center mb-6 z-10">
-              <h2 className="text-2xl text-vanguard text-white uppercase">FCC Staking Performance</h2>
-              <div className="flex space-x-2 bg-black/40 p-1 border border-white/10">
-                {['24H', '7D', '1M', 'ALL'].map((tf, i) => (
-                  <button key={tf} className={`px-4 py-1.5  font-bold text-telemetry text-[9px] transition-colors ${i === 2 ? 'bg-white text-black' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
-                    {tf}
-                  </button>
-                ))}
-              </div>
+                  <p className="text-sm text-slate-200">{row.type}</p>
+                  <p className="mt-1 text-[11px] text-slate-500">{row.submitter}</p>
+                </div>
+              ))}
             </div>
-            <div className="flex-1 border border-white/5 relative flex items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800/20 via-transparent to-transparent">
-              {/* Fake chart placeholder */}
-              <div className="text-slate-600 text-sm text-center relative z-10 font-mono font-bold uppercase tracking-widest">
-                <svg className="w-16 h-16 mx-auto mb-2 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-                </svg>
-                Representative chart preview
-              </div>
-              {/* Synthetic visual line representing a climbing chart */}
-              <svg className="absolute inset-x-0 bottom-0 w-full h-[80%] opacity-60" preserveAspectRatio="none" viewBox="0 0 100 100">
-                  <path d="M0,80 L10,75 L20,85 L30,60 L40,70 L50,40 L60,50 L70,20 L80,30 L90,10 L100,5" fill="none" stroke="#f8fafc" strokeWidth="2" vectorEffect="non-scaling-stroke"></path>
-                  <path d="M0,100 L0,80 L10,75 L20,85 L30,60 L40,70 L50,40 L60,50 L70,20 L80,30 L90,10 L100,5 L100,100 Z" fill="url(#grad)" opacity="0.1"></path>
-                  <defs>
-                      <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stopColor="#f8fafc" stopOpacity="1" />
-                          <stop offset="100%" stopColor="#f8fafc" stopOpacity="0" />
-                      </linearGradient>
-                  </defs>
-              </svg>
+          </article>
+
+          <article className="border border-white/10 bg-[#020617]/70 p-5">
+            <header className="mb-5">
+              <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">Policy &amp; escalation</p>
+              <h2 className="mt-2 text-xl font-serif font-light text-white">Recent flags</h2>
+            </header>
+            <div className="space-y-2">
+              {policyFeed.map((row) => (
+                <div key={`${row.time}-${row.rule}`} className="flex items-start justify-between gap-3 border border-white/5 bg-white/[0.02] p-3">
+                  <div>
+                    <p className="text-[11px] font-mono uppercase tracking-[0.24em] text-slate-500">
+                      {row.time} · {row.severity}
+                    </p>
+                    <p className="mt-1 text-sm text-slate-200">{row.rule}</p>
+                  </div>
+                  <span
+                    className={
+                      'shrink-0 border px-2 py-0.5 text-[9px] font-mono uppercase tracking-[0.24em] ' +
+                      (row.status === 'Active'
+                        ? 'border-red-400/30 bg-red-400/5 text-red-300/90'
+                        : row.status === 'Acknowledged'
+                          ? 'border-fc-gold/25 bg-fc-gold/5 text-fc-gold/80'
+                          : 'border-white/10 bg-white/[0.02] text-slate-400')
+                    }
+                  >
+                    {row.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* Footer CTA — Ready for review */}
+      <section className="border border-white/10 bg-[#020617]/70 p-6 md:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="h-5 w-5 shrink-0 text-fc-gold" />
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Ready for review</p>
+              <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-300">
+                When this dashboard reflects a named operating owner, a bounded use case, a measurable outcome, and a documented privacy boundary — you are ready for a pilot review.
+              </p>
             </div>
           </div>
-
-           <div className="agency-panel p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl text-vanguard text-white uppercase">Active Proposals</h2>
-                <button className="bg-transparent hover:bg-white/10 text-white border border-white/20 font-bold text-[9px] px-4 py-1.5 hover:border-white transition-all uppercase">VIEW ARCHIVE</button>
-              </div>
-              <div className="space-y-4 relative min-h-[150px]">
-                {isLoading && (
-                  <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-                    <div className="w-8 h-8 border-t-2 border-cyan-500 animate-spin"></div>
-                  </div>
-                )}
-                {proposals.map((prop) => (
-                  <div key={prop.id} className="p-5 bg-white/[0.02] border border-white/5 hover:border-white/30 transition-all hover:bg-white/[0.04]">
-                    <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
-                      <div>
-                        <span className="text-[10px] font-bold text-white bg-white/10 border border-white/20 px-2.5 py-1 inline-block mb-3 uppercase tracking-wider">{prop.status}</span>
-                        <h4 className="font-bold text-white text-base md:text-lg font-mono uppercase tracking-widest">{prop.id}: {prop.title}</h4>
-                      </div>
-                      <div className="text-left sm:text-right flex flex-col items-start sm:items-end w-full sm:w-auto mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-white/5 sm:border-0">
-                        <div className="text-[10px] text-slate-500 font-bold tracking-widest uppercase mb-1">Ends in</div>
-                        <div className="text-sm font-mono text-cyan-500 bg-cyan-950/50 border border-cyan-900 px-2 py-1">{prop.endsIn}</div>
-                      </div>
-                    </div>
-                    <div className="w-full bg-slate-900 border border-slate-800 h-3 mb-3 flex overflow-hidden">
-                      <div className="bg-cyan-500 h-full border-r border-[#050505]" style={{ width: `${prop.yesPct}%` }}></div>
-                      <div className="bg-slate-400 h-full border-r border-[#050505]" style={{ width: `${prop.noPct}%` }}></div>
-                      <div className="bg-slate-800 h-full" style={{ width: `${prop.abstainPct}%` }}></div>
-                    </div>
-                    <div className="flex justify-between text-xs text-slate-400 font-bold tracking-widest uppercase">
-                      <span className="text-cyan-400">Yes: {prop.yesPct}%</span>
-                      <span className="text-slate-400">No: {prop.noPct}%</span>
-                      <span>Abstain: {prop.abstainPct}%</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-           </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => navigate('/#deployment')}
+              className="group inline-flex items-center justify-between gap-3 border border-fc-gold/30 bg-fc-gold/5 px-5 py-3 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/10"
+            >
+              <span>Map to a deployment path</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </button>
+            <a
+              href="mailto:pilots@fca.ms?subject=Dashboard%20pilot%20review"
+              className="inline-flex items-center justify-center gap-2 border border-white/10 bg-white/[0.02] px-5 py-3 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+            >
+              Discuss a pilot
+            </a>
+          </div>
         </div>
-
-        <div className="space-y-6">
-           <div className="agency-panel p-6 flex flex-col items-center text-center">
-              <div className="w-24 h-24 mb-6 relative flex justify-center items-center overflow-hidden border border-white/10 bg-white/5 grayscale">
-                <img src="/fcc-lion-god-tier.webp" alt="Wallet Identity" className="w-full h-full object-contain scale-[1.3] opacity-80" />
-              </div>
-              <h3 className="text-xl text-vanguard text-white mb-2 uppercase">Cryptographic Identity</h3>
-              <p className="text-[10px] text-telemetry text-slate-500 mb-8 bg-black border border-white/10 px-4 py-1.5 inline-block">{connectedIdentity || 'Not Connected'}</p>
-              
-              <div className="w-full bg-black/40 p-5 border border-white/5 mb-4 text-left shadow-inner">
-                <div className="text-[10px] text-telemetry font-bold text-slate-500 mb-1">AVAILABLE BALANCE</div>
-                <div className="text-3xl text-vanguard text-white">{balances.fcc.toLocaleString(undefined, {minimumFractionDigits: 2})} <span className="text-base text-slate-500 font-mono tracking-widest font-bold">FCC</span></div>
-                <div className="text-xs text-cyan-500 mt-2 font-bold font-mono tracking-widest">≈ ${(balances.fcc * 0.69).toLocaleString(undefined, {minimumFractionDigits: 2})} USD</div>
-              </div>
-
-               <div className="w-full bg-black/40 p-5 border border-white/5 mb-8 text-left relative overflow-hidden shadow-inner group transition-all hover:border-white/20">
-                <div className="text-[10px] text-telemetry font-bold text-slate-500 mb-1">UNCLAIMED REWARDS</div>
-                <div className="text-2xl text-vanguard text-white">314.5 <span className="text-sm font-mono tracking-widest font-bold text-slate-500">FCC</span></div>
-                <button className="mt-4 w-full bg-white text-black hover:bg-slate-200 border border-transparent py-2.5 text-xs tracking-widest uppercase font-bold transition-all">CLAIM REWARDS</button>
-              </div>
-
-              <button className="w-full bg-black hover:bg-white/10 text-white border border-white/20 py-3.5 text-xs tracking-widest font-bold transition-all uppercase">
-                {connectedIdentity ? 'INITIATE NEW STAKE' : 'CONNECT WALLET'}
-              </button>
-           </div>
-
-           <div className="agency-panel p-6">
-             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl text-vanguard text-white uppercase">Top Validators</h2>
-                <div className="w-2 h-2 bg-cyan-500 animate-[pulse_2s_infinite]"></div>
-             </div>
-             <div className="space-y-3 relative min-h-[250px]">
-               {isLoading && (
-                 <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-                    <div className="w-8 h-8 border-t-2 border-cyan-500 animate-spin"></div>
-                 </div>
-               )}
-               {validators.map((node, i) => (
-                 <div key={node.name} className="flex items-center justify-between p-3 hover:bg-white/[0.04] transition-colors cursor-pointer border border-transparent hover:border-white/10">
-                   <div className="flex items-center space-x-4">
-                     <div className="w-10 h-10 bg-black/50 border border-white/10 flex items-center justify-center text-sm font-bold text-white shadow-inner font-mono">
-                       {i + 1}
-                     </div>
-                     <div>
-                       <div className="text-sm font-bold text-white mb-0.5 tracking-wider uppercase font-mono">{node.name}</div>
-                       <div className="text-[9px] text-telemetry font-bold text-slate-500 flex items-center tracking-widest">
-                         UPTIME {node.uptime}
-                       </div>
-                     </div>
-                   </div>
-                   <div className="text-right">
-                     <div className="text-sm font-mono text-white font-bold">{node.weight} <span className="text-slate-500 text-xs tracking-widest">PWR</span></div>
-                     <div className="text-[9px] text-telemetry font-bold text-cyan-500/80">FEE: {node.fee}</div>
-                   </div>
-                 </div>
-               ))}
-             </div>
-           </div>
-        </div>
-
-      </div>
+      </section>
     </div>
   );
 };
