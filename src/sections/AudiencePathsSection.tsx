@@ -20,7 +20,7 @@ const audiencePaths = [
     icon: Building2,
     audience: 'Institutions',
     title: 'Treasury, custody, and approval controls',
-    copy: 'Review how approved operators use seedless wallets, treasury permissions, recovery boundaries, and reporting checkpoints without creating a single point of failure.',
+    copy: 'Review how approved operators use HSM-backed custody, treasury permissions, recovery boundaries, and reporting checkpoints without creating a single point of failure.',
     reviewerQuestion: 'Who can initiate, approve, recover, and report sensitive wallet actions?',
     firstStep: 'Define custody, approval, and reporting owners',
     route: '/dashboard',

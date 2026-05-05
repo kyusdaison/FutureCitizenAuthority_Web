@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useIssuanceCounter, formatLastIssued } from '../lib/issuanceCounter';
+import { DataSourceBadge } from '../components/DataSourceBadge';
 
 type KpiTile = {
   icon: LucideIcon;
@@ -146,7 +147,7 @@ const Dashboard = () => {
     <div className="space-y-8 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
       {/* Sample preview banner — now honest: one tile is live, the rest are sample */}
       <div className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Mixed source</span>
+        <DataSourceBadge kind="mixed" className="mr-3 align-middle" />
         <span className="mx-3 text-slate-400">/</span>
         The <span className="text-cyan-200">Issuance</span> tile reads a real counter wired to the <a href="/identity" className="underline decoration-cyan-300/40 underline-offset-2 hover:text-white">/identity</a> demo — every credential you mint there increments it here. Remaining tiles are sample data; production pilots replace them with verified identity, treasury, audit, and recovery sources.
       </div>
@@ -194,12 +195,7 @@ const Dashboard = () => {
               <div className="mb-4 flex items-center justify-between">
                 <Icon className={'h-5 w-5 ' + (isLive ? 'text-cyan-200' : 'text-cyan-300')} />
                 <span className="flex items-center gap-2">
-                  {isLive && (
-                    <span className="inline-flex items-center gap-1.5 border border-cyan-300/40 bg-cyan-300/10 px-2 py-0.5 text-[9px] font-mono uppercase tracking-[0.24em] text-cyan-200">
-                      <span className="h-1 w-1 rounded-full bg-cyan-300 animate-pulse" aria-hidden />
-                      Live
-                    </span>
-                  )}
+                  <DataSourceBadge kind={isLive ? 'live' : 'sample'} label={isLive ? 'Live' : 'Sample'} pulse={isLive} />
                   <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-400">
                     0{i + 1} // {tile.kicker}
                   </span>
@@ -225,7 +221,7 @@ const Dashboard = () => {
               <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">Issuance · last 30 min</p>
               <h2 className="mt-2 text-xl font-serif font-light text-white">Recent credential events</h2>
             </div>
-            <span className="text-[9px] font-mono uppercase tracking-[0.28em] text-slate-400">Sample data</span>
+            <DataSourceBadge kind="sample" label="Sample data" />
           </header>
           <div className="space-y-1 overflow-x-auto">
             <div className="grid min-w-[640px] grid-cols-[60px_1.4fr_1.2fr_1fr_80px] gap-3 px-3 py-2 text-[9px] font-mono uppercase tracking-[0.22em] text-slate-400">

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useRef, useEffect, type ReactNode } from 'react';
-import { CyberToast, type ToastType } from '../components/CyberToast';
+import { AgencyToast, type ToastType } from '../components/AgencyToast';
 import { AnimatePresence } from 'framer-motion';
 
 interface ToastOptions {
@@ -60,7 +60,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
       <div className="fixed bottom-8 right-8 z-[100] flex flex-col gap-4 pointer-events-none">
         <AnimatePresence mode="popLayout">
           {toasts.map((t) => (
-            <CyberToast 
+            <AgencyToast 
               key={t.id} 
               message={t.message} 
               type={t.type} 

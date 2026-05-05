@@ -16,7 +16,7 @@ const MOCK_ARTIFACTS: ArtifactData[] = [
     rarity: 'Legendary',
     power: 9940,
     owner: '0x49fA…bD21',
-    image: 'https://images.unsplash.com/photo-1542644485-cbd46ec6fd56?q=80&w=600&auto=format&fit=crop',
+    image: '/products/fcc_series3_resident_1774149181409.png',
     traits: ['Issuer-attested', 'Recovery-bound', 'Audit-sealed'],
     status: 'Active'
   },
@@ -26,7 +26,7 @@ const MOCK_ARTIFACTS: ArtifactData[] = [
     rarity: 'Rare',
     power: 4200,
     owner: '0x22cB…8f0A',
-    image: 'https://images.unsplash.com/photo-1533134486753-c833f0ed4866?q=80&w=600&auto=format&fit=crop',
+    image: '/products/fcc_series3_vault_1774149135581.png',
     traits: ['Limit-bound', 'Quorum-gated'],
     status: 'Active'
   },
@@ -36,7 +36,7 @@ const MOCK_ARTIFACTS: ArtifactData[] = [
     rarity: 'Uncommon',
     power: 1540,
     owner: '0x88fC…4b9B',
-    image: 'https://images.unsplash.com/photo-1473663678007-9b2658fc5ec7?q=80&w=600&auto=format&fit=crop',
+    image: '/products/fcc_series3_chain_1774149083861.png',
     traits: ['Read-only', 'Time-boxed'],
     status: 'Idle'
   },
@@ -46,7 +46,7 @@ const MOCK_ARTIFACTS: ArtifactData[] = [
     rarity: 'Epic',
     power: 7800,
     owner: '0x1A4f…7c22',
-    image: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=600&auto=format&fit=crop',
+    image: '/products/fcc_series3_kyc_1774149108992.png',
     traits: ['MPC share', 'Council-only', 'Escalation-bound'],
     status: 'Active'
   }
@@ -89,16 +89,16 @@ const MOCK_CORE_PRODUCTS: CoreProduct[] = [
 export interface ValidatorData {
   name: string;
   weight: string;
-  apy: string;
+  assurance: string;
   uptime: string;
   fee: string;
 }
 
 const MOCK_VALIDATORS: ValidatorData[] = [
-  { name: 'Region-1 Settlement Node', weight: '18.4%', apy: '14.2%', uptime: '100%', fee: '0%' },
-  { name: 'Region-2 Settlement Node', weight: '12.1%', apy: '13.8%', uptime: '99.9%', fee: '2%' },
-  { name: 'Region-3 Settlement Node', weight: '9.8%', apy: '14.0%', uptime: '99.9%', fee: '1%' },
-  { name: 'Reserve Validator', weight: '7.2%', apy: '13.5%', uptime: '99.8%', fee: '4%' }
+  { name: 'Region-1 Settlement Node', weight: '18.4%', assurance: 'A+', uptime: '100%', fee: '0%' },
+  { name: 'Region-2 Settlement Node', weight: '12.1%', assurance: 'A', uptime: '99.9%', fee: '2%' },
+  { name: 'Region-3 Settlement Node', weight: '9.8%', assurance: 'A', uptime: '99.9%', fee: '1%' },
+  { name: 'Reserve Validator', weight: '7.2%', assurance: 'B+', uptime: '99.8%', fee: '4%' }
 ];
 
 export interface IdentityStat {

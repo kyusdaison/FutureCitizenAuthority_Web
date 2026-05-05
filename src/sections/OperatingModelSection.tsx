@@ -15,7 +15,7 @@ const operatingSteps = [
   {
     icon: WalletCards,
     title: 'Activate the wallet rail',
-    copy: 'Connect verified users to seedless MPC wallets, recovery boundaries, policy-bound payment routing, and settlement status.',
+    copy: 'Connect verified users to HSM-backed custody, recovery boundaries, policy-bound payment routing, and settlement status.',
     plain: 'This answers: how do they transact safely?',
     proof: 'Custody boundary',
     evidence: 'Operator roles, recovery process, signing policy, limit rules',

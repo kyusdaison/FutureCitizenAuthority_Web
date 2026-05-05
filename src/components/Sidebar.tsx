@@ -55,6 +55,19 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
 
             <li>
               <button
+                onClick={() => onNavigate('pilot-application')}
+                className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'pilot-application' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
+              >
+                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-2-9-7-7-7 7-2 9 9-2z" />
+                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 19v-8" />
+                 </svg>
+                 <span className="text-xs font-bold tracking-widest uppercase">Pilot Request</span>
+              </button>
+            </li>
+
+            <li>
+              <button
                 onClick={() => onNavigate('identity')}
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'identity' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
@@ -91,7 +104,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'explorer' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Explorer</span>
+                 <span className="text-xs font-bold tracking-widest uppercase">Evidence Explorer</span>
               </button>
             </li>
 
@@ -106,18 +119,6 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
             </li>
           </ul>
         </nav>
-      </div>
-
-      <div className="px-4 pb-3 border-t border-slate-800/60 pt-4">
-        <button
-          onClick={() => onNavigate('community')}
-          className={`w-full flex items-center justify-between px-4 py-2.5 transition-all group ${currentView === 'community' ? 'text-cyan-300 bg-slate-800/40' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900/40'}`}
-        >
-          <span className="text-[10px] font-mono tracking-[0.28em] uppercase">Community appendix</span>
-          <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </button>
       </div>
 
       <div className="p-6">
@@ -149,14 +150,25 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                  <svg className="w-4 h-4 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
              </div>
              <div>
-               <div className="text-[10px] font-bold tracking-widest uppercase text-slate-500">Network</div>
-               <div className="text-xs font-mono font-bold text-slate-300 tracking-wider">FC Network · Sample</div>
+               <div className="text-[10px] font-bold tracking-widest uppercase text-slate-500">Evidence rail</div>
+               <div className="text-xs font-mono font-bold text-slate-300 tracking-wider">FC Chain · Sample</div>
              </div>
           </div>
         </div>
       </div>
 
       <div className="p-6 border-t border-slate-800 bg-[#020617]">
+        <div className="mb-4 flex flex-wrap gap-x-3 gap-y-2 text-[9px] font-bold uppercase tracking-[0.18em] text-slate-600">
+          <button type="button" onClick={() => onNavigate('privacy')} className="transition-colors hover:text-white">
+            Privacy
+          </button>
+          <button type="button" onClick={() => onNavigate('terms')} className="transition-colors hover:text-white">
+            Terms
+          </button>
+          <button type="button" onClick={() => onNavigate('security')} className="transition-colors hover:text-white">
+            Security
+          </button>
+        </div>
         <div className="text-[10px] text-slate-500 flex items-center justify-between font-mono">
           <span>AUTHORITY OS v1.0</span>
           <span className="flex items-center text-cyan-500/80"><span className="w-1.5 h-1.5 bg-cyan-500 mr-2 shadow-[0_0_5px_rgba(6,182,212,0.5)]"></span> SECURE</span>

@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:analyze": "tsc -b && vite build --mode analyze",
+    "content:guard": "node scripts/content-guard.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "type-check": "tsc --noEmit"

@@ -45,7 +45,7 @@ export const IdentitySection = () => {
                  </p>
                </div>
                <div className="flex flex-wrap gap-3 mb-8">
-	                 {['Verified Enrollment', 'Private Proofs', 'Seedless Wallets', 'Governance Access'].map((item) => (
+	                 {['Verified Enrollment', 'Selective Disclosure', 'HSM Custody', 'Role-Bound Access'].map((item) => (
                    <span
                      key={item}
                      className="border border-fc-gold/20 bg-fc-gold/5 px-3 py-2 text-[9px] font-mono tracking-[0.3em] text-fc-gold uppercase"
@@ -97,10 +97,10 @@ export const IdentitySection = () => {
               <div className="agency-panel p-8 md:p-10 bg-[#020617]/90 backdrop-blur-2xl border border-slate-700 shadow-2xl w-full">
                <ShieldCheck className="w-10 h-10 text-cyan-400 mb-6 opacity-80" />
                <h3 className="text-3xl font-serif font-light text-white mb-4 border-b border-slate-800 pb-4">
-                 Seedless Identity Wallet
+                 HSM-Backed Credential Vault
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
-	                 Complete self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet splits key authority across device enclaves, distributed custody infrastructure, and encrypted offline recovery so identity access remains resilient without turning a help desk into the single point of control.
+                 Hardware-security-module-backed custody with <strong className="text-cyan-400 font-medium">no single private-key holder</strong>. The credential vault splits signing authority across device enclaves, distributed HSM infrastructure, and encrypted offline recovery — so identity access stays resilient without turning a help desk into the single point of control.
                </p>
                <div className="p-4 border border-slate-800 bg-slate-900/50">
                  <p className="text-[9px] font-mono tracking-widest text-cyan-300 uppercase">System Notice:</p>

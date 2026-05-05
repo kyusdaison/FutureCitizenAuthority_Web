@@ -2,10 +2,17 @@
 User-agent: *
 Allow: /
 
-# Demo / experimental surfaces — not yet ready for indexing
-Disallow: /sentinel
-Disallow: /whisper
+# Community / network-operation surfaces — not part of the institutional pitch.
+# Routes still live for existing community participants who hold direct links,
+# but explicitly excluded from search-engine indexing and public navigation.
+Disallow: /community
+Disallow: /tokenomics
+Disallow: /staking
+Disallow: /bridge
+Disallow: /swap
 Disallow: /artifacts
 Disallow: /oracle
+Disallow: /whisper
+Disallow: /sentinel
 
 Sitemap: https://fca.ms/sitemap.xml

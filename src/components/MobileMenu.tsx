@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useCyberSound } from '../hooks/useCyberSound';
+import { useInterfaceSound } from '../hooks/useInterfaceSound';
+import { pilotApplicationRoute, trackConversionEvent } from '../lib/conversion';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -9,7 +10,7 @@ interface MobileMenuProps {
 }
 
 export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
-  const { playHover, playClick } = useCyberSound();
+  const { playHover, playClick } = useInterfaceSound();
   const navigate = useNavigate();
   
   const links = [
@@ -93,12 +94,17 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           >
             <button 
               onMouseEnter={() => playHover()}
-              onClick={() => { playClick(); onClose(); navigate('/review-room'); }}
+              onClick={() => {
+                playClick();
+                trackConversionEvent('pilot_request_started', 'mobile-home-menu');
+                onClose();
+                navigate(pilotApplicationRoute);
+              }}
               className="w-full relative p-[1px] bg-white/10 hover:bg-fc-gold/50 transition-colors overflow-hidden group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fc-gold to-transparent -translate-x-full group-hover:translate-x-full duration-1000 ease-in-out"></div>
               <div className="relative bg-[#020306] px-8 py-4 flex items-center justify-center">
-                <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-fc-gold group-hover:text-white transition-colors z-10 sm:tracking-[0.4em]">Open Review Room</span>
+                <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-fc-gold group-hover:text-white transition-colors z-10 sm:tracking-[0.4em]">Request Pilot Review</span>
               </div>
             </button>
           </motion.div>

@@ -14,6 +14,7 @@ import {
   Wallet,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { DataSourceBadge } from '../components/DataSourceBadge';
 
 type CoreComponent = {
   icon: LucideIcon;
@@ -43,7 +44,7 @@ const coreComponents: CoreComponent[] = [
     icon: KeyRound,
     label: 'Wallet & custody',
     title: 'Holder wallet + recovery',
-    copy: 'Holder wallet bound to credential status, MPC-backed recovery rules, and role-limited operator keys for institutional review.',
+    copy: 'Holder wallet bound to credential status, HSM-backed recovery rules, and role-limited operator keys for institutional review.',
     status: 'Sample preview',
   },
   {
@@ -57,7 +58,7 @@ const coreComponents: CoreComponent[] = [
     icon: Layers,
     label: 'Settlement',
     title: 'FC Chain settlement',
-    copy: 'Transaction settlement layer for benefit, registry, and audit events. Community network-operation material lives separately at /community.',
+    copy: 'Transaction settlement layer for benefit, registry, and audit events. Operated by the network as a separate layer with its own audit posture.',
     status: 'Live (sample-traffic)',
   },
   {
@@ -128,7 +129,7 @@ const Ecosystem = () => {
     <div className="space-y-10 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
       {/* Sample preview banner */}
       <div className="mt-4 border border-emerald-300/20 bg-emerald-300/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-emerald-300">Ecosystem map</span>
+        <DataSourceBadge kind="mixed" label="Ecosystem map" className="mr-3 align-middle" />
         <span className="mx-3 text-slate-400">/</span>
         Reviewable infrastructure components and integration paths. Use this to scope what is
         already live, what is sample preview, and what each partner category needs to surface

@@ -2,9 +2,9 @@ import { useCallback, useRef, useEffect } from 'react';
 
 /**
  * 轻量级 Web Audio API 合成器
- * 用于硬件级赛博朋克 UI 交互音效
+ * 用于轻量界面交互音效
  */
-export const useCyberSound = () => {
+export const useInterfaceSound = () => {
   const audioCtxRef = useRef<AudioContext | null>(null);
   const isInitialized = useRef(false);
 

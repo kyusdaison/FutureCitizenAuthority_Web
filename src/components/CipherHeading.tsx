@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import type { RefObject } from 'react';
 
 // Cryptographic character pool
 const CHARS = '!<>-_\\\\/[]{}—=+*^?#________';
@@ -9,15 +10,17 @@ interface CipherHeadingProps {
   className?: string;
   duration?: number;
   delay?: number;
+  as?: 'span' | 'h1' | 'h2' | 'h3';
 }
 
 export const CipherHeading = ({ 
   text, 
   className = '', 
   duration = 1000, 
-  delay = 0
+  delay = 0,
+  as = 'span'
 }: CipherHeadingProps) => {
-  const ref = useRef<HTMLSpanElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
   // Start fully scrambled
   const [displayText, setDisplayText] = useState(text.replace(/./g, '·'));
@@ -79,9 +82,35 @@ export const CipherHeading = ({
     };
   }, [isInView, text, duration, delay]);
 
+  const visualText = <span aria-hidden="true">{displayText}</span>;
+
+  if (as === 'h1') {
+    return (
+      <motion.h1 ref={ref as RefObject<HTMLHeadingElement>} className={className} aria-label={text}>
+        {visualText}
+      </motion.h1>
+    );
+  }
+
+  if (as === 'h2') {
+    return (
+      <motion.h2 ref={ref as RefObject<HTMLHeadingElement>} className={className} aria-label={text}>
+        {visualText}
+      </motion.h2>
+    );
+  }
+
+  if (as === 'h3') {
+    return (
+      <motion.h3 ref={ref as RefObject<HTMLHeadingElement>} className={className} aria-label={text}>
+        {visualText}
+      </motion.h3>
+    );
+  }
+
   return (
-    <motion.span ref={ref} className={className}>
-      {displayText}
+    <motion.span ref={ref as RefObject<HTMLSpanElement>} className={className} aria-label={text}>
+      {visualText}
     </motion.span>
   );
 };

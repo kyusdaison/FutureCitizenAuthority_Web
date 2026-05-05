@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 
 export type ToastType = 'success' | 'process' | 'error' | 'info';
 
-interface CyberToastProps {
+interface AgencyToastProps {
   message: string;
   type?: ToastType;
   onClose?: () => void;
 }
 
-export const CyberToast = ({ message, type = 'info', onClose }: CyberToastProps) => {
+export const AgencyToast = ({ message, type = 'info', onClose }: AgencyToastProps) => {
   const bgColors = {
     success: 'bg-green-500/10 border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.2)]',
     process: 'bg-yellow-500/10 border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)]',
@@ -61,7 +61,7 @@ export const CyberToast = ({ message, type = 'info', onClose }: CyberToastProps)
         </span>
       </div>
       
-      {/* Immersive Scanline in Toast */}
+      {/* Subtle status sweep */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
          <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent absolute top-0 -translate-y-full animate-[scan_2s_linear_infinite]" />
       </div>

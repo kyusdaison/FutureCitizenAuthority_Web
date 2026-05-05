@@ -1,7 +1,19 @@
-import { ArrowRight, BadgeCheck, Building2, Code2, FileCheck2, Landmark, Route, ShieldCheck } from 'lucide-react';
+import {
+  ArrowRight,
+  BadgeCheck,
+  Building2,
+  Code2,
+  Download,
+  FileCheck2,
+  Landmark,
+  Mail,
+  Route,
+  ShieldCheck,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { TiltCard } from '../components/TiltCard';
+import { pilotApplicationRoute, reviewPacketHref, trackConversionEvent } from '../lib/conversion';
 
 const deploymentPaths = [
   {
@@ -11,7 +23,7 @@ const deploymentPaths = [
     summary: 'Issue verifiable identity, route benefits, and supervise public treasury flows from one auditable authority layer.',
     proof: 'Resident credentials, benefit disbursement, compliance dashboards',
     checkpoint: 'Name the agency owner, eligible population, data boundary, and first service outcome.',
-    action: 'Review Identity',
+    action: 'Open Identity',
     route: '/identity',
     accent: 'text-fc-gold',
     border: 'hover:border-fc-gold/45',
@@ -20,8 +32,8 @@ const deploymentPaths = [
     icon: Building2,
     audience: 'Institutions',
     title: 'Treasury and settlement',
-    summary: 'Connect verified operators to seedless wallets, auto-gas execution, programmable payouts, and policy-bound approvals.',
-    proof: 'MPC custody, merchant settlement, treasury controls',
+    summary: 'Connect verified operators to HSM-backed custody, automated execution, programmable payouts, and policy-bound approvals.',
+    proof: 'HSM custody, merchant settlement, treasury controls',
     checkpoint: 'Define approval roles, recovery paths, reporting obligations, and transaction limits.',
     action: 'Open Dashboard',
     route: '/dashboard',
@@ -64,11 +76,11 @@ const proofSignals = [
   { value: '1', label: 'lead use case' },
   { value: '4', label: 'control surfaces' },
   { value: '90d', label: 'pilot window' },
-  { value: 'ZK / MPC', label: 'privacy and custody controls' },
+  { value: 'HSM-backed', label: 'privacy and custody controls' },
 ];
 
 const pilotCadence = [
-  { window: '0-30 days', focus: 'Use-case selection and control review' },
+  { window: '0-30 days', focus: 'Use-case selection and control sign-off' },
   { window: '31-60 days', focus: 'Limited operator pilot and reporting checks' },
   { window: '61-90 days', focus: 'Scale, pause, or revise decision' },
 ];
@@ -88,8 +100,8 @@ const supportingMaterials = [
   },
   {
     lane: 'Evidence surface',
-    label: 'Network explorer',
-    copy: 'Representative settlement references, audit events, and network telemetry.',
+    label: 'Evidence explorer',
+    copy: 'Representative settlement references, audit events, exceptions, and exportable evidence.',
     route: '/explorer',
   },
   {
@@ -97,12 +109,6 @@ const supportingMaterials = [
     label: 'Developer portal',
     copy: 'SDKs, proof hooks, policy surfaces, and integration tooling.',
     route: '/developer',
-  },
-  {
-    lane: 'Community appendix',
-    label: 'Network economics',
-    copy: 'Supply, reserve policy, fee treatment, and community-facing disclosures.',
-    route: '/tokenomics',
   },
 ];
 
@@ -116,6 +122,14 @@ const firstMeetingPackage = [
 
 export const ConversionSection = () => {
   const navigate = useNavigate();
+  const startPilotRequest = () => {
+    trackConversionEvent('pilot_request_started', 'homepage-first-meeting-package');
+    navigate(pilotApplicationRoute);
+  };
+
+  const downloadPacket = () => {
+    trackConversionEvent('review_packet_downloaded', 'homepage-first-meeting-package');
+  };
 
   return (
     <section id="deployment" className="py-24 px-6 lg:px-12 bg-[#05070b] border-y border-white/5 relative overflow-hidden">
@@ -136,7 +150,7 @@ export const ConversionSection = () => {
                 <span className="italic text-fc-gold font-serif">Entry Point.</span>
               </h3>
               <p className="text-base md:text-lg text-slate-400 leading-[1.8] max-w-2xl">
-                Future Citizen becomes easier to understand when every conversation starts from the buyer's first useful deployment. Identity is the base, but the review path should begin with the service outcome, responsible owner, and control boundary.
+                Future Citizen becomes easier to understand when every conversation starts from the buyer's first useful deployment. Identity is the base, but the evaluation should begin with the service outcome, responsible owner, and control boundary.
               </p>
             </div>
 
@@ -146,7 +160,7 @@ export const ConversionSection = () => {
                 <span className="text-sm font-medium">Evaluation rule</span>
               </div>
               <p className="text-sm text-slate-400 leading-relaxed">
-                Lead with the buyer's first deployment path. Treat protocol, economics, and network telemetry as supporting appendix material.
+                Lead with the buyer's first deployment path. Treat protocol, economics, and settlement evidence as supporting appendix material.
               </p>
             </div>
           </div>
@@ -267,14 +281,35 @@ export const ConversionSection = () => {
                   </div>
                 ))}
               </div>
-              <button
-                type="button"
-                onClick={() => navigate('/review-room')}
-                className="mt-6 inline-flex w-full items-center justify-between border border-fc-gold/30 bg-[#020617]/60 px-5 py-4 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/10"
-              >
-                <span>Open pilot packet</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
+              <div className="mt-6 grid grid-cols-1 gap-3">
+                <button
+                  type="button"
+                  onClick={startPilotRequest}
+                  className="inline-flex w-full items-center justify-between border border-fc-gold/30 bg-[#020617]/60 px-5 py-4 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/10"
+                >
+                  <span>Request a pilot</span>
+                  <Mail className="h-4 w-4" />
+                </button>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-1">
+                  <a
+                    href={reviewPacketHref}
+                    download
+                    onClick={downloadPacket}
+                    className="inline-flex w-full items-center justify-between border border-white/10 bg-[#020617]/50 px-5 py-4 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+                  >
+                    <span>Download packet</span>
+                    <Download className="h-4 w-4 text-cyan-300" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/review-room')}
+                    className="inline-flex w-full items-center justify-between border border-white/10 bg-[#020617]/50 px-5 py-4 text-sm text-slate-200 transition-colors hover:border-fc-gold/35 hover:bg-white/[0.04] hover:text-white"
+                  >
+                    <span>Open pilot packet</span>
+                    <ArrowRight className="h-4 w-4 text-fc-gold" />
+                  </button>
+                </div>
+              </div>
             </div>
             <div className="border border-white/10 bg-[#020617]/75 p-6 md:p-8">
               <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -283,7 +318,7 @@ export const ConversionSection = () => {
                   <h4 className="text-2xl md:text-3xl font-serif font-light text-white">Deeper material lives off the institutional homepage.</h4>
                 </div>
                 <p className="max-w-md text-sm leading-relaxed text-slate-500">
-                  The homepage should close the review conversation. Network, developer, and economics material remain available as appendix pages for specialist audiences.
+                  The homepage should close the conversation. Evidence, developer, and economics material remain available as appendix pages for specialist audiences.
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">

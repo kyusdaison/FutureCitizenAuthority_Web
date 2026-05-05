@@ -6,8 +6,6 @@ import { MobileMenu } from './components/MobileMenu';
 import { LiveTelemetryFooter } from './components/LiveTelemetryFooter';
 import { CommandPalette, type Command } from './components/CommandPalette';
 import { ConnectWalletModal } from './components/ConnectWalletModal';
-import { CommunityBreadcrumb } from './components/CommunityBreadcrumb';
-
 import { HeroSection } from './sections/HeroSection';
 import { OperatingModelSection } from './sections/OperatingModelSection';
 import { AssuranceSection } from './sections/AssuranceSection';
@@ -16,30 +14,25 @@ import { FooterSection } from './sections/FooterSection';
 import { Sidebar } from './components/Sidebar';
 import React, { Suspense } from 'react';
 import { PageLoader } from './components/PageLoader';
+import { SeoMeta } from './components/SeoMeta';
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Ecosystem = React.lazy(() => import('./pages/Ecosystem'));
-const Staking = React.lazy(() => import('./pages/Staking'));
 const Explorer = React.lazy(() => import('./pages/Explorer'));
 const DeveloperHub = React.lazy(() => import('./pages/DeveloperHub'));
-const Tokenomics = React.lazy(() => import('./pages/Tokenomics'));
-const Bridge = React.lazy(() => import('./pages/Bridge'));
-const Swap = React.lazy(() => import('./pages/Swap'));
-const Artifacts = React.lazy(() => import('./pages/Artifacts'));
-const Oracle = React.lazy(() => import('./pages/Oracle'));
 const Identity = React.lazy(() => import('./pages/Identity'));
-const Sentinel = React.lazy(() => import('./pages/Sentinel'));
-const Whisper = React.lazy(() => import('./pages/Whisper'));
-const Community = React.lazy(() => import('./pages/Community'));
 const ReviewRoom = React.lazy(() => import('./pages/ReviewRoom'));
+const PilotApplication = React.lazy(() => import('./pages/PilotApplication'));
+const Privacy = React.lazy(() => import('./pages/Privacy'));
+const Terms = React.lazy(() => import('./pages/Terms'));
+const Security = React.lazy(() => import('./pages/Security'));
 
-import { FCChainNetworkSeal } from './components/BrandMarks';
 import { useWallet } from './contexts/WalletContext';
 import { useCommandPalette } from './hooks/useCommandPalette';
 import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
 
-type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper' | 'community' | 'review-room';
+type View = 'home' | 'dashboard' | 'ecosystem' | 'explorer' | 'developer' | 'identity' | 'review-room' | 'pilot-application' | 'privacy' | 'terms' | 'security';
 
 const homeNavItems = [
   { label: 'Model', target: 'model' },
@@ -47,8 +40,7 @@ const homeNavItems = [
   { label: 'Pilot', target: 'deployment' },
 ];
 
-const communityViews: View[] = ['tokenomics', 'staking', 'bridge', 'swap', 'artifacts', 'oracle', 'whisper', 'sentinel'];
-const isCommunityAppendixView = (view: View) => view === 'community' || communityViews.includes(view);
+const legalViews: View[] = ['privacy', 'terms', 'security'];
 
 export default function App() {
   const location = useLocation();
@@ -56,6 +48,8 @@ export default function App() {
   const rawView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
   const currentView = (rawView === 'passport' ? 'identity' : rawView) as View;
   const isReviewRoom = currentView === 'review-room';
+  const isPilotApplication = currentView === 'pilot-application';
+  const isLegalView = legalViews.includes(currentView);
   const navigate = useCallback((view: string) => {
     navigateFn(view === 'home' ? '/' : `/${view}`);
   }, [navigateFn]);
@@ -69,16 +63,16 @@ export default function App() {
   const { toggleAmbient } = useSoundEffects();
   
   const [isLowPowerMode, setIsLowPowerMode] = useState(() => {
-    return localStorage.getItem('fc_low_power_mode') === 'true';
+    return localStorage.getItem('fca:low-power-mode') === 'true';
   });
 
   useEffect(() => {
     if (isLowPowerMode) {
       document.body.classList.add('low-power-mode');
-      localStorage.setItem('fc_low_power_mode', 'true');
+      localStorage.setItem('fca:low-power-mode', 'true');
     } else {
       document.body.classList.remove('low-power-mode');
-      localStorage.setItem('fc_low_power_mode', 'false');
+      localStorage.setItem('fca:low-power-mode', 'false');
     }
   }, [isLowPowerMode]);
 
@@ -111,7 +105,7 @@ export default function App() {
   }, [currentView, navigateFn, scrollToSection]);
 
   useEffect(() => {
-    if (currentView !== 'home' || !location.hash) return;
+    if (!location.hash) return;
 
     const target = location.hash.slice(1);
     const timers = [150, 650].map((delay) =>
@@ -121,13 +115,12 @@ export default function App() {
     return () => timers.forEach((timer) => window.clearTimeout(timer));
   }, [currentView, location.hash, scrollToSection]);
 
-
   // 使用 useMemo 缓存 commands 数组
   const commands: Command[] = useMemo(() => [
     {
       id: 'nav-dashboard',
-      title: 'Open Control Dashboard',
-      subtitle: 'Operating metrics and institutional review dashboards',
+      title: 'Open Operating Dashboard',
+      subtitle: 'Pilot controls, source labels, and institutional operating posture',
       action: () => { navigate('dashboard'); closeCommandPalette(); }
     },
     {
@@ -139,7 +132,7 @@ export default function App() {
     {
       id: 'nav-explorer',
       title: 'Open Evidence Explorer',
-      subtitle: 'Audit events and network telemetry',
+      subtitle: 'Audit evidence, exceptions, and settlement references',
       action: () => { navigate('explorer'); closeCommandPalette(); }
     },
     {
@@ -155,20 +148,38 @@ export default function App() {
       action: () => { navigate('review-room'); closeCommandPalette(); }
     },
     {
+      id: 'nav-pilot-application',
+      title: 'Request Pilot Review',
+      subtitle: 'Application intake, email draft, and local conversion event',
+      action: () => { navigate('pilot-application'); closeCommandPalette(); }
+    },
+    {
+      id: 'nav-privacy',
+      title: 'Open Privacy Policy',
+      subtitle: 'Visitor data, local browser state, and pilot-review contact handling',
+      action: () => { navigate('privacy'); closeCommandPalette(); }
+    },
+    {
+      id: 'nav-security',
+      title: 'Open Security Posture',
+      subtitle: 'Demo boundaries, pilot controls, and vulnerability reporting',
+      action: () => { navigate('security'); closeCommandPalette(); }
+    },
+    {
       id: 'nav-model',
-      title: 'Review Operating Model',
+      title: 'See Operating Model',
       subtitle: 'Identity, wallet, governance, and pilot flow',
       action: () => { navigateToHomeSection('model'); closeCommandPalette(); }
     },
     {
       id: 'nav-deployment',
-      title: 'Review Deployment Paths',
+      title: 'See Deployment Paths',
       subtitle: 'Government, institution, and builder entry points',
       action: () => { navigateToHomeSection('deployment'); closeCommandPalette(); }
     },
     {
       id: 'nav-assurance',
-      title: 'Review Institutional Assurance',
+      title: 'Inspect Institutional Assurance',
       subtitle: 'Compliance, data governance, and pilot readiness',
       action: () => { navigateToHomeSection('assurance'); closeCommandPalette(); }
     },
@@ -183,12 +194,6 @@ export default function App() {
       title: 'Go to Identity',
       subtitle: 'Verified identity review layer',
       action: () => { navigate('identity'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-community',
-      title: 'Open Community Appendix',
-      subtitle: 'Separated network, economics, and participant surfaces',
-      action: () => { navigate('community'); closeCommandPalette(); }
     },
     {
       id: 'action-connect-wallet',
@@ -223,9 +228,9 @@ export default function App() {
     }
   ], [navigate, navigateToHomeSection, closeCommandPalette, ambientPlaying, toggleAmbient, isLowPowerMode]);
 
-
   return (
     <MotionConfig reducedMotion="user">
+    <SeoMeta currentView={currentView} />
     <div className="min-h-screen bg-[#0b1220] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white pb-8">
       <OfficialBackground />
 
@@ -246,11 +251,9 @@ export default function App() {
         />
       )}
 
-
       {/* Ambient Volumetric Orbs - Muted for Authority */}
       <div className="fixed top-[10%] left-[-15%] w-[50vw] h-[50vw] rounded-full bg-cyan-700/[0.012] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
       <div className="fixed bottom-[-15%] right-[-15%] w-[60vw] h-[60vw] rounded-full bg-slate-500/[0.012] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
-
 
       {/* The Immersive 8K Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden scale-105">
@@ -305,15 +308,7 @@ export default function App() {
               <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Open Review Room</span>
             </div>
           </button>
-          <button
-            type="button"
-            onClick={() => navigate('explorer')}
-            className="hidden 2xl:flex items-center gap-2 border border-white/10 bg-[#020306]/80 px-3 py-2 transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/5"
-          >
-            <FCChainNetworkSeal className="h-5 w-5" />
-            <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-slate-400">Powered by FC Chain</span>
-          </button>
-          {connectedIdentity ? (
+          {connectedIdentity && (
             <button
               type="button"
               onClick={() => navigate('identity')}
@@ -321,10 +316,6 @@ export default function App() {
             >
               <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
               <span className="text-[10px] font-mono text-cyan-400 font-bold tracking-widest">{connectedIdentity}</span>
-            </button>
-          ) : (
-            <button onClick={() => navigate('identity')} className="hidden md:block btn-vercel-primary px-8 py-3 text-[10px] font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-              Review Identity
             </button>
           )}
         </div>
@@ -376,22 +367,16 @@ export default function App() {
                     transition={{ duration: 0.3 }}
                     className="w-full h-full min-h-screen"
                   >
-                     {communityViews.includes(currentView) && <CommunityBreadcrumb />}
                      {currentView === 'ecosystem' && <Ecosystem />}
                      {currentView === 'dashboard' && <Dashboard />}
-                       {currentView === 'explorer' && <Explorer />}
-                       {currentView === 'staking' && <Staking />}
-                       {currentView === 'developer' && <DeveloperHub />}
-                       {currentView === 'tokenomics' && <Tokenomics />}
-                       {currentView === 'bridge' && <Bridge />}
-                       {currentView === 'swap' && <Swap />}
-                       {currentView === 'artifacts' && <Artifacts />}
-                       {currentView === 'oracle' && <Oracle />}
-                       {currentView === 'identity' && <Identity />}
-                       {currentView === 'sentinel' && <Sentinel />}
-                       {currentView === 'whisper' && <Whisper />}
-                       {currentView === 'community' && <Community />}
-                       {currentView === 'review-room' && <ReviewRoom />}
+                     {currentView === 'explorer' && <Explorer />}
+                     {currentView === 'developer' && <DeveloperHub />}
+                     {currentView === 'identity' && <Identity />}
+                     {currentView === 'review-room' && <ReviewRoom />}
+                     {currentView === 'pilot-application' && <PilotApplication />}
+                     {currentView === 'privacy' && <Privacy />}
+                     {currentView === 'terms' && <Terms />}
+                     {currentView === 'security' && <Security />}
                     </motion.div>
                   </AnimatePresence>
                 </Suspense>
@@ -400,7 +385,7 @@ export default function App() {
         </div>
       )}
 
-      {currentView !== 'home' && !isReviewRoom && !isCommunityAppendixView(currentView) && (
+      {currentView !== 'home' && !isReviewRoom && !isPilotApplication && !isLegalView && (
         <LiveTelemetryFooter />
       )}
     </div>

@@ -14,16 +14,13 @@ export interface WalletContextType {
   disconnectWallet: () => void;
   balances: Balances;
   updateBalances: (newBalances: Partial<Balances>) => void;
-  xp: number;
-  level: number;
-  gainXP: (amount: number) => void;
   stakedFCC: number;
   updateStakedFCC: (newTotal: number) => void;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'fcc-wallet-state';
+const STORAGE_KEY = 'fca:wallet';
 
 const loadSavedState = () => {
   try {
@@ -35,7 +32,6 @@ const loadSavedState = () => {
 };
 
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
-  // Lazy initializers: loadSavedState() runs once on mount, not on every re-render
   const [connectedIdentity, setConnectedIdentity] = useState<string | null>(() => {
     const saved = loadSavedState();
     return saved?.connectedIdentity ?? null;
@@ -44,50 +40,24 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
     const saved = loadSavedState();
     return saved?.balances ? { fcc: 0, usdc: 0, data: 0, neon: 0, ...saved.balances } : { fcc: 0, usdc: 0, data: 0, neon: 0 };
   });
-  const [xp, setXp] = useState<number>(() => {
-    const saved = loadSavedState();
-    return typeof saved?.xp === 'number' ? saved.xp : 0;
-  });
   const [stakedFCC, setStakedFCC] = useState<number>(() => {
     const saved = loadSavedState();
     return typeof saved?.stakedFCC === 'number' ? saved.stakedFCC : 0;
   });
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ connectedIdentity, balances, xp, stakedFCC }));
-  }, [connectedIdentity, balances, xp, stakedFCC]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ connectedIdentity, balances, stakedFCC }));
+  }, [connectedIdentity, balances, stakedFCC]);
 
-  // Clearance Level scales intentionally
-  // Level 1: 0 - 499
-  // Level 2: 500 - 1499
-  // Level 3: 1500 - 4999
-  // Level 4: 5000+
-  let level = 1;
-  if (xp >= 5000) level = 4;
-  else if (xp >= 1500) level = 3;
-  else if (xp >= 500) level = 2;
-
-  // 使用 useCallback 缓存函数引用
-  const gainXP = useCallback((amount: number) => {
-    if (connectedIdentity) setXp(prev => prev + amount);
-  }, [connectedIdentity]);
-
+  // Connection means "authenticated institutional reviewer", not "starter loot".
+  // No random pre-fill of balances or progression points.
   const connectWallet = useCallback((identity: string) => {
     setConnectedIdentity(identity);
-    // When a wallet is connected, simulate fetching mock balances
-    setBalances({
-      fcc: Number((Math.random() * 10000 + 500).toFixed(2)),
-      usdc: Number((Math.random() * 5000 + 100).toFixed(2)),
-      data: 0,
-      neon: 0,
-    });
-    setXp(Number((Math.random() * 1500).toFixed(0))); // Start with random XP
   }, []);
 
   const disconnectWallet = useCallback(() => {
     setConnectedIdentity(null);
     setBalances({ fcc: 0, usdc: 0, data: 0, neon: 0 });
-    setXp(0);
     setStakedFCC(0);
   }, []);
 
@@ -99,29 +69,22 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
     setStakedFCC(newTotal);
   }, []);
 
-  // 使用 useMemo 缓存 context value
   const value = useMemo(() => ({
     connectedIdentity,
     connectWallet,
     disconnectWallet,
     balances,
     updateBalances,
-    xp,
-    level,
-    gainXP,
     stakedFCC,
-    updateStakedFCC
+    updateStakedFCC,
   }), [
     connectedIdentity,
     connectWallet,
     disconnectWallet,
     balances,
     updateBalances,
-    xp,
-    level,
-    gainXP,
     stakedFCC,
-    updateStakedFCC
+    updateStakedFCC,
   ]);
 
   return (

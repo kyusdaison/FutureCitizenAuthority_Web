@@ -11,6 +11,7 @@ import {
   Server,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { DataSourceBadge } from '../components/DataSourceBadge';
 
 type KpiTile = {
   icon: LucideIcon;
@@ -23,46 +24,46 @@ type KpiTile = {
 
 const kpiTiles: KpiTile[] = [
   {
-    icon: Activity,
-    kicker: 'Network',
-    label: 'Network uptime · 30d',
-    value: '99.97%',
-    delta: '+0.04 vs prior 30d',
-    sub: '0 SEV-1 incidents · 2 SEV-3 (resolved)',
-  },
-  {
     icon: ScrollText,
-    kicker: 'Audit',
-    label: 'Audit log integrity · 24h',
+    kicker: 'Evidence',
+    label: 'Audit events sealed · 24h',
     value: '14,902',
     delta: '0 missing · 0 tamper alerts',
-    sub: 'Sealed events with reference hash',
+    sub: 'Credential, approval, custody, and settlement references',
+  },
+  {
+    icon: Activity,
+    kicker: 'Integrity',
+    label: 'Evidence integrity checks',
+    value: '100%',
+    delta: 'all references reproducible',
+    sub: 'Every sample event resolves to a signed audit record',
   },
   {
     icon: Gauge,
-    kicker: 'Latency',
-    label: 'Settlement latency',
+    kicker: 'Reconcile',
+    label: 'Settlement evidence latency',
     value: '180ms',
-    sub: 'p50 · p95 450ms · p99 720ms',
+    sub: 'p50 from event seal to verifiable settlement reference',
   },
   {
     icon: AlertTriangle,
-    kicker: 'Anomalies',
-    label: 'Anomaly flags · 24h',
+    kicker: 'Exceptions',
+    label: 'Open evidence exceptions',
     value: '3',
     sub: '1 active · 2 resolved · 0 escalated',
   },
   {
     icon: Server,
-    kicker: 'Throughput',
-    label: 'Events per minute · 1h avg',
-    value: '424',
-    sub: 'peak 1.2k · baseline 110',
+    kicker: 'Export',
+    label: 'Audit exports prepared',
+    value: '42',
+    sub: 'CSV / JSON evidence packets ready for auditor handoff',
   },
   {
     icon: Globe2,
-    kicker: 'Coverage',
-    label: 'Jurisdiction coverage',
+    kicker: 'Boundary',
+    label: 'Jurisdiction scopes mapped',
     value: '12',
     sub: '4 active pilots · 8 observer regions',
   },
@@ -128,49 +129,49 @@ const anomalies: AnomalyRow[] = [
 
 const Explorer = () => {
   const navigate = useNavigate();
-  // Static sample timestamp; production wires this to real network telemetry.
+  // Static sample timestamp; production wires this to real audit evidence.
   const [now] = useState(() => new Date().toISOString().slice(11, 16));
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
       {/* Sample preview banner */}
       <div className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Sample preview</span>
+        <DataSourceBadge kind="sample" className="mr-3 align-middle" />
         <span className="mx-3 text-slate-400">/</span>
-        Network telemetry surface for institutional walkthroughs. Production deployments connect this
-        view to real audit-event streams, settlement integrity checks, and anomaly detectors. Numbers
-        are representative.
+        Evidence explorer for institutional walkthroughs. Production deployments connect this view
+        to real audit-event streams, settlement references, approval records, and exception cases.
+        Numbers are representative.
       </div>
 
       {/* Header */}
       <header className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Network telemetry</p>
+          <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Evidence explorer</p>
           <h1 className="text-3xl md:text-5xl font-serif font-light text-white leading-tight">
-            What the network is doing right now.
+            Can the pilot evidence be reproduced?
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-[1.85] text-slate-400">
-            One screen for auditors, technical reviewers, and operations leads. Tracks uptime,
-            audit-log integrity, settlement latency, anomaly flags, throughput, and jurisdictional
-            coverage.
+            One screen for auditors, technical leads, and operations owners. It shows whether
+            issuance, approval, recovery, and settlement events can be sealed, traced, exported,
+            and reconciled without exposing raw participant records.
           </p>
         </div>
         <div className="flex items-center gap-3 self-start md:self-end">
           <span className="border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.24em] text-slate-400">
-            {now} UTC · live
+            {now} UTC · sample feed
           </span>
           <button
             type="button"
             onClick={() => navigate('/dashboard')}
             className="border border-white/10 bg-white/[0.02] px-4 py-2 text-[11px] font-mono uppercase tracking-[0.22em] text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
           >
-            Operating dashboard
+            Open operating dashboard
           </button>
         </div>
       </header>
 
       {/* KPI tiles */}
-      <section aria-label="Network telemetry KPIs" className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <section aria-label="Evidence audit KPIs" className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {kpiTiles.map((tile, i) => {
           const Icon = tile.icon;
           return (
@@ -192,16 +193,16 @@ const Explorer = () => {
         })}
       </section>
 
-      {/* Main grid: live event stream + anomaly feed */}
+      {/* Main grid: evidence event stream + exception feed */}
       <section className="grid grid-cols-1 gap-3 lg:grid-cols-[1.5fr_1fr]">
-        {/* Live event stream */}
+        {/* Evidence event stream */}
         <article className="border border-white/10 bg-[#020617]/70 p-5">
           <header className="mb-5 flex items-center justify-between">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">Stream · last 3 min</p>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/70">Evidence stream · last 3 min</p>
               <h2 className="mt-2 text-xl font-serif font-light text-white">Sealed audit events</h2>
             </div>
-            <span className="text-[9px] font-mono uppercase tracking-[0.28em] text-slate-400">Sample data</span>
+            <DataSourceBadge kind="sample" label="Sample data" />
           </header>
           <div className="space-y-1 overflow-x-auto">
             <div className="grid min-w-[680px] grid-cols-[80px_1fr_1.4fr_1fr_80px] gap-3 px-3 py-2 text-[9px] font-mono uppercase tracking-[0.22em] text-slate-400">
@@ -236,16 +237,16 @@ const Explorer = () => {
             ))}
           </div>
           <p className="mt-4 text-[11px] font-mono text-slate-500">
-            Each event is signed and anchored to the audit ledger. Reference hashes are reproducible
-            on demand for procurement / external audit.
+            Each event is signed and anchored to the evidence log. Reference hashes are reproducible
+            on demand for procurement, compliance, and external audit.
           </p>
         </article>
 
         {/* Anomaly feed */}
         <article className="border border-white/10 bg-[#020617]/70 p-5">
           <header className="mb-5">
-            <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Detector output</p>
-            <h2 className="mt-2 text-xl font-serif font-light text-white">Anomalies · last 24h</h2>
+            <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Exception feed</p>
+            <h2 className="mt-2 text-xl font-serif font-light text-white">Open evidence exceptions · 24h</h2>
           </header>
           <div className="space-y-2">
             {anomalies.map((row) => (
@@ -272,8 +273,8 @@ const Explorer = () => {
             ))}
           </div>
           <p className="mt-4 text-[11px] font-mono text-slate-500">
-            Anomalies are detector output, not human-reported tickets. Each can be expanded into the
-            full event chain for review.
+            Exceptions are detector output, not marketing metrics. Each can be expanded into the
+            full event chain, responsible owner, and disposition.
           </p>
         </article>
       </section>
@@ -284,7 +285,7 @@ const Explorer = () => {
           <div className="flex items-start gap-3">
             <ShieldCheck className="h-5 w-5 shrink-0 text-fc-gold" />
             <div>
-              <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Reviewable observability</p>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">Reproducible evidence</p>
               <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-300">
                 Every metric on this page can be reproduced from sealed audit events. A pilot's
                 operational integrity does not depend on this UI being available — the underlying log
@@ -302,7 +303,7 @@ const Explorer = () => {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </button>
             <a
-              href="mailto:pilots@fca.ms?subject=Telemetry%20pilot%20review"
+              href="mailto:pilots@fca.ms?subject=Evidence%20pilot%20request"
               className="inline-flex items-center justify-center gap-2 border border-white/10 bg-white/[0.02] px-5 py-3 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
             >
               Discuss a pilot

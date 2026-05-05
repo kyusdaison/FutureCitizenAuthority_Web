@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useWallet } from './WalletContext';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
 interface SecurityContextType {
@@ -14,7 +14,6 @@ const SecurityContext = createContext<SecurityContextType | undefined>(undefined
 export function SecurityProvider({ children }: { children: React.ReactNode }) {
   const [threatLevel, setThreatLevel] = useState(0);
   const isBreached = threatLevel >= 80;
-  const { gainXP } = useWallet();
   const { playSuccess } = useSoundEffects();
 
   const triggerSimulatedBreach = useCallback(() => {
@@ -25,21 +24,8 @@ export function SecurityProvider({ children }: { children: React.ReactNode }) {
     if (isBreached) {
       setThreatLevel(0);
       playSuccess();
-      gainXP(500); // Massive XP bonus for defending the network
     }
-  }, [gainXP, isBreached, playSuccess]);
-
-  // Randomly simulate a breach event (demo-only: disabled in production)
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-    const interval = setInterval(() => {
-      if (!isBreached && Math.random() < 0.05) {
-        triggerSimulatedBreach();
-      }
-    }, 20000);
-
-    return () => clearInterval(interval);
-  }, [isBreached, triggerSimulatedBreach]);
+  }, [isBreached, playSuccess]);
 
   const value = useMemo(
     () => ({ threatLevel, isBreached, neutralizeThreat, triggerSimulatedBreach }),

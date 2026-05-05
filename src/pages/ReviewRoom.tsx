@@ -4,16 +4,20 @@ import {
   BadgeCheck,
   ClipboardCheck,
   DatabaseZap,
+  Download,
   FileCheck2,
   KeyRound,
   Landmark,
   LockKeyhole,
+  Mail,
   Route,
   Scale,
   ShieldCheck,
   TimerReset,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { DataSourceBadge } from '../components/DataSourceBadge';
+import { pilotApplicationRoute, reviewPacketHref, trackConversionEvent } from '../lib/conversion';
 
 type PacketFile = {
   icon: LucideIcon;
@@ -137,7 +141,7 @@ const dataBoundaryRows = [
   {
     category: 'Settlement events',
     treatment: 'Recorded as network or treasury events without raw participant data',
-    visibility: 'Visible through telemetry and reporting surfaces',
+    visibility: 'Visible through evidence and reporting surfaces',
   },
 ];
 
@@ -152,34 +156,50 @@ const pilotPlan = [
   },
   {
     window: '61-90 days',
-    focus: 'Review evidence, measure service outcome, and decide scale, pause, or revise.',
+    focus: 'Inspect evidence, measure service outcome, and decide scale, pause, or revise.',
   },
 ];
 
 const fileStatus = [
   ['Status', 'Representative pilot-ready preview'],
-  ['Use', 'Internal review and scoping conversation'],
-  ['Data', 'Sample evidence model, not production telemetry'],
+  ['Use', 'Internal scoping conversation'],
+  ['Data', 'Sample evidence model, not a production evidence feed'],
+];
+
+const reviewDirectory = [
+  ['Scope', '#scope', 'Decision gates and pilot ownership'],
+  ['Controls', '#controls', 'Identity, custody, approval, and audit files'],
+  ['Evidence', '#evidence', 'Approval matrix and data boundary'],
+  ['Pilot Plan', '#pilot-plan', '60-90 day pilot cadence'],
+  ['Next Step', '#next-step', 'Route to deeper pilot surfaces'],
 ];
 
 const ReviewRoom = () => {
   const navigate = useNavigate();
+  const startPilotRequest = (source: string) => {
+    trackConversionEvent('pilot_request_started', source);
+    navigate(pilotApplicationRoute);
+  };
+
+  const trackPacketDownload = (source: string) => {
+    trackConversionEvent('review_packet_downloaded', source);
+  };
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 pb-20 lg:px-8">
       <section className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Review room</span>
+        <DataSourceBadge kind="representative" label="Review room" className="mr-3 align-middle" />
         <span className="mx-3 text-slate-600">/</span>
-        Representative pilot-ready review file for institutional scoping. It shows the control
+        Representative pilot-ready packet for institutional scoping. It shows the control
         model, evidence structure, and pilot path before production data or partner-specific
         records are connected.
       </section>
 
       <header className="grid grid-cols-1 gap-8 border-b border-white/10 pb-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div>
-          <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-fc-gold">Pilot-ready review file</p>
+          <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-fc-gold">Pilot-ready packet</p>
           <h1 className="max-w-4xl text-4xl font-serif font-light leading-tight text-white md:text-6xl">
-            Everything a reviewer needs before a controlled pilot.
+            Everything an evaluator needs before a controlled pilot.
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-[1.85] text-slate-400">
             The Review Room turns the Future Citizen Authority story into a practical evaluation
@@ -194,6 +214,25 @@ const ReviewRoom = () => {
               </div>
             ))}
           </div>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => startPilotRequest('review-room-header')}
+              className="inline-flex items-center justify-center gap-3 border border-fc-gold/35 bg-fc-gold/[0.08] px-5 py-4 text-sm font-medium text-fc-gold transition-colors hover:border-fc-gold/60 hover:bg-fc-gold/[0.14]"
+            >
+              <Mail className="h-4 w-4" />
+              <span>Request a pilot</span>
+            </button>
+            <a
+              href={reviewPacketHref}
+              download
+              onClick={() => trackPacketDownload('review-room-header')}
+              className="inline-flex items-center justify-center gap-3 border border-white/10 bg-white/[0.02] px-5 py-4 text-sm font-medium text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+            >
+              <Download className="h-4 w-4 text-cyan-300" />
+              <span>Download review packet</span>
+            </a>
+          </div>
         </div>
         <div className="border border-white/10 bg-[#020617]/70 p-6">
           <div className="mb-5 flex items-center gap-3 text-white">
@@ -201,11 +240,13 @@ const ReviewRoom = () => {
             <h2 className="text-2xl font-serif font-light">Evaluation posture</h2>
           </div>
           <p className="text-sm leading-relaxed text-slate-400">
-            A procurement reviewer should leave this page knowing what can be piloted, who owns each
+            A procurement lead should leave this page knowing what can be piloted, who owns each
             decision, what evidence will be produced, and what data does not leave approved systems.
           </p>
           <div className="mt-5 border border-cyan-300/15 bg-cyan-300/[0.035] p-4">
-            <p className="mb-2 text-[10px] uppercase tracking-[0.24em] text-cyan-300/80">Disclosure</p>
+            <div className="mb-3">
+              <DataSourceBadge kind="representative" label="Disclosure" />
+            </div>
             <p className="text-sm leading-relaxed text-slate-300">
               Figures and event examples on this page are representative. A formal pilot should
               replace them with partner-approved evidence, system boundaries, and reporting terms.
@@ -226,7 +267,34 @@ const ReviewRoom = () => {
         </div>
       </header>
 
-      <section aria-label="Decision gates" className="grid grid-cols-1 gap-3 md:grid-cols-4">
+      <nav aria-label="Review packet directory" className="border border-white/10 bg-[#020617]/70 p-4">
+        <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.28em] text-fc-gold">How to read this packet</p>
+            <p className="mt-2 text-sm leading-relaxed text-slate-400">
+              Start with scope, confirm controls, inspect evidence, then agree on the pilot decision path.
+            </p>
+          </div>
+          <DataSourceBadge kind="representative" label="Institutional packet" />
+        </div>
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-5">
+          {reviewDirectory.map(([label, href, description], index) => (
+            <a
+              key={href}
+              href={href}
+              className="group border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/[0.04]"
+            >
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <span className="text-sm font-medium text-white">{label}</span>
+                <span className="text-[10px] font-mono text-slate-500">0{index + 1}</span>
+              </div>
+              <p className="text-xs leading-relaxed text-slate-500 group-hover:text-slate-400">{description}</p>
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      <section id="scope" aria-label="Decision gates" className="scroll-mt-24 grid grid-cols-1 gap-3 md:grid-cols-4">
         {decisionGates.map((gate, index) => (
           <article key={gate.gate} className="border border-white/10 bg-[#020617]/70 p-5">
             <div className="mb-8 flex items-center justify-between">
@@ -240,7 +308,7 @@ const ReviewRoom = () => {
         ))}
       </section>
 
-      <section className="grid grid-cols-1 gap-3 md:grid-cols-2">
+      <section id="controls" className="scroll-mt-24 grid grid-cols-1 gap-3 md:grid-cols-2">
         {packetFiles.map((item, index) => {
           const Icon = item.icon;
 
@@ -273,12 +341,12 @@ const ReviewRoom = () => {
         })}
       </section>
 
-      <section className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_0.9fr]">
+      <section id="evidence" className="scroll-mt-24 grid grid-cols-1 gap-6 xl:grid-cols-[1fr_0.9fr]">
         <article className="border border-white/10 bg-[#020617]/70 p-6">
           <div className="mb-6 flex items-center justify-between gap-6">
             <div>
               <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Approval matrix</p>
-              <h2 className="text-3xl font-serif font-light text-white">Who can act, approve, and review.</h2>
+              <h2 className="text-3xl font-serif font-light text-white">Who can act, approve, and audit.</h2>
             </div>
             <Scale className="hidden h-6 w-6 text-cyan-300 md:block" />
           </div>
@@ -320,7 +388,7 @@ const ReviewRoom = () => {
         </article>
       </section>
 
-      <section className="grid grid-cols-1 gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+      <section id="pilot-plan" className="scroll-mt-24 grid grid-cols-1 gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <article className="border border-fc-gold/20 bg-fc-gold/[0.035] p-6">
           <div className="mb-6 flex items-center gap-3 text-white">
             <TimerReset className="h-5 w-5 text-fc-gold" />
@@ -336,20 +404,39 @@ const ReviewRoom = () => {
           </div>
         </article>
 
-        <article className="border border-white/10 bg-[#020617]/70 p-6">
-          <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-cyan-300">Next review path</p>
+        <article id="next-step" className="scroll-mt-24 border border-white/10 bg-[#020617]/70 p-6">
+          <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-cyan-300">Next pilot path</p>
           <h2 className="mb-5 text-3xl font-serif font-light text-white">Use this page to start the serious conversation.</h2>
           <p className="mb-7 max-w-2xl text-sm leading-relaxed text-slate-400">
             The Review Room should be the link sent after an introductory conversation. From here,
-            reviewers can inspect the identity model, preview the operating dashboard, and evaluate
-            the network telemetry appendix without confusing those materials with the community
+            evaluators can inspect the identity model, preview the operating dashboard, and evaluate
+            the evidence explorer without confusing those materials with the community
             token surfaces.
           </p>
+          <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={() => startPilotRequest('review-room-next-step')}
+              className="inline-flex items-center justify-between border border-fc-gold/30 bg-fc-gold/[0.06] px-4 py-3 text-sm text-fc-gold transition-colors hover:border-fc-gold/55 hover:bg-fc-gold/[0.12]"
+            >
+              <span>Request a pilot</span>
+              <Mail className="h-4 w-4" />
+            </button>
+            <a
+              href={reviewPacketHref}
+              download
+              onClick={() => trackPacketDownload('review-room-next-step')}
+              className="inline-flex items-center justify-between border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
+            >
+              <span>Download review packet</span>
+              <Download className="h-4 w-4 text-cyan-300" />
+            </a>
+          </div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {[
               ['Identity layer', '/identity'],
               ['Operating dashboard', '/dashboard'],
-              ['Network telemetry', '/explorer'],
+              ['Evidence explorer', '/explorer'],
             ].map(([label, route]) => (
               <button
                 key={route}

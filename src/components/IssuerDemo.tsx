@@ -101,7 +101,7 @@ export const IssuerDemo = () => {
   }, [credential, issuer]);
 
   return (
-    <section className="border border-fc-gold/25 bg-[#020617]/70 p-6 md:p-8 my-10">
+    <section id="issuer-demo" className="border border-fc-gold/25 bg-[#020617]/70 p-6 md:p-8 my-10 scroll-mt-32">
       <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="mb-2 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Live demo</p>

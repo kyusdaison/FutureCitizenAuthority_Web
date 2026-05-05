@@ -6,18 +6,18 @@ import { TiltCard } from '../components/TiltCard';
 const assurancePillars = [
   {
     icon: FileCheck2,
-    title: 'Compliance Review',
+    title: 'Compliance Posture',
     copy: 'Document identity proof models, policy controls, audit events, approval boundaries, and responsible parties before any production deployment.',
   },
   {
     icon: LockKeyhole,
     title: 'Data Protection',
-    copy: 'Use zero-knowledge proofs and permissioned access paths so sensitive participant data does not need to be exposed on public settlement rails.',
+    copy: 'Use selective disclosure and role-bound access paths so sensitive participant data does not need to be exposed on public settlement rails.',
   },
   {
     icon: ClipboardCheck,
     title: 'Pilot Readiness',
-    copy: 'Define the first controlled use case, success metrics, responsible operators, and review checkpoints before scaling the program.',
+    copy: 'Define the first controlled use case, success metrics, responsible operators, and decision checkpoints before scaling the program.',
   },
   {
     icon: Scale,
@@ -38,7 +38,7 @@ const assuranceBoundaries = [
   'Jurisdictional policy remains with the responsible public authority.',
   'Raw participant records do not need to be placed on public settlement rails.',
   'High-risk treasury or service actions keep human approval and escalation paths.',
-  'Public rollout follows a bounded pilot, not an unreviewed platform launch.',
+  'Public rollout follows a bounded pilot, not an unscoped platform launch.',
 ];
 
 export const AssuranceSection = () => {
@@ -63,7 +63,7 @@ export const AssuranceSection = () => {
                 <span className="italic text-cyan-300 font-serif">Review.</span>
               </h3>
               <p className="text-base md:text-lg text-slate-400 leading-[1.85] max-w-2xl mb-8">
-                Government and regulated institutions do not buy opaque infrastructure. They need clear accountability, data boundaries, auditability, and a controlled path from briefing to pilot. This section turns technical claims into reviewable evidence.
+                Government and regulated institutions do not buy opaque infrastructure. They need clear accountability, data boundaries, auditability, and a controlled path from briefing to pilot. This section turns technical claims into inspectable evidence.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
@@ -71,7 +71,7 @@ export const AssuranceSection = () => {
                   onClick={() => navigate('/identity')}
                   className="inline-flex items-center justify-center gap-3 border border-cyan-300/25 bg-cyan-300/5 px-6 py-4 text-sm text-cyan-100 transition-colors hover:border-cyan-300/50 hover:bg-cyan-300/10"
                 >
-                  Review Identity Layer
+                  Open Identity Layer
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
@@ -87,7 +87,7 @@ export const AssuranceSection = () => {
             <div className="border border-white/10 bg-[#020617]/85 p-6 md:p-8">
               <div className="flex items-center gap-3 mb-6 text-white">
                 <ShieldCheck className="w-6 h-6 text-fc-gold" />
-                <h4 className="text-2xl md:text-3xl font-serif font-light">Institutional review file</h4>
+                <h4 className="text-2xl md:text-3xl font-serif font-light">Institutional pilot file</h4>
               </div>
               <p className="text-sm text-slate-400 leading-relaxed mb-8">
                 These are the materials a serious evaluator should be able to inspect before procurement, pilot approval, or public-sector deployment.

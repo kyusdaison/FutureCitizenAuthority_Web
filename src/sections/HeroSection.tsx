@@ -1,9 +1,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, BadgeCheck, ChevronDown, FileCheck2, Landmark, Network, ShieldCheck } from 'lucide-react';
+import {BadgeCheck, ChevronDown, FileCheck2, Landmark, Network} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { MagneticButton } from '../components/MagneticButton';
-import { FCChainNetworkSeal } from '../components/BrandMarks';
 
 const institutionalSignals = [
   {
@@ -51,13 +50,6 @@ const reviewPacket = [
   },
 ];
 
-const reviewOutputs = [
-  'Pilot scope memo',
-  'Identity proof model',
-  'Custody boundary',
-  'Approval matrix',
-];
-
 export const HeroSection = () => {
   const { scrollYProgress } = useScroll();
   const opacityHeroText = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
@@ -66,40 +58,21 @@ export const HeroSection = () => {
 
   return (
     <section id="hero" className="min-h-[100svh] w-full px-5 pb-28 pt-32 sm:px-6 sm:pt-36 lg:px-12 relative overflow-hidden flex items-start sm:items-center">
-      {/* Institutional review coordinates */}
-      <div className="absolute top-1/4 left-12 hidden 2xl:flex flex-col gap-2 text-left opacity-80">
-         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">REVIEW DESK <span className="text-slate-400">//</span> PUBLIC-SECTOR</div>
-         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]">PILOT STATUS <span className="text-slate-400">//</span> SCOPED</div>
-         <div className="w-32 h-px bg-gradient-to-r from-fc-gold/40 to-transparent mt-2"></div>
-      </div>
-      
-      <div className="absolute bottom-1/3 right-12 hidden 2xl:flex flex-col gap-2 text-right opacity-80">
-         <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]"><span className="text-slate-400">//</span> PRIVACY + CUSTODY</div>
-         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-400">//</span> ASSURANCE FILE READY</div>
-         <div className="w-32 h-px bg-gradient-to-l from-fc-gold/40 to-transparent mt-2 ml-auto"></div>
-      </div>
-      
-      {/* Vertical Label */}
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.018] rotate-180 pointer-events-none vertical-text">
-         <h2 className="text-[7rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
-           <span>AUTHORITY</span>
-         </h2>
-      </div>
-
       <motion.div style={{ opacity: opacityHeroText, y: yHeroText }} className="hero-mobile-frame relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[1.04fr_0.96fr] lg:items-center">
         <div className="min-w-0 text-left">
-          <FadeInUp delay={0.55}>
-            <div className="inline-flex max-w-full items-center gap-3 border border-fc-gold/20 bg-[#020617]/75 px-4 py-3 backdrop-blur-xl sm:px-5">
-              <ShieldCheck className="h-4 w-4 text-fc-gold" />
-              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-fc-gold sm:tracking-[0.34em]">Institutional review entry</span>
-            </div>
-          </FadeInUp>
+            <FadeInUp delay={0.55}>
+              <p className="mt-5 max-w-3xl border border-white/10 bg-white/[0.025] px-5 py-4 text-sm leading-[1.75] text-slate-300 sm:text-base">
+                <span className="mr-2 font-semibold text-white">FCA establishes the trusted authority layer</span>
+                {' '}where governments and regulated institutions can issue credentials, govern access, approve wallets,
+                and settle activity with audit-ready evidence.
+              </p>
+            </FadeInUp>
 
           <motion.h1
             initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 1.6, ease: "easeInOut" }}
-            className="my-7 max-w-4xl text-[2.65rem] font-serif font-light leading-[1.03] tracking-[0.02em] text-white drop-shadow-md sm:my-9 sm:text-[4.2rem] sm:tracking-[0.04em] md:text-[5.4rem] xl:text-[6.4rem]"
+            className="my-6 max-w-4xl text-[2.65rem] font-serif font-light leading-[1.03] tracking-[0.02em] text-white drop-shadow-md sm:my-8 sm:text-[4.2rem] sm:tracking-[0.04em] md:text-[5.4rem] xl:text-[6.4rem]"
           >
             Future Citizen
             <span className="block text-gold-gradient font-serif italic font-normal">
@@ -109,42 +82,32 @@ export const HeroSection = () => {
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4, delay: 0.35 }} className="relative z-20 w-full max-w-3xl min-w-0">
             <p className="hero-copy whitespace-normal break-words border-l border-fc-gold/35 pl-5 text-sm leading-[1.85] text-slate-300 [overflow-wrap:anywhere] sm:pl-6 md:text-lg md:leading-[1.9]">
-              Identity-first governance infrastructure for agencies and regulated institutions. FCA packages credentials, wallet access, approvals, and FC Chain settlement into one reviewable pilot layer, so teams can evaluate authority, evidence, and rollout risk before deployment.
+              Identity infrastructure for public agencies — issue verifiable credentials and govern access without putting resident data on a public chain.
             </p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <MagneticButton intensity={0.16}>
+            <div className="mt-8">
+              <MagneticButton intensity={0.16} className="w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={() => navigate('/review-room')}
-                  className="premium-btn w-full px-5 py-4 auth-glass-panel rounded-sm sm:w-auto sm:px-8"
+                  className="premium-btn w-full px-5 py-4 auth-glass-panel rounded-sm sm:w-auto sm:px-10"
                 >
-	                <span className="relative z-10 text-[11px] font-mono tracking-[0.18em] text-gold-gradient uppercase sm:tracking-[0.34em]">Open Review Room</span>
-                </button>
-              </MagneticButton>
-              <MagneticButton intensity={0.12}>
-                <button
-                  type="button"
-                  onClick={() => navigate('/identity')}
-                  className="group inline-flex w-full items-center justify-center gap-3 border border-white/10 bg-[#020617]/80 px-5 py-4 text-[11px] font-mono uppercase tracking-[0.18em] text-slate-300 transition-colors hover:border-cyan-500/40 hover:text-white sm:w-auto sm:px-8 sm:tracking-[0.3em]"
-                >
-	                Review Identity Model
-                  <ArrowRight className="h-3.5 w-3.5 text-fc-gold transition-transform group-hover:translate-x-1" />
+                  <span className="relative z-10 text-[11px] font-mono tracking-[0.18em] text-gold-gradient uppercase sm:tracking-[0.34em]">Open Review Room</span>
                 </button>
               </MagneticButton>
             </div>
 
             <p className="hero-copy mt-5 whitespace-normal break-words text-[10px] font-mono uppercase tracking-[0.12em] text-slate-500 [overflow-wrap:anywhere] sm:tracking-[0.28em]">
-              Send the Review Room after an introduction; keep technical appendices behind the evaluation path.
+              Primary next step: open the Review Room for scope, controls, evidence, and pilot readiness.
             </p>
-            <div className="hero-mobile-frame mt-6 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 sm:grid-cols-4">
-              {reviewOutputs.map((output) => (
-                <div key={output} className="border border-white/10 bg-white/[0.025] px-3 py-2">
-                  <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-slate-500">Review file</div>
-                  <div className="mt-1 text-xs text-slate-200">{output}</div>
-                </div>
-              ))}
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/identity#issuer-demo')}
+              className="hero-copy mt-2 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.12em] text-cyan-300/80 transition-colors hover:text-cyan-200 sm:tracking-[0.28em]"
+            >
+              <span aria-hidden>→</span>
+              Or run the live W3C credential demo
+            </button>
           </motion.div>
 
           <div className="mt-10 hidden max-w-4xl grid-cols-1 gap-3 xl:grid xl:grid-cols-3">
@@ -198,13 +161,6 @@ export const HeroSection = () => {
               })}
             </div>
 
-            <div className="relative mt-5 flex items-center gap-3 border border-fc-gold/15 bg-fc-gold/[0.04] p-4">
-              <FCChainNetworkSeal className="h-10 w-10 shrink-0" />
-              <div>
-                <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-fc-gold/80">Powered by FC Chain</div>
-                <div className="mt-1 text-xs leading-relaxed text-slate-500">FC Chain is the settlement network. Network economics stay in the appendix until authority, controls, and pilot scope are understood.</div>
-              </div>
-            </div>
           </aside>
         </FadeInUp>
 
@@ -216,22 +172,6 @@ export const HeroSection = () => {
           <ChevronDown className="w-4 h-4 text-cyan-500/80" />
         </motion.div>
       </motion.div>
-      
-      {/* Infinite Marquee Ticker */}
-      <div className="absolute bottom-0 w-[200vw] left-0 h-10 border-t border-white/5 bg-[#020306] flex items-center overflow-hidden z-20">
-        <div className="hairline-divider-h absolute top-0 left-0"></div>
-        <div className="animate-marquee motion-reduce:animate-none flex gap-16 text-[9px] font-mono tracking-[0.4em] text-slate-500 uppercase">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="flex gap-16 whitespace-nowrap">
-              <span>// IDENTITY PROOF: REVIEWABLE CREDENTIAL</span>
-              <span>// PRIVACY: NO RAW RECORDS ON PUBLIC RAILS</span>
-              <span>// CUSTODY: SEEDLESS MPC RECOVERY</span>
-              <span>// GOVERNANCE: HUMAN APPROVAL GATES</span>
-              <span>// PILOT: BOUNDED 60-90 DAY EVALUATION <span className="text-fc-gold opacity-50 ml-2">// ECONOMICS: APPENDIX MATERIAL</span></span>
-            </div>
-          ))}
-        </div>
-      </div>
     </section>
   );
 };
