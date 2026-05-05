@@ -1,6 +1,5 @@
 import { ArrowRight, Building2, Code2, Landmark, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { CipherHeading } from '../components/CipherHeading';
 import { FadeInUp } from '../components/FadeInUp';
 import { TiltCard } from '../components/TiltCard';
 
@@ -65,13 +64,12 @@ export const AudiencePathsSection = () => {
               <div className="mb-6 flex items-center gap-4">
                 <div className="h-px w-10 bg-fc-gold/45" />
                 <h2 className="text-xs font-bold uppercase text-fc-gold">
-                  <CipherHeading text="01 // Audience Paths" />
+                  01 // Audience Paths
                 </h2>
               </div>
               <h3 className="mb-6 text-5xl font-light leading-tight text-white md:text-7xl font-serif">
-                <CipherHeading text="Choose The " className="inline-block" />
-                {' '}
-                <span className="italic text-fc-gold font-serif"><CipherHeading text="Review Path." /></span>
+                Choose The{' '}
+                <span className="italic text-fc-gold font-serif">Review Path.</span>
               </h3>
               <p className="max-w-2xl text-base leading-[1.85] text-slate-400 md:text-lg">
                 Governments, regulated institutions, and builders should not have to interpret the same message in the same way. Each path starts with the review question that audience is likely to bring into a serious evaluation.

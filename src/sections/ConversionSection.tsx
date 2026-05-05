@@ -2,7 +2,6 @@ import { ArrowRight, BadgeCheck, Building2, Code2, FileCheck2, Landmark, Route, 
 import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { TiltCard } from '../components/TiltCard';
-import { CipherHeading } from '../components/CipherHeading';
 
 const deploymentPaths = [
   {
@@ -130,12 +129,12 @@ export const ConversionSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  <CipherHeading text="05 // Deployment Paths" />
+                  05 // Deployment Paths
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-6">
-                <CipherHeading text="Choose The " className="inline-block" />
-                <span className="italic text-fc-gold font-serif"><CipherHeading text="Entry Point." /></span>
+                Choose The{' '}
+                <span className="italic text-fc-gold font-serif">Entry Point.</span>
               </h3>
               <p className="text-base md:text-lg text-slate-400 leading-[1.8] max-w-2xl">
                 Future Citizen becomes easier to understand when every conversation starts from the buyer's first useful deployment. Identity is the base, but the review path should begin with the service outcome, responsible owner, and control boundary.

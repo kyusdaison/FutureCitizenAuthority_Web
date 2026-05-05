@@ -1,5 +1,5 @@
 import { ArrowRight, BadgeCheck, ClipboardCheck, Landmark, ShieldCheck, WalletCards } from 'lucide-react';
-import { CipherHeading } from '../components/CipherHeading';
+import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { TiltCard } from '../components/TiltCard';
 
@@ -72,6 +72,8 @@ const decisionCriteria = [
 ];
 
 export const OperatingModelSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section id="model" className="py-24 px-6 lg:px-12 bg-[#020617] border-y border-white/5 relative overflow-hidden">
       <div className="absolute inset-0 bg-tactical-grid opacity-15 pointer-events-none" />
@@ -84,12 +86,12 @@ export const OperatingModelSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  <CipherHeading text="02 // Operating Model" />
+                  02 // Operating Model
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-8">
-                <CipherHeading text="One Clear " className="inline-block" />
-                <span className="italic text-fc-gold font-serif"><CipherHeading text="Logic." /></span>
+                One Clear{' '}
+                <span className="italic text-fc-gold font-serif">Logic.</span>
               </h3>
               <p className="text-base md:text-lg text-slate-400 leading-[1.85] max-w-xl mb-8">
                 Future Citizen is easiest to evaluate as a control plane: identity proves who can act, wallets let them transact, governance defines what is allowed, and deployment turns that into one measurable service path. The reviewer should never have to guess where authority, data, or custody responsibility sits.
@@ -136,10 +138,14 @@ export const OperatingModelSection = () => {
                         </div>
                         <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-5">
                           <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Proof</span>
-                          <span className="inline-flex items-center gap-2 text-sm text-cyan-200">
+                          <button 
+                            type="button"
+                            onClick={() => navigate('/review-room')}
+                            className="group inline-flex items-center gap-2 text-sm text-cyan-200 hover:text-cyan-100 transition-colors cursor-pointer"
+                          >
                             {step.proof}
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </span>
+                            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                          </button>
                         </div>
                       </article>
                     </TiltCard>

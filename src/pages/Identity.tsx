@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
-import { CipherHeading } from '../components/CipherHeading';
 import { useWallet } from '../contexts/WalletContext';
 import { useToast } from '../contexts/ToastContext';
 import { useSoundEffects } from '../hooks/useSoundEffects';
@@ -11,15 +10,6 @@ import { ConnectWalletModal } from '../components/ConnectWalletModal';
 import { IssuerDemo } from '../components/IssuerDemo';
 import { lazy, Suspense } from 'react';
 const IdentityAvatar = lazy(() => import('../components/IdentityAvatar').then(module => ({ default: module.IdentityAvatar })));
-
-const generateHash = (length = 16) => {
-  const chars = '0123456789abcdef';
-  let hash = '0x';
-  for (let i = 0; i < length; i++) {
-    hash += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return hash;
-};
 
 const issuerPillars = [
   {
@@ -116,11 +106,6 @@ export default function Identity() {
   }, [clearAllTimeouts]);
 
 
-  // 16-segment radar stats (mock)
-  const stats = [85, 92, 78, 65, 88, 95];
-  const maxStat = 100;
-  const labels = ['TRUST', 'ACCESS', 'ACTIVITY', 'GOVERNANCE', 'RECORDS', 'OPERATIONS'];
-
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -181,10 +166,6 @@ export default function Identity() {
     return () => { mounted = false; };
   }, [connectedIdentity]);
 
-  // SVG Radar generator logic
-  const radarRadius = 100;
-  const centerX = 150;
-  const centerY = 150;
   const availableLiquidity = balances.fcc;
   const delegatedLiquidity = stakedFCC;
   const portfolioUsdValue = availableLiquidity * 0.69;
@@ -194,16 +175,6 @@ export default function Identity() {
       ? 'VERIFIED'
       : 'READY FOR ISSUANCE';
   const credentialTier = level >= 3 ? 'INSTITUTIONAL' : level >= 2 ? 'CIVIC PLUS' : 'CITIZEN';
-  
-  const getPointCoordinates = (value: number, index: number, total: number, customRadius = radarRadius) => {
-    const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
-    const distance = (value / maxStat) * customRadius;
-    const x = centerX + distance * Math.cos(angle);
-    const y = centerY + distance * Math.sin(angle);
-    return { x, y };
-  };
-
-
 
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8 md:space-y-12 flex flex-col items-center md:items-stretch">
@@ -211,7 +182,7 @@ export default function Identity() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-serif font-light text-white mb-2">
-            <CipherHeading text="Identity Layer" />
+            Identity Layer
           </h1>
           <p className="text-slate-400 font-mono text-xs tracking-widest">ISSUER BRIEF + HOLDER PREVIEW</p>
         </div>
@@ -413,9 +384,6 @@ export default function Identity() {
             <div className="relative z-10 space-y-8">
               {/* --- 1. CREDENTIAL DECK --- */}
               <div className="flex flex-col md:flex-row gap-8 items-start relative pb-6 border-b border-white/5">
-                {/* Tactical Backdrop */}
-                <div className="absolute inset-0 bg-tactical-grid opacity-[0.15] bg-[length:30px_30px] pointer-events-none" />
-                
                 {/* Avatar Section */}
                 <div className="w-32 h-32 md:w-40 md:h-40 relative flex-shrink-0 z-10">
                   <Suspense fallback={<div className="absolute inset-0 animate-pulse bg-cyan-500/10 rounded-none" />}>
@@ -457,7 +425,7 @@ export default function Identity() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="p-3 bg-black/40 border border-white/5 relative overflow-hidden group-hover:border-cyan-500/20 transition-colors">
                       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
                       <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Clearance</div>
@@ -467,10 +435,6 @@ export default function Identity() {
                       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent" />
                       <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Status</div>
                       <div className="font-bold text-green-400 font-mono tracking-wider">{connectedIdentity ? 'ACTIVE' : 'PENDING'}</div>
-                    </div>
-                    <div className="col-span-2 p-3 bg-black/40 border border-white/5">
-                      <div className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Authorization Hash</div>
-                      <div className="font-mono text-[10px] text-yellow-500 truncate">{authHash || generateHash()}</div>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-3">
@@ -490,14 +454,6 @@ export default function Identity() {
                     </button>
                   </div>
                 </div>
-              </div>
-
-              {/* Data Matrix / Visual Barcode */}
-              <div className="w-full h-10 bg-tactical-dots bg-[length:8px_8px] opacity-30 border-y border-white/10 flex items-center px-4 overflow-hidden relative">
-                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-cyan-500/10 via-transparent to-yellow-500/10 pointer-events-none" />
-                 <div className="font-mono text-[8px] tracking-[0.3em] text-cyan-400 opacity-60 whitespace-nowrap overflow-hidden">
-                   {generateHash(128)}
-                 </div>
               </div>
 
               {/* --- 2. THE CONTROL VAULT --- */}
@@ -543,71 +499,6 @@ export default function Identity() {
                   </div>
                 </div>
 
-                {/* Radar Stats Sub-Section inside the vault */}
-                <div className="mt-12 relative overflow-hidden bg-black/30 border border-white/5 p-8 flex flex-col md:flex-row items-center gap-12">
-                   <div className="absolute inset-0 bg-tactical-grid opacity-20 pointer-events-none mix-blend-screen" />
-                   
-                   <div className="flex-1 space-y-4 relative z-10 w-full">
-                     <h4 className="text-sm font-bold text-white tracking-widest uppercase">Trust Metrics</h4>
-                     <p className="text-xs text-slate-400 leading-relaxed">
-                       Credential status, wallet activity, governance permissions, and operational records are presented as reviewable indicators. These values are representative until connected to a production identity data source.
-                     </p>
-                     <div className="pt-4 space-y-2">
-                       {stats.slice(0, 3).map((stat, idx) => (
-                         <div key={idx} className="flex justify-between items-center text-[10px] font-mono border-b border-white/5 pb-2">
-                           <span className="text-slate-500">{labels[idx]}</span>
-                           <span className={stat > 80 ? "text-cyan-400" : "text-yellow-500"}>{stat}%</span>
-                         </div>
-                       ))}
-                     </div>
-                   </div>
-
-                   <div className="relative w-[200px] h-[200px] flex-shrink-0 flex items-center justify-center">
-                     <svg width="240" height="240" className="overflow-visible absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        {/* Background Grid */}
-                        {[0.2, 0.4, 0.6, 0.8, 1].map((scale, i) => (
-                          <polygon
-                            key={i}
-                            points={stats.map((_, idx) => {
-                              const coords = getPointCoordinates(scale * maxStat, idx, stats.length, 80);
-                              return `${coords.x},${coords.y}`;
-                            }).join(' ')}
-                            fill="none"
-                            stroke="rgba(255,255,255,0.05)"
-                            strokeWidth="1"
-                          />
-                        ))}
-                        
-                        {/* Data Polygon */}
-                        <motion.path
-                          d={stats.map((s, i) => getPointCoordinates(s, i, stats.length, 80)).map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') + ' Z'}
-                          fill="rgba(6, 182, 212, 0.15)"
-                          stroke="#06b6d4"
-                          strokeWidth="1.5"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1 }}
-                          transition={{ duration: 1.5, ease: "easeOut" }}
-                        />
-                        
-                        {/* Labels */}
-                        {labels.map((label, i) => {
-                          const coords = getPointCoordinates(maxStat * 1.25, i, labels.length, 80);
-                          return (
-                            <text
-                              key={label}
-                              x={coords.x}
-                              y={coords.y}
-                              textAnchor="middle"
-                              dominantBaseline="middle"
-                              className="fill-slate-500 text-[8px] uppercase tracking-widest font-mono"
-                            >
-                              {label}
-                            </text>
-                          );
-                        })}
-                      </svg>
-                   </div>
-                </div>
               </div>
             </div>
           </motion.div>

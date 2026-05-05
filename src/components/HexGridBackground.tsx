@@ -11,6 +11,8 @@ export const HexGridBackground = () => {
 
     let width = window.innerWidth;
     let height = window.innerHeight;
+    const canTrackPointer = window.matchMedia('(pointer: fine)').matches && window.matchMedia('(hover: hover)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const syncCanvasSize = () => {
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -106,11 +108,15 @@ export const HexGridBackground = () => {
       scheduleRender();
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    if (canTrackPointer && !prefersReducedMotion) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
     window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      if (canTrackPointer && !prefersReducedMotion) {
+        window.removeEventListener('mousemove', handleMouseMove);
+      }
       window.removeEventListener('resize', handleResize);
       if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);

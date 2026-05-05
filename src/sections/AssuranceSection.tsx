@@ -1,6 +1,5 @@
 import { ArrowRight, ClipboardCheck, FileCheck2, LockKeyhole, Scale, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { CipherHeading } from '../components/CipherHeading';
 import { FadeInUp } from '../components/FadeInUp';
 import { TiltCard } from '../components/TiltCard';
 
@@ -95,12 +94,12 @@ export const AssuranceSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-cyan-300/45" />
                 <h2 className="text-xs font-bold text-cyan-300 uppercase">
-                  <CipherHeading text="04 // Institutional Assurance" />
+                  04 // Institutional Assurance
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-8">
-                <CipherHeading text="Built For " className="inline-block" />
-                <span className="italic text-cyan-300 font-serif"><CipherHeading text="Review." /></span>
+                Built For{' '}
+                <span className="italic text-cyan-300 font-serif">Review.</span>
               </h3>
               <p className="text-base md:text-lg text-slate-400 leading-[1.85] max-w-2xl mb-8">
                 Government and regulated institutions do not buy opaque infrastructure. They need clear accountability, data boundaries, auditability, and a controlled path from briefing to pilot. This section turns technical claims into reviewable evidence.

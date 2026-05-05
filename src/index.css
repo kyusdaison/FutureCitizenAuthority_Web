@@ -131,32 +131,6 @@ section[id] {
     color: #ffffff;
     font-family: var(--font-sans);
   }
-  
-  body.theme-ascension {
-    --color-cyan-300: #fef08a; /* gold light */
-    --color-cyan-400: #facc15; 
-    --color-cyan-500: #eab308; /* gold base */
-    --color-cyan-600: #ca8a04; 
-    --color-blue-400: #facc15;
-    --color-blue-500: #eab308;
-    --color-blue-600: #ca8a04;
-    --color-cyan-neon: var(--color-gold-base);
-  }
-  
-  body.theme-breach {
-    --color-cyan-neon: #ef4444;
-    --color-fc-gold: #ef4444;
-    --color-gold-base: #dc2626;
-    --color-gold-light: #f87171;
-    --color-gold-dark: #991b1b;
-    --color-cyan-300: #fca5a5;
-    --color-cyan-400: #f87171;
-    --color-cyan-500: #ef4444;
-    --color-cyan-600: #dc2626;
-    --color-blue-400: #f87171;
-    --color-blue-500: #ef4444;
-    --color-blue-600: #dc2626;
-  }
 }
 
 /* Reusable UI Components mapped from the implementation_plan */

@@ -3,7 +3,6 @@ import { Fingerprint, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { TiltCard } from '../components/TiltCard';
 import { FadeInUp } from '../components/FadeInUp';
-import { CipherHeading } from '../components/CipherHeading';
 import { HexGridBackground } from '../components/HexGridBackground';
 
 export const IdentitySection = () => {
@@ -43,7 +42,7 @@ export const IdentitySection = () => {
               <div className="agency-panel p-10 lg:p-12 relative border-l-4 border-l-fc-gold h-full flex flex-col justify-center bg-[#020617]/90 shadow-2xl">
                <Fingerprint className="w-10 h-10 text-fc-gold mb-8 opacity-80" />
                <h3 className="text-3xl font-serif font-light text-white mb-6 border-b border-slate-800 pb-6">
-                 <CipherHeading text="Identity Verification Layer" />
+                 Identity Verification Layer
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
 	                 A standards-aligned credential architecture that binds verified identity primitives to service access, wallet permissions, and governance rules using <strong className="text-white font-medium">privacy-preserving proofs</strong>. In plain terms: a person or institution can prove eligibility without publishing raw personal records on public rails.
@@ -107,7 +106,7 @@ export const IdentitySection = () => {
               <div className="agency-panel p-8 md:p-10 bg-[#020617]/90 backdrop-blur-2xl border border-slate-700 shadow-2xl w-full">
                <ShieldCheck className="w-10 h-10 text-cyan-400 mb-6 opacity-80" />
                <h3 className="text-3xl font-serif font-light text-white mb-4 border-b border-slate-800 pb-4">
-                 <CipherHeading text="Seedless Identity Wallet" />
+                 Seedless Identity Wallet
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
 	                 Complete self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet splits key authority across device enclaves, distributed custody infrastructure, and encrypted offline recovery so identity access remains resilient without turning a help desk into the single point of control.

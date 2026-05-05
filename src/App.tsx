@@ -11,9 +11,7 @@ import { ConnectWalletModal } from './components/ConnectWalletModal';
 import { CommunityBreadcrumb } from './components/CommunityBreadcrumb';
 
 import { HeroSection } from './sections/HeroSection';
-import { AudiencePathsSection } from './sections/AudiencePathsSection';
 import { OperatingModelSection } from './sections/OperatingModelSection';
-import { IdentitySection } from './sections/IdentitySection';
 import { AssuranceSection } from './sections/AssuranceSection';
 import { ConversionSection } from './sections/ConversionSection';
 import { FooterSection } from './sections/FooterSection';
@@ -39,7 +37,6 @@ const ReviewRoom = React.lazy(() => import('./pages/ReviewRoom'));
 
 import { FCChainNetworkSeal } from './components/BrandMarks';
 import { useWallet } from './contexts/WalletContext';
-import { useSecurity } from './contexts/SecurityContext';
 const VanguardOrb = React.lazy(() => import('./components/VanguardOrb').then(module => ({ default: module.VanguardOrb })));
 import { useCommandPalette } from './hooks/useCommandPalette';
 import { useMouseTracker } from './hooks/useMouseTracker';
@@ -48,9 +45,7 @@ import { useSoundEffects } from './hooks/useSoundEffects';
 type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper' | 'community' | 'review-room';
 
 const homeNavItems = [
-  { label: 'Review Paths', target: 'audiences' },
   { label: 'Model', target: 'model' },
-  { label: 'Identity', target: 'identity' },
   { label: 'Assurance', target: 'assurance' },
   { label: 'Pilot', target: 'deployment' },
 ];
@@ -68,8 +63,7 @@ export default function App() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const { isOpen: isCommandPaletteOpen, close: closeCommandPalette, open: openCommandPalette } = useCommandPalette();
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
-  const { connectedIdentity, level } = useWallet();
-  const { isBreached } = useSecurity();
+  const { connectedIdentity } = useWallet();
   const { scrollYProgress } = useScroll();
   const [ambientPlaying, setAmbientPlaying] = useState(false);
   const { toggleAmbient } = useSoundEffects();
@@ -93,21 +87,6 @@ export default function App() {
       navigateFn('/identity', { replace: true });
     }
   }, [rawView, navigateFn]);
-  
-  // 主题效果
-  useEffect(() => {
-    if (isBreached) {
-      document.body.classList.add('theme-breach');
-      document.body.classList.remove('theme-ascension');
-    } else {
-      document.body.classList.remove('theme-breach');
-      if (level >= 3) {
-        document.body.classList.add('theme-ascension');
-      } else {
-        document.body.classList.remove('theme-ascension');
-      }
-    }
-  }, [level, isBreached]);
 
   const yContent = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const yBackground = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
@@ -180,12 +159,6 @@ export default function App() {
       title: 'Review Operating Model',
       subtitle: 'Identity, wallet, governance, and pilot flow',
       action: () => { navigateToHomeSection('model'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-audiences',
-      title: 'Review Audience Paths',
-      subtitle: 'Government, institution, and builder entry points',
-      action: () => { navigateToHomeSection('audiences'); closeCommandPalette(); }
     },
     {
       id: 'nav-deployment',
@@ -438,9 +411,7 @@ export default function App() {
       {currentView === 'home' ? (
       <motion.main style={{ y: yContent }} className="relative z-10 w-full will-change-transform">
         <HeroSection />
-        <AudiencePathsSection />
         <OperatingModelSection />
-        <IdentitySection />
         <AssuranceSection />
         <ConversionSection />
         <FooterSection />

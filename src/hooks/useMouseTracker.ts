@@ -7,6 +7,10 @@ export function useMouseTracker() {
   const ticking = useRef(false);
 
   useEffect(() => {
+    const canTrackPointer = window.matchMedia('(pointer: fine)').matches && window.matchMedia('(hover: hover)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canTrackPointer || prefersReducedMotion) return;
+
     const updateMousePosition = () => {
       document.body.style.setProperty('--mouse-x', `${mousePos.current.x}px`);
       document.body.style.setProperty('--mouse-y', `${mousePos.current.y}px`);
