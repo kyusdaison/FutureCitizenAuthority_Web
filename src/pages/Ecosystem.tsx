@@ -56,10 +56,10 @@ const coreComponents: CoreComponent[] = [
   },
   {
     icon: Layers,
-    label: 'Settlement',
-    title: 'FC Chain settlement',
-    copy: 'Transaction settlement layer for benefit, registry, and audit events. Operated by the network as a separate layer with its own audit posture.',
-    status: 'Live (sample-traffic)',
+    label: 'Settlement evidence',
+    title: 'Settlement evidence rail',
+    copy: 'Settlement references for benefit, registry, and audit events flow into the reviewable evidence pipeline. The rail is scoped per pilot, not a public chain operated by FCA.',
+    status: 'Sample preview',
   },
   {
     icon: Database,
@@ -117,7 +117,7 @@ const partnerCategories: PartnerCategory[] = [
     icon: Network,
     label: 'Settlement',
     title: 'Settlement counterparties',
-    copy: 'Reserve banks, treasury counterparties, and chain operators downstream of FC Chain. Reconciled daily, never speculatively.',
+    copy: 'Reserve banks, treasury counterparties, and approved settlement networks downstream of the pilot rail. Reconciled daily, never speculatively.',
     proof: 'Counterparty list, daily reconciliation, regulator-of-record',
   },
 ];
@@ -222,9 +222,9 @@ const Ecosystem = () => {
         <p className="text-[10px] uppercase tracking-[0.28em] text-emerald-300 mb-3">Default partner posture</p>
         <p className="max-w-3xl text-sm leading-relaxed text-slate-300">
           New partners enter the ecosystem in a sandbox, carry sample labels until verified sources
-          are connected, and never require a reviewer to inspect network economics before the use case
-          is understood. Every partner integration starts with a one-page scope, a named owner, and a
-          reviewable evidence path on the audit pipeline.
+          are connected, and the use case is understood before any production path is opened. Every
+          partner integration starts with a one-page scope, a named owner, and a reviewable evidence
+          path on the audit pipeline.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <button

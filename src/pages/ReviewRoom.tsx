@@ -46,7 +46,7 @@ const packetFiles: PacketFile[] = [
     icon: KeyRound,
     file: 'Custody boundary',
     purpose: 'Separate wallet signing, recovery, and operator authority.',
-    evidence: 'MPC roles, recovery council, device controls, signing limits, escalation procedure',
+    evidence: 'HSM-backed signing roles, recovery council, device controls, signing limits, escalation procedure',
     decision: 'Who can initiate, recover, pause, or approve wallet access?',
   },
   {

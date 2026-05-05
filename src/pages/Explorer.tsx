@@ -115,7 +115,7 @@ const anomalies: AnomalyRow[] = [
     time: '06:01',
     category: 'Custody',
     severity: 'Warn',
-    description: 'MPC role rotation drift detected on Recovery Council key set',
+    description: 'Recovery role rotation drift detected on Recovery Council key set',
     status: 'Resolved',
   },
   {

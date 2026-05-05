@@ -24,7 +24,7 @@ const integrationTracks = [
     label: 'Wallet permissions',
     title: 'Bind access to policy and recovery rules',
     copy: 'Map credential status to wallet limits, service eligibility, and operator permissions before any pilot transaction path is opened.',
-    proof: 'MPC recovery, role limits, audit owner',
+    proof: 'HSM-backed recovery, role limits, audit owner',
   },
   {
     icon: Network,
@@ -194,7 +194,7 @@ const DeveloperHub = () => {
           <div className="mt-7 border border-white/10 bg-[#020617]/70 p-5">
             <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500">Default rule</p>
             <p className="text-sm leading-relaxed text-slate-400">
-              Integrations start in a sandbox, carry sample labels until verified sources are connected, and never require a reviewer to inspect network economics before the use case is understood.
+              Integrations start in a sandbox, carry sample labels until verified sources are connected, and the use case is understood before any production path is opened.
             </p>
           </div>
         </motion.section>

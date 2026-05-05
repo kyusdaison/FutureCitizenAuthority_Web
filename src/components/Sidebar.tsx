@@ -151,7 +151,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
              </div>
              <div>
                <div className="text-[10px] font-bold tracking-widest uppercase text-slate-500">Evidence rail</div>
-               <div className="text-xs font-mono font-bold text-slate-300 tracking-wider">FC Chain · Sample</div>
+               <div className="text-xs font-mono font-bold text-slate-300 tracking-wider">Pilot rail · Sample</div>
              </div>
           </div>
         </div>
