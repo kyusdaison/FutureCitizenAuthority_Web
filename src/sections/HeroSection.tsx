@@ -40,8 +40,8 @@ const reviewPacket = [
     icon: Network,
     step: '03',
     label: 'Network',
-    title: 'FC Chain settlement rail',
-    copy: 'Settlement, validator events, wallet operations, and the FCC utility denomination.',
+    title: 'Settlement evidence rail',
+    copy: 'Settlement references, wallet operations, and audit evidence without leading with network economics.',
   },
   {
     icon: FileCheck2,
@@ -179,7 +179,7 @@ export const HeroSection = () => {
                   What a reviewer needs to understand before a pilot.
                 </h2>
               </div>
-              <img src="/hero-logo.png" alt="Future Citizen Authority crest" className="h-14 w-14 shrink-0 object-contain grayscale transition-all duration-500 hover:grayscale-0" />
+              <img src="/hero-logo.webp" alt="Future Citizen Authority crest" className="h-14 w-14 shrink-0 object-contain grayscale transition-all duration-500 hover:grayscale-0" loading="eager" decoding="async" />
             </div>
 
             <div className="relative space-y-3">
@@ -208,7 +208,7 @@ export const HeroSection = () => {
               <FCChainNetworkSeal className="h-10 w-10 shrink-0" />
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-fc-gold/80">Powered by FC Chain</div>
-                <div className="mt-1 text-xs leading-relaxed text-slate-500">FC Chain is the settlement network; FCC is the gas and utility denomination. Both belong in the appendix until the operating model is understood.</div>
+                <div className="mt-1 text-xs leading-relaxed text-slate-500">FC Chain is the settlement network. Network economics remain in the appendix until the operating model is understood.</div>
               </div>
             </div>
           </aside>
@@ -233,7 +233,7 @@ export const HeroSection = () => {
               <span>// PRIVACY: NO RAW RECORDS ON PUBLIC RAILS</span>
               <span>// CUSTODY: SEEDLESS MPC RECOVERY</span>
               <span>// GOVERNANCE: HUMAN APPROVAL GATES</span>
-              <span>// PILOT: BOUNDED 60-90 DAY EVALUATION <span className="text-fc-gold opacity-50 ml-2">// FCC: GAS / SETTLEMENT UTILITY</span></span>
+              <span>// PILOT: BOUNDED 60-90 DAY EVALUATION <span className="text-fc-gold opacity-50 ml-2">// ECONOMICS: APPENDIX MATERIAL</span></span>
             </div>
           ))}
         </div>

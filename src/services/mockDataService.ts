@@ -11,43 +11,43 @@ export interface ArtifactData {
 
 const MOCK_ARTIFACTS: ArtifactData[] = [
   {
-    id: 'FC-ID-8842',
-    type: 'Identity Nexus',
+    id: 'CRD-RES-0148',
+    type: 'Resident Credential',
     rarity: 'Legendary',
     power: 9940,
-    owner: '0x49fA...bD21',
+    owner: '0x49fA…bD21',
     image: 'https://images.unsplash.com/photo-1542644485-cbd46ec6fd56?q=80&w=600&auto=format&fit=crop',
-    traits: ['Cybernetic', 'Quantum Sync', 'Neural Link'],
+    traits: ['Issuer-attested', 'Recovery-bound', 'Audit-sealed'],
     status: 'Active'
   },
   {
-    id: 'MECH-X-99',
-    type: 'Exosuit Construct',
+    id: 'CRD-OPS-0072',
+    type: 'Treasury Operator Key',
     rarity: 'Rare',
     power: 4200,
-    owner: '0x22cB...8f0A',
+    owner: '0x22cB…8f0A',
     image: 'https://images.unsplash.com/photo-1533134486753-c833f0ed4866?q=80&w=600&auto=format&fit=crop',
-    traits: ['Heavy Armor', 'Plasma Core'],
-    status: 'Staked'
+    traits: ['Limit-bound', 'Quorum-gated'],
+    status: 'Active'
   },
   {
-    id: 'NANO-DRONE-V2',
-    type: 'Surveillance Unit',
+    id: 'CRD-AUD-0029',
+    type: 'Auditor Attestation',
     rarity: 'Uncommon',
     power: 1540,
-    owner: '0x88fC...4b9B',
+    owner: '0x88fC…4b9B',
     image: 'https://images.unsplash.com/photo-1473663678007-9b2658fc5ec7?q=80&w=600&auto=format&fit=crop',
-    traits: ['Stealth Tech', 'AI Optics'],
+    traits: ['Read-only', 'Time-boxed'],
     status: 'Idle'
   },
   {
-    id: 'QUANTUM-KEY-A1',
-    type: 'Access Protocol',
+    id: 'CRD-REC-A1',
+    type: 'Recovery Council Share',
     rarity: 'Epic',
     power: 7800,
-    owner: '0x1A4f...7c22',
+    owner: '0x1A4f…7c22',
     image: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=600&auto=format&fit=crop',
-    traits: ['Decryption', 'Root Access', 'Vault Bypass'],
+    traits: ['MPC share', 'Council-only', 'Escalation-bound'],
     status: 'Active'
   }
 ];
@@ -95,10 +95,10 @@ export interface ValidatorData {
 }
 
 const MOCK_VALIDATORS: ValidatorData[] = [
-  { name: 'FC Core Alpha', weight: '18.4%', apy: '14.2%', uptime: '100%', fee: '0%' },
-  { name: 'Nexus Subnet', weight: '12.1%', apy: '13.8%', uptime: '99.9%', fee: '2%' },
-  { name: 'Regional Node 01', weight: '9.8%', apy: '14.0%', uptime: '99.9%', fee: '1%' },
-  { name: 'Quantum Validator', weight: '7.2%', apy: '13.5%', uptime: '99.8%', fee: '4%' }
+  { name: 'Region-1 Settlement Node', weight: '18.4%', apy: '14.2%', uptime: '100%', fee: '0%' },
+  { name: 'Region-2 Settlement Node', weight: '12.1%', apy: '13.8%', uptime: '99.9%', fee: '2%' },
+  { name: 'Region-3 Settlement Node', weight: '9.8%', apy: '14.0%', uptime: '99.9%', fee: '1%' },
+  { name: 'Reserve Validator', weight: '7.2%', apy: '13.5%', uptime: '99.8%', fee: '4%' }
 ];
 
 export interface IdentityStat {
@@ -107,11 +107,18 @@ export interface IdentityStat {
   sub: string;
 }
 
+// 8 institutional sample stats. The first 6 mirror the Dashboard KPI tile
+// vocabulary 1:1 so the Identity sidebar reads as the same operating story.
+// The last 2 are institutional extensions that complete the issuance picture.
 const MOCK_IDENTITY_STATS: IdentityStat[] = [
-  { title: 'ON-CHAIN TXs', val: '1,492', sub: '+12% this week' },
-  { title: 'STAKED VOLUME', val: '45,290 FCC', sub: 'Yielding 14.2% APY' },
-  { title: 'MINTED ARTIFACTS', val: '8 / 12', sub: 'Matrix Level 2' },
-  { title: 'GOVERNANCE POWER', val: '9.4 vPWR', sub: 'Active Voter' }
+  { title: 'CREDENTIALS ISSUED · 30D', val: '1,492', sub: '+12% week-on-week' },
+  { title: 'APPROVALS PENDING', val: '47', sub: '6 high-risk · 41 standard' },
+  { title: 'POLICY FLAGS · 7D', val: '3', sub: '1 active · 2 resolved this week' },
+  { title: 'RECOVERY CASES', val: '5', sub: '2 open · 3 closed · avg 18h' },
+  { title: 'AUDIT EVENTS · 24H', val: '14,902', sub: 'integrity ✓ · 0 missing' },
+  { title: 'SERVICE SLA · 30D', val: '99.6%', sub: 'issuance · recovery · escalation' },
+  { title: 'ACTIVE ISSUERS', val: '12', sub: '11 civic offices + 1 recovery council' },
+  { title: 'REVOKED CREDENTIALS · 30D', val: '8', sub: 'all reasons documented' }
 ];
 
 export interface ActivityLog {
@@ -122,12 +129,18 @@ export interface ActivityLog {
   color: string;
 }
 
+// 8 recent operating events that read as the activity stream behind the
+// 8 stats above. Vocabulary is locked to issuance / approval / policy /
+// recovery / audit — same surface the Dashboard tiles describe.
 const MOCK_ACTIVITY_LOGS: ActivityLog[] = [
-  { action: 'STAKED', amount: '+500 FCC', target: 'FC Core Node #009', time: '2 mins ago', color: 'text-yellow-400' },
-  { action: 'MINTED', amount: 'Credential', target: 'Identity Review Badge', time: '4 hours ago', color: 'text-purple-400' },
-  { action: 'SWAPPED', amount: '120 USDC', target: '-> 45.2 FCC', time: '12 hours ago', color: 'text-cyan-400' },
-  { action: 'VOTED', amount: 'Prop-84', target: 'Matrix Parameter Update', time: '1 day ago', color: 'text-white' },
-  { action: 'BRIDGED', amount: '2.5 ETH', target: 'Origin -> FC Settlement', time: '2 days ago', color: 'text-blue-400' }
+  { action: 'Credential issued', amount: '', target: 'Resident · Tier 2 → 0x83a9…d214', time: '2 mins ago', color: 'text-cyan-300' },
+  { action: 'Approval granted', amount: '', target: 'APR-0481 · Treasury settlement', time: '14 mins ago', color: 'text-cyan-300' },
+  { action: 'Policy flag raised', amount: '', target: 'Treasury · single-actor approval', time: '47 mins ago', color: 'text-fc-gold' },
+  { action: 'Recovery case opened', amount: '', target: 'Custodian · Holder 0x6e90…2bd1', time: '2 hours ago', color: 'text-fc-gold' },
+  { action: 'Credential revoked', amount: '', target: 'Operator · APR-0479 review outcome', time: '4 hours ago', color: 'text-white' },
+  { action: 'Audit export sealed', amount: '', target: '24h sweep · integrity ✓', time: '8 hours ago', color: 'text-cyan-300' },
+  { action: 'Approval queue cleared', amount: '', target: '12 routed · 0 escalated', time: '14 hours ago', color: 'text-cyan-300' },
+  { action: 'Issuer key rotation', amount: '', target: 'Civic Office #12 · scheduled rotation', time: '1 day ago', color: 'text-white' }
 ];
 
 export interface ProposalData {
@@ -161,10 +174,10 @@ const MOCK_PROPOSALS: ProposalData[] = [
 const MOCK_SYSTEM_NODES: SystemNode[] = [
   { name: 'RPC NODES', status: 'OPERATIONAL', ping: '12ms' },
   { name: 'CONSENSUS', status: 'SECURE', ping: '8ms' },
-  { name: 'LIQUIDITY RAIL', status: 'OPERATIONAL', ping: '15ms' },
-  { name: 'BRIDGE RELAY', status: 'ELEVATED', ping: '45ms' },
+  { name: 'SETTLEMENT RAIL', status: 'OPERATIONAL', ping: '15ms' },
+  { name: 'INTEROP RELAY', status: 'ELEVATED', ping: '45ms' },
   { name: 'POLICY DATA', status: 'OPERATIONAL', ping: '22ms' },
-  { name: 'DIGITAL ASSET MINT', status: 'SECURE', ping: '18ms' },
+  { name: 'CREDENTIAL ISSUANCE', status: 'SECURE', ping: '18ms' }
 ];
 
 // Helper to simulate network latency
@@ -175,7 +188,7 @@ export const mockDataService = {
     await delay(800);
     return MOCK_ARTIFACTS;
   },
-  
+
   getEcosystemApps: async (): Promise<EcosystemApp[]> => {
     await delay(600);
     return MOCK_APPS;

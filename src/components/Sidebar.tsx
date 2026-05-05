@@ -29,7 +29,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
       <aside className={`fixed left-0 top-0 bottom-0 w-64 bg-[#020617]/95 backdrop-blur-md border-r border-slate-800 flex flex-col z-[100] transition-transform duration-300 ease-in-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
       <div className="p-6 flex items-center space-x-3 border-b border-slate-800 group pt-8 cursor-pointer" onClick={() => onNavigate('home')}>
         <div className="w-10 h-10 flex items-center justify-center p-1 bg-slate-900 border border-slate-700">
-          <img src="/hero-logo.png" alt="Logo" className="w-full h-full object-contain filter brightness-150" />
+          <img src="/hero-logo.webp" alt="Logo" className="w-full h-full object-contain filter brightness-150" loading="eager" decoding="async" />
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-sans font-black leading-tight tracking-[0.2em] text-slate-100 uppercase">FUTURE CITIZEN</span>

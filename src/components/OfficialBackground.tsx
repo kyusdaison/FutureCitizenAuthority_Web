@@ -31,7 +31,7 @@ export const OfficialBackground = memo(() => {
 
       {/* FC Lion Monolithic Watermark */}
       <div className="absolute top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.03] z-[2] mix-blend-screen pointer-events-none grayscale">
-        <img src="/fcc-lion-god-tier.webp" alt="FC Crest" className="w-full h-full object-contain" />
+        <img src="/fcc-lion-god-tier.webp" alt="FC Crest" className="w-full h-full object-contain" loading="lazy" decoding="async" />
       </div>
 
       {/* Bottom Structural Gradient */}

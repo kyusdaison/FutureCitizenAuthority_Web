@@ -57,7 +57,7 @@ const coreComponents: CoreComponent[] = [
     icon: Layers,
     label: 'Settlement',
     title: 'FC Chain settlement',
-    copy: 'Transaction settlement layer for benefit, registry, and audit events. The public community surface for token holders and validators lives separately at /community.',
+    copy: 'Transaction settlement layer for benefit, registry, and audit events. Community network-operation material lives separately at /community.',
     status: 'Live (sample-traffic)',
   },
   {
@@ -221,8 +221,8 @@ const Ecosystem = () => {
         <p className="text-[10px] uppercase tracking-[0.28em] text-emerald-300 mb-3">Default partner posture</p>
         <p className="max-w-3xl text-sm leading-relaxed text-slate-300">
           New partners enter the ecosystem in a sandbox, carry sample labels until verified sources
-          are connected, and never require a reviewer to inspect token mechanics before the use case
-          is understood. Every partner contract starts with a one-page scope, a named owner, and a
+          are connected, and never require a reviewer to inspect network economics before the use case
+          is understood. Every partner integration starts with a one-page scope, a named owner, and a
           reviewable evidence path on the audit pipeline.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">

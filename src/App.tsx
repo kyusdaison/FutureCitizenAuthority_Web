@@ -201,8 +201,8 @@ export default function App() {
     },
     {
       id: 'nav-staking',
-      title: 'Community: Validator Operations',
-      subtitle: 'Manage validator delegation and yields',
+      title: 'Community: Network Operations',
+      subtitle: 'Community operations, delegation, and participation records',
       action: () => { navigate('staking'); closeCommandPalette(); }
     },
     {
@@ -214,13 +214,13 @@ export default function App() {
     {
       id: 'nav-bridge',
       title: 'Community: Interoperability Bridge',
-      subtitle: 'Cross-chain asset transfer',
+      subtitle: 'Community interoperability appendix',
       action: () => { navigate('bridge'); closeCommandPalette(); }
     },
     {
       id: 'nav-swap',
-      title: 'Community: Liquidity Router',
-      subtitle: 'Stablecoin and liquidity routing',
+      title: 'Community: Settlement Routing',
+      subtitle: 'Community settlement-routing appendix',
       action: () => { navigate('swap'); closeCommandPalette(); }
     },
     {
@@ -256,7 +256,7 @@ export default function App() {
     {
       id: 'nav-tokenomics',
       title: 'Community: Network Economics',
-      subtitle: 'FCC utility, supply, and reserve model',
+      subtitle: 'Supply, reserves, fees, and community disclosures',
       action: () => { navigate('tokenomics'); closeCommandPalette(); }
     },
     {
@@ -365,7 +365,7 @@ export default function App() {
       {currentView === 'home' && (
       <nav className="fixed top-8 sm:top-9 w-full z-50 py-3 sm:py-4 px-4 sm:px-6 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <img src="/hero-logo.png" alt="Future Citizen Authority" className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
+          <img src="/hero-logo.webp" alt="Future Citizen Authority" className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" loading="eager" decoding="async" />
           <div className="flex min-w-0 flex-col">
             <span className="max-w-[54vw] truncate text-[11px] font-bold tracking-[0.16em] uppercase text-white sm:max-w-none sm:text-sm sm:tracking-[0.3em]">Future Citizen Authority</span>
             <span className="hidden text-[9px] tracking-[0.2em] font-mono text-slate-500 sm:block">Digital Governance Infrastructure</span>
@@ -451,7 +451,7 @@ export default function App() {
             {/* Mobile Header for dashboard/inner pages */}
             <div className="lg:hidden fixed top-0 left-0 w-full h-16 bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 z-50 flex items-center justify-between px-6">
               <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateFn('/')}>
-                <img src="/hero-logo.png" alt="Logo" className="w-8 h-8 object-contain filter brightness-150" />
+                <img src="/hero-logo.webp" alt="Logo" className="w-8 h-8 object-contain filter brightness-150" loading="eager" decoding="async" />
                 <span className="text-xs font-bold font-mono tracking-widest text-slate-300 uppercase">F.C.A</span>
               </div>
               <button onClick={() => setIsMobileSidebarOpen(true)} className="text-white p-2" aria-label="Toggle Mobile Menu" title="Menu">

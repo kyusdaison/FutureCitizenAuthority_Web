@@ -11,8 +11,19 @@ export const HexGridBackground = () => {
 
     let width = window.innerWidth;
     let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
+
+    const syncCanvasSize = () => {
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * pixelRatio);
+      canvas.height = Math.floor(height * pixelRatio);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    };
+
+    syncCanvasSize();
 
     const hexSize = 35; // Size of hexagon
     const hexHeight = hexSize * Math.sqrt(3);
@@ -21,14 +32,6 @@ export const HexGridBackground = () => {
 
     let mouseX = -1000;
     let mouseY = -1000;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
 
     const drawHexagon = (x: number, y: number, size: number, distance: number) => {
       ctx.beginPath();
@@ -61,9 +64,10 @@ export const HexGridBackground = () => {
       }
     };
 
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
 
     const render = () => {
+      animationFrameId = null;
       ctx.clearRect(0, 0, width, height);
 
       const cols = Math.ceil(width / hexOffsetX) + 1;
@@ -81,25 +85,36 @@ export const HexGridBackground = () => {
           drawHexagon(x, y, hexSize, distance);
         }
       }
+    };
 
+    const scheduleRender = () => {
+      if (animationFrameId !== null) return;
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
-
-    const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      scheduleRender();
     };
 
-    window.addEventListener('resize', handleResize);
+    scheduleRender();
+
+    const handleResize = () => {
+      syncCanvasSize();
+      scheduleRender();
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
   }, []);
 
@@ -107,7 +122,7 @@ export const HexGridBackground = () => {
     <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden mix-blend-screen opacity-60">
       <canvas 
         ref={canvasRef} 
-        className="block min-w-full min-h-full"
+        className="block h-full w-full"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-[#020306] via-transparent to-[#020306] pointer-events-none" />
     </div>

@@ -10,41 +10,46 @@ export const FCChainNetworkSeal = ({ className = 'w-full h-full' }: BrandMarkPro
     alt="FC Chain Network Seal"
     className={brandImageClass(className)}
     loading="eager"
+    decoding="async"
   />
 );
 
 export const FCCTokenMark = ({ className = 'w-full h-full' }: BrandMarkProps) => (
   <img
-    src="/fcc_token_asset.png"
+    src="/fcc_token_asset.webp"
     alt="FCC Token Mark"
     className={brandImageClass(className)}
     loading="eager"
+    decoding="async"
   />
 );
 
 export const FCCTokenNavyOnLight = ({ className = 'w-full h-full' }: BrandMarkProps) => (
   <img
-    src="/fcc_token_asset.png"
+    src="/fcc_token_asset.webp"
     alt="FCC token mark navy on light variant"
     className={brandImageClass(className)}
     loading="eager"
+    decoding="async"
   />
 );
 
 export const FCCTokenMonochrome = ({ className = 'w-full h-full' }: BrandMarkProps) => (
   <img
-    src="/fcc_token_asset.png"
+    src="/fcc_token_asset.webp"
     alt="FCC token mark monochrome variant"
     className={brandImageClass(className)}
     loading="eager"
+    decoding="async"
   />
 );
 
 export const FCATextCrest = ({ className = 'w-full h-full' }: BrandMarkProps) => (
   <img
-    src="/hero-logo.png"
+    src="/hero-logo.webp"
     alt="Future Citizen Authority Crest"
     className={brandImageClass(className)}
     loading="eager"
+    decoding="async"
   />
 );

@@ -110,7 +110,7 @@ export const IdentitySection = () => {
                  <CipherHeading text="Seedless Identity Wallet" />
                </h3>
                <p className="text-sm text-gray-400 font-light leading-[1.8] tracking-wide mb-6">
-	                 Complete self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet splits key authority across device enclaves, validator infrastructure, and encrypted offline recovery so identity access remains resilient without turning a help desk into the single point of control.
+	                 Complete self-custody with <strong className="text-cyan-400 font-medium">zero seed phrase risk</strong>. The FC Digital Wallet splits key authority across device enclaves, distributed custody infrastructure, and encrypted offline recovery so identity access remains resilient without turning a help desk into the single point of control.
                </p>
                <div className="p-4 border border-slate-800 bg-slate-900/50">
                  <p className="text-[9px] font-mono tracking-widest text-cyan-300 uppercase">System Notice:</p>

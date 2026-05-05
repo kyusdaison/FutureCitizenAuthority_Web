@@ -90,7 +90,7 @@ const supportingMaterials = [
   {
     lane: 'Evidence surface',
     label: 'Network explorer',
-    copy: 'Representative FC Chain blocks, transactions, and validator telemetry.',
+    copy: 'Representative settlement references, audit events, and network telemetry.',
     route: '/explorer',
   },
   {
@@ -101,8 +101,8 @@ const supportingMaterials = [
   },
   {
     lane: 'Community appendix',
-    label: 'FCC economics',
-    copy: 'Gas, validator incentives, reserves, and treasury utility for token-facing review.',
+    label: 'Network economics',
+    copy: 'Supply, reserve policy, fee treatment, and community-facing disclosures.',
     route: '/tokenomics',
   },
 ];
@@ -285,7 +285,7 @@ export const ConversionSection = () => {
                   <h4 className="text-2xl md:text-3xl font-serif font-light text-white">Deeper material lives off the institutional homepage.</h4>
                 </div>
                 <p className="max-w-md text-sm leading-relaxed text-slate-500">
-                  The homepage should close the review conversation. Network, developer, and token material remain available as appendix pages for specialist audiences.
+                  The homepage should close the review conversation. Network, developer, and economics material remain available as appendix pages for specialist audiences.
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
