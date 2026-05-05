@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FCA OG Card — 1200×630</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Roboto+Mono:wght@400;500&display=swap"
+    />
+    <style>
+      :root {
+        --bg-base: #0b1220;
+        --bg-deep: #020617;
+        --gold: #b38b39;
+        --gold-light: #c29f45;
+        --slate-100: #f1f5f9;
+        --slate-300: #cbd5e1;
+        --slate-400: #94a3b8;
+        --slate-500: #64748b;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background: linear-gradient(180deg, #020617 0%, #0b1220 50%, #020617 100%);
+        color: var(--slate-100);
+        position: relative;
+      }
+
+      /* Top accent line */
+      .top-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          var(--gold) 50%,
+          transparent 100%
+        );
+      }
+
+      /* Bottom accent line */
+      .bottom-accent {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          var(--gold) 50%,
+          transparent 100%
+        );
+        opacity: 0.5;
+      }
+
+      /* Subtle hex grid backdrop */
+      .grid-overlay {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+        background-size: 60px 60px;
+        background-position: center center;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      /* Volumetric glow */
+      .glow-gold {
+        position: absolute;
+        right: -15%;
+        bottom: -15%;
+        width: 50%;
+        height: 80%;
+        background: radial-gradient(
+          circle at center,
+          rgba(179, 139, 57, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+
+      .container {
+        position: relative;
+        z-index: 10;
+        height: 100%;
+        padding: 56px 80px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .spacer {
+        flex: 1;
+      }
+
+      /* Brand row */
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .crest {
+        width: 56px;
+        height: 56px;
+        border: 1.5px solid rgba(179, 139, 57, 0.45);
+        background: rgba(179, 139, 57, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--gold-light);
+        letter-spacing: 0.02em;
+      }
+
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .brand-name {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--slate-100);
+      }
+
+      .brand-tag {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--slate-500);
+      }
+
+      /* Headline block */
+      .headline {
+        max-width: 1040px;
+      }
+
+      .kicker {
+        display: inline-block;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--gold-light);
+        padding: 8px 14px;
+        border: 1px solid rgba(179, 139, 57, 0.32);
+        background: rgba(179, 139, 57, 0.06);
+        margin-bottom: 28px;
+      }
+
+      .h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 68px;
+        font-weight: 300;
+        line-height: 1.06;
+        letter-spacing: -0.005em;
+        color: white;
+        margin-bottom: 6px;
+      }
+
+      .h1 .accent {
+        font-style: italic;
+        font-weight: 400;
+        color: var(--gold-light);
+        background: linear-gradient(135deg, #e2c87a 0%, #d4af37 50%, #aa8222 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .tagline {
+        margin-top: 22px;
+        max-width: 880px;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.45;
+        color: var(--slate-300);
+      }
+
+      /* Footer row */
+      .footer {
+        position: absolute;
+        bottom: 50px;
+        left: 80px;
+        right: 80px;
+        z-index: 11;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .footer-domain {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: var(--gold-light);
+      }
+
+      .footer-credentials {
+        display: flex;
+        gap: 12px;
+      }
+
+      .credential-chip {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--slate-300);
+        padding: 8px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.04);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-accent"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-gold"></div>
+
+    <div class="container">
+      <div class="brand">
+        <div class="crest">F</div>
+        <div class="brand-text">
+          <div class="brand-name">Future Citizen Authority</div>
+          <div class="brand-tag">Digital Governance Infrastructure</div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="headline">
+        <span class="kicker">Identity Infrastructure</span>
+        <h1 class="h1">
+          Issue, govern, and settle <br />
+          <span class="accent">on a reviewable rail.</span>
+        </h1>
+        <p class="tagline">
+          Verifiable credentials, access governance, and audit-ready evidence — for public agencies and regulated institutions.
+        </p>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="footer">
+        <div class="footer-domain">fca.ms</div>
+        <div class="footer-credentials">
+          <span class="credential-chip">W3C VC</span>
+          <span class="credential-chip">did:key</span>
+          <span class="credential-chip">EdDSA</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-accent"></div>
+  </body>
+</html>
