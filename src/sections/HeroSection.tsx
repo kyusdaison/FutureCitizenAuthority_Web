@@ -115,7 +115,7 @@ export const HeroSection = () => {
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4, delay: 0.35 }} className="relative z-20 w-full max-w-3xl min-w-0">
             <p className="hero-copy whitespace-normal break-words border-l border-fc-gold/35 pl-5 text-sm leading-[1.85] text-slate-300 [overflow-wrap:anywhere] sm:pl-6 md:text-lg md:leading-[1.9]">
-              Identity-first digital governance infrastructure for public agencies, regulated institutions, and infrastructure partners. FCA presents identity, wallet access, governance approvals, and FC Chain settlement as one reviewable operating layer before any pilot.
+              Identity-first governance infrastructure for agencies and regulated institutions. FCA packages credentials, wallet access, approvals, and FC Chain settlement into one reviewable pilot layer.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -141,7 +141,7 @@ export const HeroSection = () => {
             </div>
 
             <p className="hero-copy mt-5 whitespace-normal break-words text-[10px] font-mono uppercase tracking-[0.12em] text-slate-500 [overflow-wrap:anywhere] sm:tracking-[0.28em]">
-              Use the Review Room as the first institutional link after an introduction.
+              Review Room is the first institutional link after an introduction.
             </p>
             <div className="hero-mobile-frame mt-6 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 sm:grid-cols-4">
               {reviewOutputs.map((output) => (
