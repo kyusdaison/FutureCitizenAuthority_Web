@@ -56,17 +56,17 @@ export interface EcosystemApp {
   name: string;
   category: string;
   description: string;
-  tvl: string;
+  signal: string;
   icon: string;
 }
 
 const MOCK_APPS: EcosystemApp[] = [
-  { name: 'Aether Settlement', category: 'Payments', description: 'Institutional settlement and liquidity routing on Future Citizen Chain.', tvl: '$245M', icon: 'bg-indigo-500' },
-  { name: 'Nova Services', category: 'Public Services', description: 'Digital service workflows for verified residents, operators, and partner institutions.', tvl: '12K Users', icon: 'bg-blue-600' },
-  { name: 'Galactic Registry', category: 'Assets', description: 'Registry surface for digital credentials, tokenized assets, and institutional records.', tvl: '$89M Vol', icon: 'bg-purple-500' },
-  { name: 'Nexus Bridge', category: 'Bridges', description: 'Fast, secure cross-chain bridging between Ethereum, Solana, and FCC.', tvl: '$512M', icon: 'bg-teal-400' },
-  { name: 'Prism Liquidity', category: 'Payments', description: 'Aggregated liquidity layer for stablecoin routing and FCC gas abstraction.', tvl: '$120M', icon: 'bg-pink-500' },
-  { name: 'Chronos Governance', category: 'Governance', description: 'Committee approvals, reserve workflows, and treasury management controls.', tvl: '$56M', icon: 'bg-rose-500' }
+  { name: 'Aether Settlement', category: 'Payments', description: 'Institutional settlement and disbursement workflow for verified operator roles.', signal: 'Pilot ready', icon: 'bg-indigo-500' },
+  { name: 'Nova Services', category: 'Public Services', description: 'Digital service workflow for residents, program operators, and partner institutions.', signal: '12K sample users', icon: 'bg-blue-600' },
+  { name: 'Civic Registry', category: 'Records', description: 'Registry surface for credentials, service status, and institutional evidence files.', signal: 'Credential schema mapped', icon: 'bg-purple-500' },
+  { name: 'Interoperability Gateway', category: 'Interoperability', description: 'Controlled message and settlement references for approved external systems.', signal: 'Review required', icon: 'bg-teal-400' },
+  { name: 'Treasury Controls', category: 'Controls', description: 'Policy gates for payouts, approvals, reporting checkpoints, and custody limits.', signal: 'Sample controls', icon: 'bg-pink-500' },
+  { name: 'Chronos Governance', category: 'Governance', description: 'Committee approvals, reserve workflows, and policy management controls.', signal: 'Approval matrix', icon: 'bg-rose-500' }
 ];
 
 export interface CoreProduct {

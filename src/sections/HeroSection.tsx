@@ -113,23 +113,6 @@ export const HeroSection = () => {
             </span>
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.0, delay: 0.6 }}
-            className="relative z-20 mb-7 max-w-3xl"
-          >
-            <div className="inline-flex items-start gap-3 border-l border-fc-gold/35 bg-[#020617]/40 py-2 pl-4 pr-2 backdrop-blur-sm">
-              <span className="mt-[5px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-fc-gold/80" aria-hidden />
-              <p className="text-[12px] leading-[1.7] text-slate-300 md:text-[13px]">
-                Built by a team behind a multi-billion-dollar digital governance infrastructure project.
-                <span className="ml-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-500">
-                  Operator credentials available on request.
-                </span>
-              </p>
-            </div>
-          </motion.div>
-
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4, delay: 0.35 }} className="relative z-20 max-w-3xl">
             <p className="border-l border-fc-gold/35 pl-6 text-base leading-[1.9] text-slate-300 md:text-lg">
               Identity-first digital governance infrastructure for public agencies, regulated institutions, and infrastructure partners. FCA presents identity, wallet access, governance approvals, and FC Chain settlement as one reviewable operating layer before any pilot.

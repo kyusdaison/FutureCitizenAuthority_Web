@@ -298,13 +298,13 @@ export default function App() {
       <OfficialBackground />
       
       {/* Official State Banner */}
-      <div className="w-full bg-[#0a1019] border-b border-white/5 text-[9px] uppercase tracking-[0.3em] text-slate-500 py-2 flex justify-center items-center gap-3 relative z-[60]">
+      <div className="w-full overflow-hidden bg-[#0a1019] border-b border-white/5 px-3 py-2 text-[8px] uppercase tracking-[0.18em] text-slate-500 sm:text-[9px] sm:tracking-[0.3em] flex justify-center items-center gap-2 sm:gap-3 relative z-[60]">
         <svg className="w-3.5 h-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
-        <span className="font-bold font-mono text-slate-300">Future Citizen Authority Institutional Site</span>
-        <span className="opacity-20 text-slate-500">|</span>
-        <span className="font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">Secure Digital Governance Review Channel</span>
+        <span className="whitespace-nowrap font-bold font-mono text-slate-300">FCA Institutional Site</span>
+        <span className="hidden opacity-20 text-slate-500 sm:inline">|</span>
+        <span className="hidden whitespace-nowrap font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)] sm:inline">Secure Digital Governance Review Channel</span>
       </div>
 
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
@@ -362,12 +362,12 @@ export default function App() {
 
       {/* Top Navigation Protocol */}
       {currentView === 'home' && (
-      <nav className="fixed top-9 w-full z-50 py-4 px-8 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
-        <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <img src="/brand/fca-authority-crest.png" alt="Future Citizen Authority" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
-          <div className="flex flex-col">
-            <span className="text-sm font-bold tracking-[0.3em] uppercase text-white">Future Citizen Authority</span>
-            <span className="text-[9px] tracking-[0.2em] font-mono text-slate-500">Digital Governance Infrastructure</span>
+      <nav className="fixed top-8 sm:top-9 w-full z-50 py-3 sm:py-4 px-4 sm:px-6 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <img src="/brand/fca-authority-crest.png" alt="Future Citizen Authority" className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
+          <div className="flex min-w-0 flex-col">
+            <span className="max-w-[54vw] truncate text-[11px] font-bold tracking-[0.16em] uppercase text-white sm:max-w-none sm:text-sm sm:tracking-[0.3em]">Future Citizen Authority</span>
+            <span className="hidden text-[9px] tracking-[0.2em] font-mono text-slate-500 sm:block">Digital Governance Infrastructure</span>
           </div>
         </div>
         <div className="hidden xl:flex gap-6 2xl:gap-9 text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase font-sans">
@@ -500,9 +500,11 @@ export default function App() {
 
       {currentView !== 'home' && (
         <>
+          {currentView === 'review-room' && !isLowPowerMode && (
           <Suspense fallback={null}>
             <VanguardOrb />
           </Suspense>
+          )}
           <LiveTelemetryFooter />
         </>
       )}

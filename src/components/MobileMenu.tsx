@@ -39,7 +39,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
           animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
           exit={{ opacity: 0, backdropFilter: "blur(0px)", transition: { delay: 0.3 } }}
-          className="fixed inset-0 z-[100] bg-[#020306]/90 flex flex-col justify-center items-center px-8 xl:hidden"
+          className="fixed inset-0 z-[100] bg-[#020306]/90 flex flex-col justify-center items-center px-6 sm:px-8 xl:hidden"
         >
           {/* Close Area Background */}
           <div className="absolute inset-0 z-0" onClick={() => { playClick(); onClose(); }}></div>
@@ -63,7 +63,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
               hidden: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
             }}
-            className="flex flex-col gap-6 w-full z-10 -mt-10"
+            className="flex flex-col gap-5 w-full z-10 -mt-10"
           >
             {links.map((link, i) => (
               <motion.div 
@@ -80,7 +80,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                   className="group flex flex-col items-start w-full border-b border-white/10 pb-4 text-left"
                 >
                   <span className="text-[10px] font-mono tracking-widest text-fc-gold uppercase opacity-80 mb-1">0{i+1} //</span>
-                  <span className="text-3xl font-serif font-light text-white tracking-widest uppercase group-hover:text-fc-gold transition-colors">{link.label}</span>
+                  <span className="text-2xl font-serif font-light text-white tracking-[0.12em] uppercase group-hover:text-fc-gold transition-colors sm:text-3xl sm:tracking-widest">{link.label}</span>
                 </button>
               </motion.div>
             ))}
@@ -100,7 +100,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fc-gold to-transparent -translate-x-full group-hover:translate-x-full duration-1000 ease-in-out"></div>
               <div className="relative bg-[#020306] px-8 py-4 flex items-center justify-center">
-                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-fc-gold group-hover:text-white transition-colors z-10">Open Review Room</span>
+                <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-fc-gold group-hover:text-white transition-colors z-10 sm:tracking-[0.4em]">Open Review Room</span>
               </div>
             </button>
           </motion.div>

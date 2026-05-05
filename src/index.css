@@ -6,6 +6,13 @@ html {
   scroll-padding-top: 8rem;
 }
 
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 section[id] {
   scroll-margin-top: 8rem;
 }

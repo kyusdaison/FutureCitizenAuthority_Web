@@ -1,260 +1,247 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { TerminalLog } from '../components/TerminalLog';
-import { useWallet } from '../contexts/WalletContext';
+import {
+  ArrowRight,
+  BadgeCheck,
+  Code2,
+  FileCheck2,
+  KeyRound,
+  Network,
+  ShieldCheck,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const MOCK_CONTRACT_CODE = `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
-
-import "@futurecitizen/contracts/token/FCC20.sol";
-import "@futurecitizen/contracts/access/Ownable.sol";
-
-contract GlobalIdentityToken is FCC20, Ownable {
-    constructor() FCC20("Global Identity", "GID", 18) {
-        _mint(msg.sender, 1000000000 * 10 ** decimals());
-    }
-
-    function mintIdentity(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
-    }
-    
-    // FCA verification routine
-    function verifyCitizen(address account) external view returns (bool) {
-        return balanceOf(account) > 0;
-    }
-}
-`;
-
-const getDeploymentSequence = (identity: string, balance: number) => [
-  "> fca-cli compile --network mainnet",
-  "[INFO] Compiling 2 contract files...",
-  "[INFO] Optimizing Bytecode (Runs: 200)",
-  "Compiling @futurecitizen/contracts/token/FCC20.sol",
-  "Compiling GlobalIdentityToken.sol",
-  "[SUCCESS] Compilation successful. Output artifacts saved.",
-  "> fca-cli deploy GlobalIdentityToken --network mainnet",
-  "[INFO] Initializing deployment review...",
-  "[INFO] Connecting to FCA RPC Node (ws://rpc.fc-chain.network)...",
-  "Connection established. Sync status: SYNCHRONIZED",
-  `Account: ${identity.substring(0, 6)}...${identity.substring(identity.length - 4)}`,
-  `Balance: ${balance.toFixed(2)} FCC`,
-  "",
-  "Deploying 'GlobalIdentityToken'",
-  "---------------------------",
-  `Transaction Hash: 0x${Math.random().toString(16).substring(2, 14)}...f9b1`,
-  "Waiting for block inclusion...",
-  `Block Confirmed: #${Math.floor(Math.random() * 100000 + 18400000).toLocaleString()}`,
-  "Gas Used: 2,410,392 Gwei (Approx 150 FCC deducted)",
-  "",
-  `[SUCCESS] Deployed to: 0xFC${Math.random().toString(16).substring(2, 10).toUpperCase()}...4bC9`,
-  "Contract Verification initialized via FC-Trace...",
-  "[SUCCESS] Source code verified.",
-  "> Deployment Sequence Completed in 2.41s."
+const integrationTracks = [
+  {
+    icon: BadgeCheck,
+    label: 'Credential issuance',
+    title: 'Connect approved enrollment sources',
+    copy: 'Issue verifiable credentials from a reviewed intake flow without exposing raw identity records to public settlement rails.',
+    proof: 'Schema, issuer key, revocation policy',
+  },
+  {
+    icon: KeyRound,
+    label: 'Wallet permissions',
+    title: 'Bind access to policy and recovery rules',
+    copy: 'Map credential status to wallet limits, service eligibility, and operator permissions before any pilot transaction path is opened.',
+    proof: 'MPC recovery, role limits, audit owner',
+  },
+  {
+    icon: Network,
+    label: 'Event evidence',
+    title: 'Publish only the evidence reviewers need',
+    copy: 'Route service events, approval decisions, and settlement references into an audit surface with live versus sample source labels.',
+    proof: 'Webhook log, audit export, evidence hash',
+  },
 ];
 
+const reviewArtifacts = [
+  'Credential schema map',
+  'Issuer key custody note',
+  'Webhook event catalogue',
+  'Data minimization checklist',
+  'Pilot sandbox access',
+];
+
+const integrationSnippets = {
+  credential: {
+    tab: 'Credential API',
+    file: 'credential.issue.json',
+    code: `POST /v1/credentials/issue
+Authorization: Bearer <pilot-token>
+Content-Type: application/json
+
+{
+  "schema": "resident-service-v1",
+  "issuer": "agency-pilot-01",
+  "subjectRef": "internal-user-48291",
+  "claims": {
+    "serviceEligible": true,
+    "region": "pilot-district-a"
+  },
+  "privacy": {
+    "publicRecords": "none",
+    "evidence": "hashed-status-only"
+  }
+}`,
+  },
+  webhook: {
+    tab: 'Evidence Webhook',
+    file: 'service.approved.json',
+    code: `POST https://partner.example/fca/events
+X-FCA-Signature: ed25519:<signature>
+
+{
+  "event": "service.approved",
+  "credentialId": "vc_9f3a...42d",
+  "policy": "benefit-disbursement-v1",
+  "decision": "approved",
+  "review": {
+    "source": "sample",
+    "auditEvent": "0x81b2f940",
+    "operatorRole": "case-reviewer"
+  }
+}`,
+  },
+  export: {
+    tab: 'Audit Export',
+    file: 'pilot-control-export.csv',
+    code: `timestamp,control,source,result,owner
+2026-05-04T16:20:00Z,credential-issued,live,pass,agency-pilot-01
+2026-05-04T16:24:12Z,wallet-limit-applied,sample,pass,treasury-review
+2026-05-04T16:31:44Z,service-approved,sample,pass,program-owner`,
+  },
+};
+
+type SnippetKey = keyof typeof integrationSnippets;
+
 const DeveloperHub = () => {
-  const [logs, setLogs] = useState<string[]>([]);
-  const [isDeploying, setIsDeploying] = useState(false);
-  const [activeTab, setActiveTab] = useState('GlobalIdentityToken.sol');
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { gainXP, connectedIdentity, balances, updateBalances } = useWallet();
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
-
-  const handleDeploy = () => {
-    if (isDeploying) return;
-    
-    if (!connectedIdentity) {
-      setLogs(prev => [...prev, '> fca-cli deploy GlobalIdentityToken --network mainnet', '[ERROR] Verified FC-ID credential required. Identity missing.']);
-      return;
-    }
-    
-    if (balances.fcc < 150) {
-      setLogs(prev => [...prev, '> fca-cli deploy GlobalIdentityToken --network mainnet', `[ERROR] Insufficient computation credits. Required: 150 FCC. Available: ${balances.fcc.toFixed(2)} FCC.`]);
-      return;
-    }
-
-    setIsDeploying(true);
-    setLogs([]);
-    
-    // Deduct exact cost
-    updateBalances({ fcc: balances.fcc - 150 });
-    
-    const sequence = getDeploymentSequence(connectedIdentity, balances.fcc);
-    let currentStep = 0;
-    
-    const pushNextLog = () => {
-      if (currentStep < sequence.length) {
-        setLogs(prev => [...prev, sequence[currentStep]]);
-        currentStep++;
-        
-        // Randomize typing/execution speed slightly for realism
-        const delay = Math.random() * 300 + 100; // 100-400ms
-        timerRef.current = setTimeout(pushNextLog, delay);
-      } else {
-        setIsDeploying(false);
-        gainXP(100); // XP for deploying
-      }
-    };
-
-    // Initial delay
-    timerRef.current = setTimeout(pushNextLog, 200);
-  };
-
-  const handleCommand = (cmd: string) => {
-    setLogs(prev => [...prev, `> ${cmd}`]);
-    
-    const command = cmd.trim().toLowerCase();
-    
-    if (command === 'clear') {
-      setLogs([]);
-    } else if (command === 'help') {
-      setLogs(prev => [...prev, '[INFO] Available Commands:', '  fca-cli compile', '  fca-cli deploy', '  clear', '  help']);
-    } else if (command.startsWith('fca-cli compile')) {
-      // Simulate quick compile
-      setTimeout(() => {
-        setLogs(prev => [...prev, "[INFO] Compiling 2 contract files...", "Compiling GlobalIdentityToken.sol", "[SUCCESS] Compilation successful."]);
-        if (connectedIdentity) gainXP(100);
-      }, 500);
-    } else if (command.startsWith('fca-cli deploy')) {
-      handleDeploy();
-    } else {
-      setTimeout(() => {
-        setLogs(prev => [...prev, `[ERROR] Command not recognized: ${cmd}. Type 'help' for available commands.`]);
-      }, 300);
-    }
-  };
+  const [activeTab, setActiveTab] = useState<SnippetKey>('credential');
+  const navigate = useNavigate();
+  const activeSnippet = integrationSnippets[activeTab];
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8 max-w-7xl mx-auto w-full pb-20">
-      <motion.header 
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mx-auto w-full max-w-7xl space-y-8 pb-20">
+      <motion.header
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        className="mb-10 flex justify-between items-end"
+        viewport={{ once: true, margin: '-50px' }}
+        className="grid gap-6 border-b border-white/10 pb-8 md:grid-cols-[1fr_auto] md:items-end"
       >
         <div>
-	          <h1 className="text-4xl font-mono font-bold uppercase text-white mb-2 tracking-wider">Developer Portal</h1>
-	          <p className="font-mono text-slate-400">Compile, test, and deploy identity-aware logic to the FC Engine.</p>
+          <div className="mb-4 inline-flex items-center gap-3 border border-emerald-400/20 bg-emerald-400/[0.04] px-4 py-2">
+            <ShieldCheck className="h-4 w-4 text-emerald-300" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-emerald-200">Institutional integration portal</span>
+          </div>
+          <h1 className="mb-4 text-4xl font-serif font-light leading-tight text-white md:text-6xl">
+            Build against the reviewable control layer.
+          </h1>
+          <p className="max-w-3xl text-sm leading-[1.9] text-slate-400 md:text-base">
+            This portal frames integration work around credentials, wallet permissions, policy events, and audit exports. It is built for pilot scoping and technical review, not public-chain deployment theatrics.
+          </p>
         </div>
-        <div className="hidden lg:flex gap-4">
-           <div className="px-4 py-2 border border-cyan-500/20 bg-cyan-500/10 flex items-center gap-2">
-             <div className="w-2 h-2 bg-cyan-500 animate-[pulse_2s_infinite]"></div>
-             <span className="text-xs text-cyan-400 font-mono font-bold tracking-widest">RPC ONLINE</span>
-           </div>
+        <div className="grid gap-3 sm:grid-cols-2 md:w-[23rem] md:grid-cols-1">
+          <button
+            type="button"
+            onClick={() => navigate('/review-room')}
+            className="group flex items-center justify-between border border-fc-gold/25 bg-fc-gold/[0.04] px-5 py-4 text-left transition-colors hover:border-fc-gold/50 hover:bg-fc-gold/[0.08]"
+          >
+            <span className="text-sm text-fc-gold">Open pilot packet</span>
+            <ArrowRight className="h-4 w-4 text-fc-gold transition-transform group-hover:translate-x-1" />
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/identity')}
+            className="group flex items-center justify-between border border-white/10 bg-white/[0.02] px-5 py-4 text-left transition-colors hover:border-emerald-300/40 hover:bg-emerald-300/[0.04]"
+          >
+            <span className="text-sm text-slate-200">Review identity model</span>
+            <ArrowRight className="h-4 w-4 text-emerald-300 transition-transform group-hover:translate-x-1" />
+          </button>
         </div>
       </motion.header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[70vh] min-h-[600px]">
-        
-        {/* Mock IDE / Code Editor */}
-        <motion.div 
-          initial={{ opacity: 0, x: -30 }}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {integrationTracks.map((track, index) => {
+          const Icon = track.icon;
+
+          return (
+            <motion.article
+              key={track.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ delay: index * 0.08 }}
+              className="agency-panel flex min-h-[22rem] flex-col p-6 md:p-7"
+            >
+              <div className="mb-8 flex items-start justify-between gap-5">
+                <div>
+                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-emerald-300/80">{track.label}</p>
+                  <h2 className="text-2xl font-serif font-light leading-tight text-white">{track.title}</h2>
+                </div>
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.03]">
+                  <Icon className="h-5 w-5 text-emerald-300" />
+                </div>
+              </div>
+              <p className="mb-8 text-sm leading-[1.85] text-slate-400">{track.copy}</p>
+              <div className="mt-auto border-t border-white/10 pt-5">
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500">Reviewer asks for</p>
+                <p className="text-sm text-slate-200">{track.proof}</p>
+              </div>
+            </motion.article>
+          );
+        })}
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[0.76fr_1.24fr]">
+        <motion.section
+          initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ delay: 0.2 }}
-          className="agency-panel border-white/10 overflow-hidden flex flex-col relative group"
+          viewport={{ once: true, margin: '-50px' }}
+          className="agency-panel p-6 md:p-8"
         >
-          <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-0"></div>
-          
-          {/* IDE Tabs */}
-          <div className="flex border-b border-white/10 bg-black/40 z-10">
-             {['GlobalIdentityToken.sol', 'DeployScript.js'].map(tab => (
-               <button 
-                 key={tab}
-                 onClick={() => setActiveTab(tab)}
-                 className={`px-6 py-3 text-xs font-mono font-bold transition-colors border-r border-white/10 ${activeTab === tab ? 'bg-white/5 text-cyan-400 border-b-2 border-b-cyan-400' : 'text-slate-500 hover:bg-white/[0.02] hover:text-white'}`}
-               >
-                 {tab}
-               </button>
-             ))}
+          <div className="mb-7 flex items-center gap-3">
+            <FileCheck2 className="h-5 w-5 text-fc-gold" />
+            <h2 className="text-xl font-serif font-light text-white">Integration review checklist</h2>
           </div>
-
-          {/* IDE Line Numbers and Code */}
-          <div className="flex flex-1 overflow-hidden z-10 bg-black/60 relative">
-             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-cyan-900 via-black to-black pointer-events-none"></div>
-             <div className="w-12 bg-black/40 border-r border-white/5 text-right pr-2 py-4 text-slate-600 font-mono text-xs hidden md:block select-none">
-               {MOCK_CONTRACT_CODE.split('\n').map((_, i) => (
-                 <div key={i}>{i + 1}</div>
-               ))}
-             </div>
-             <div className="flex-1 p-4 font-mono text-sm leading-relaxed overflow-auto relative">
-                <pre className="text-slate-300 relative z-10">
-                  <code className="language-solidity">
-                    {MOCK_CONTRACT_CODE.split('\n').map((line, i) => {
-                       // Very simple syntax highlighting for aesthetics
-                       if (line.includes('//')) return <div key={i} className="text-slate-600">{line}</div>;
-                       if (line.startsWith('pragma ') || line.startsWith('import ')) return <div key={i} className="text-cyan-400/80">{line}</div>;
-                       if (line.includes('contract ') || line.includes('function ')) {
-                          const parts = line.split(/(contract|function)/);
-                          return (
-                            <div key={i}>
-                               {parts.map((p, idx) => (
-                                 p === 'contract' || p === 'function' ? <span key={idx} className="text-cyan-400 font-bold">{p}</span> : <span key={idx} className="text-white">{p}</span>
-                               ))}
-                            </div>
-                          );
-                       }
-                       return <div key={i} className="text-slate-300">{line}</div>;
-                    })}
-                  </code>
-                </pre>
-             </div>
+          <div className="space-y-3">
+            {reviewArtifacts.map((artifact, index) => (
+              <div key={artifact} className="flex items-start gap-4 border border-white/10 bg-white/[0.02] px-4 py-3">
+                <span className="mt-0.5 font-mono text-[10px] text-fc-gold/80">0{index + 1}</span>
+                <span className="text-sm leading-relaxed text-slate-300">{artifact}</span>
+              </div>
+            ))}
           </div>
-          
-          {/* IDE Action Bar */}
-          <div className="p-4 border-t border-white/10 bg-black/80 flex justify-between items-center z-10">
-             <div className="text-xs text-telemetry text-slate-500">
-                Compiler: solc v0.8.20+commit
-             </div>
-             <button 
-               onClick={handleDeploy}
-               disabled={isDeploying}
-               className={`bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/50 text-cyan-500 px-8 py-2  font-mono font-bold text-xs tracking-widest transition-colors shadow-none ${isDeploying ? 'opacity-50 cursor-not-allowed' : ''}`}
-             >
-	                {isDeploying ? 'DEPLOYING...' : 'VERIFY & DEPLOY'}
-             </button>
+          <div className="mt-7 border border-white/10 bg-[#020617]/70 p-5">
+            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500">Default rule</p>
+            <p className="text-sm leading-relaxed text-slate-400">
+              Integrations start in a sandbox, carry sample labels until verified sources are connected, and never require a reviewer to inspect token mechanics before the use case is understood.
+            </p>
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* Console / Interaction Output */}
-        <div className="flex flex-col h-full space-y-4">
-           {/* Command Instructions */}
-           <motion.div 
-             initial={{ opacity: 0, x: 30 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true, margin: "-50px" }}
-             transition={{ delay: 0.3 }}
-             className="agency-panel border-white/10 p-6 relative overflow-hidden group"
-           >
-	              <h3 className="text-sm font-mono font-bold text-white mb-2 uppercase tracking-widest">FCA CLI Instructions</h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-mono">
-	                Deploying directly to the FC Core Engine requires a validated <span className="text-cyan-500 font-bold">FC-ID</span> credential.
-	                Transactions are inherently parallelized resulting in sub-second finality.
-	                Gas fees are routed through the platform liquidity layer.
-              </p>
-           </motion.div>
-           
-           {/* Terminal Output */}
-           <motion.div 
-             initial={{ opacity: 0, x: 30 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true, margin: "-50px" }}
-             transition={{ delay: 0.4 }}
-             className="flex-1 min-h-[400px]"
-           >
-             <TerminalLog 
-               logs={logs} 
-               isDeploying={isDeploying} 
-               onCommand={handleCommand}
-             />
-           </motion.div>
-        </div>
-
+        <motion.section
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          className="agency-panel overflow-hidden"
+        >
+          <div className="flex flex-wrap border-b border-white/10 bg-black/30">
+            {(Object.keys(integrationSnippets) as SnippetKey[]).map((key) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setActiveTab(key)}
+                className={`border-r border-white/10 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.2em] transition-colors ${
+                  activeTab === key ? 'bg-white/10 text-emerald-200' : 'text-slate-500 hover:bg-white/[0.04] hover:text-slate-200'
+                }`}
+              >
+                {integrationSnippets[key].tab}
+              </button>
+            ))}
+          </div>
+          <div className="grid min-h-[34rem] grid-cols-1 lg:grid-cols-[1fr_18rem]">
+            <div className="overflow-auto bg-[#020617]/95 p-5">
+              <div className="mb-4 flex items-center justify-between gap-4 border-b border-white/10 pb-3">
+                <div className="flex items-center gap-3">
+                  <Code2 className="h-4 w-4 text-emerald-300" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-400">{activeSnippet.file}</span>
+                </div>
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-300/70">Sample</span>
+              </div>
+              <pre className="overflow-auto whitespace-pre-wrap break-words text-[12px] leading-[1.8] text-slate-300">
+                <code>{activeSnippet.code}</code>
+              </pre>
+            </div>
+            <aside className="border-t border-white/10 bg-white/[0.02] p-6 lg:border-l lg:border-t-0">
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold/80">Pilot posture</p>
+              <h3 className="mb-5 text-2xl font-serif font-light leading-tight text-white">Make each integration auditable before it is impressive.</h3>
+              <div className="space-y-4 text-sm leading-relaxed text-slate-400">
+                <p>Every sample event should answer where the data came from, who can approve it, what is exposed, and how it can be revoked.</p>
+                <p>The production path is evidence first: connect one issuer, one service workflow, and one reporting surface.</p>
+              </div>
+            </aside>
+          </div>
+        </motion.section>
       </div>
     </motion.div>
   );

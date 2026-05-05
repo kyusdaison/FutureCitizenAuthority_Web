@@ -1,85 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useSoundEffects } from '../hooks/useSoundEffects';
+import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const BOOT_LOGS = [
-  "FCA INFRASTRUCTURE REVIEW SESSION",
-  "VERIFYING SITE PACKAGE SIGNATURES... OK",
-  "LOADING IDENTITY GOVERNANCE BRIEF... OK",
-  "SYNCHRONIZING WITH 2,048 FEDERATED NODES...",
-  "NETWORK READINESS CONFIRMED (0.4s TARGET FINALITY)",
-  "LOADING INSTITUTIONAL ASSURANCE FILES...",
-  "PREPARING AUDIT AND DEPLOYMENT PATHWAYS...",
-  "ACCESS LEVEL: PUBLIC INSTITUTIONAL REVIEW",
-  "REVIEW WORKSPACE READY."
+  'Review workspace ready',
+  'Identity brief loaded',
+  'Evidence labels active',
 ];
 
 export const BootSequence: React.FC = () => {
   const [isBooting, setIsBooting] = useState(() => !sessionStorage.getItem('fcc_booted'));
   const [lines, setLines] = useState<string[]>([]);
-  const [flash, setFlash] = useState(false);
-  const { playTypewriter, playSuccess } = useSoundEffects();
 
   useEffect(() => {
     if (!isBooting) return;
 
-    let delay = 0;
-    BOOT_LOGS.forEach((log, index) => {
-      delay += Math.random() * 80 + 40; // Random delay between 40-120ms
-      setTimeout(() => {
-        setLines(prev => [...prev, log]);
-        playTypewriter();
-        if (index === BOOT_LOGS.length - 1) {
-          setTimeout(() => {
-            playSuccess();
-            setFlash(true);
-            setTimeout(() => {
-               sessionStorage.setItem('fcc_booted', 'true');
-               setIsBooting(false);
-            }, 800); // Wait for flash to peak
-          }, 300);
-        }
-      }, delay);
-    });
+    const timers = BOOT_LOGS.map((log, index) =>
+      window.setTimeout(() => {
+        setLines((prev) => [...prev, log]);
+      }, 120 + index * 130)
+    );
 
-    // Fallback emergency kill
-    const timeout = setTimeout(() => {
-        sessionStorage.setItem('fcc_booted', 'true');
-        setIsBooting(false);
-    }, 4500);
-    return () => clearTimeout(timeout);
-  }, [isBooting, playTypewriter, playSuccess]);
+    const closeTimer = window.setTimeout(() => {
+      sessionStorage.setItem('fcc_booted', 'true');
+      setIsBooting(false);
+    }, 950);
 
-  if (!isBooting && !flash) return null;
+    return () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
+      window.clearTimeout(closeTimer);
+    };
+  }, [isBooting]);
 
   return (
     <AnimatePresence>
       {isBooting && (
-        <motion.div 
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 1.5, ease: "easeInOut" } }}
-          className="fixed inset-0 z-[100] bg-[#050505] text-slate-300 font-mono text-xs sm:text-sm p-8 overflow-hidden flex flex-col justify-end pb-16 shadow-[inset_0_0_100px_rgba(0,0,0,0.8)]"
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8, transition: { duration: 0.18 } }}
+          className="pointer-events-none fixed right-4 top-20 z-[80] w-[min(calc(100vw-2rem),24rem)] border border-white/10 bg-[#020617]/92 p-4 shadow-2xl shadow-black/30 backdrop-blur-xl"
+          role="status"
+          aria-live="polite"
         >
-          <div className="max-w-4xl mx-auto w-full relative z-10">
-            {lines.map((line, i) => (
-              <div key={i} className="mb-1 opacity-90">{line}</div>
-            ))}
-            <div className="w-3 h-5 bg-slate-300 animate-pulse mt-2 opacity-80"></div>
+          <div className="mb-3 flex items-center justify-between gap-4 border-b border-white/10 pb-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-fc-gold">Loading review context</span>
+            <span className="h-1.5 w-1.5 bg-emerald-300" />
           </div>
-          
-          <AnimatePresence>
-              {flash && (
-                  <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.8 }}
-                      className="absolute inset-0 bg-white z-50 flex items-center justify-center mix-blend-screen"
-                  >
-                        <div className="w-64 h-64 border border-cyan-500/30 rounded-full animate-ping"></div>
-                  </motion.div>
-              )}
-          </AnimatePresence>
+          <div className="space-y-1.5">
+            {lines.map((line) => (
+              <div key={line} className="font-mono text-[11px] text-slate-300">
+                {line}
+              </div>
+            ))}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -59,7 +59,7 @@ const Ecosystem = () => {
         <div className="text-center mb-16 relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-500/5 blur-[10px] pointer-events-none -z-10"></div>
             <h1 className="text-4xl md:text-6xl text-vanguard mb-4 text-white uppercase tracking-widest font-bold">Future Citizen Authority Core Infrastructure</h1>
-            <p className="text-cyan-500 text-telemetry text-[10px] md:text-xs mb-4 font-bold tracking-widest uppercase">Institutional Product Surfaces</p>
+            <p className="text-cyan-500 text-telemetry text-[10px] md:text-xs mb-4 font-bold tracking-widest uppercase">Institutional Review Surfaces</p>
             <p className="text-slate-400 text-sm max-w-2xl mx-auto font-medium">Identity, custody, compliance, and settlement components designed for reviewable digital governance deployments.</p>
         </div>
         
@@ -103,7 +103,7 @@ const Ecosystem = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
           <div>
 	            <h2 className="text-3xl md:text-4xl text-vanguard text-white mb-2 uppercase tracking-widest font-bold">Integration Directory</h2>
-	            <p className="text-slate-400 text-sm font-medium">Discover payment, asset, identity, governance, and developer integrations built on Future Citizen Chain.</p>
+	            <p className="text-slate-400 text-sm font-medium">Review payment, identity, governance, controls, and partner integrations as operational surfaces.</p>
           </div>
           <div className="relative w-full md:w-72">
             <input 
@@ -119,14 +119,14 @@ const Ecosystem = () => {
 
         {/* Filter Tags */}
         <div className="flex space-x-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-	          {['All', 'Payments', 'Assets', 'Identity', 'Bridges', 'Governance', 'Tools'].map((tag, i) => (
+	          {['All', 'Payments', 'Identity', 'Records', 'Controls', 'Governance', 'Tools'].map((tag, i) => (
             <button key={tag} className={`px-5 py-2  text-xs font-bold transition-colors whitespace-nowrap border uppercase tracking-widest ${i === 0 ? 'bg-white text-black border-white' : 'bg-black/40 text-slate-300 hover:bg-white/10 hover:text-white border-white/10'}`}>
               {tag}
             </button>
           ))}
         </div>
 
-        {/* DApps Grid */}
+        {/* Integration Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {apps.map((app, i) => (
             <motion.div 
@@ -157,7 +157,7 @@ const Ecosystem = () => {
                <div className="flex justify-between items-center mt-auto border-t border-white/5 pt-4 relative z-10 group-hover:border-cyan-500/20 transition-colors">
                   <div>
 	                     <div className="text-[9px] text-slate-500 uppercase tracking-[0.2em] mb-1 font-bold">Operational Signal</div>
-                     <div className="text-sm font-mono text-white font-medium">{app.tvl}</div>
+                     <div className="text-sm font-mono text-white font-medium">{app.signal}</div>
                   </div>
                   <button onClick={() => { setSelectedApp(app); playSuccess(); }} className="text-cyan-500 text-xs font-bold hover:text-black hover:bg-cyan-500 border border-cyan-500/50 px-5 py-2 uppercase tracking-widest transition-colors">
 	                    Review
@@ -168,7 +168,7 @@ const Ecosystem = () => {
         </div>
         
         <div className="flex justify-center mt-12">
-	           <button className="btn-vercel-outline px-8">Load More Integrations</button>
+	           <button className="btn-vercel-outline px-8">Request Integration Review</button>
         </div>
       </motion.div>
 
@@ -181,7 +181,7 @@ const Ecosystem = () => {
         data={{
           Category: selectedApp?.category,
           Description: selectedApp?.description,
-          TotalValueLocked: selectedApp?.tvl,
+          ReviewSignal: selectedApp?.signal,
 	          SecurityAudit: 'Verified by Security Operations',
           DeploymentBlock: Math.floor(Math.random() * 5000000 + 10000000),
           ContractAddress: `0xFC${Math.random().toString(16).slice(2, 10).toUpperCase()}...${Math.random().toString(16).slice(2, 6).toUpperCase()}`,
