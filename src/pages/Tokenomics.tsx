@@ -58,13 +58,13 @@ export default function Tokenomics() {
             <span className="text-telemetry text-yellow-500 tracking-[0.2em] text-sm font-bold">FCC ECONOMICS APPENDIX</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-vanguard mb-6">
-            TOKENOMICS <br />
+            NETWORK ECONOMICS <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-200">
-              & GOVERNANCE
+              APPENDIX
             </span>
           </h1>
           <p className="text-zinc-400 max-w-2xl text-lg leading-relaxed font-mono">
-            Representative overview of the FCC utility model: gas, validator incentives, treasury reserves, and governance context. This page is depth material, not the primary institutional homepage story.
+            Representative overview of the FCC utility model, reserve disclosures, and governance context. This page is depth material for specialist review, not the primary institutional homepage story.
           </p>
         </motion.div>
 
@@ -74,7 +74,7 @@ export default function Tokenomics() {
             { label: 'TOTAL SUPPLY', value: supply.toLocaleString(), unit: 'FCC', highlight: false },
             { label: 'TOTAL BURNED', value: burned.toLocaleString(), unit: 'FCC', highlight: true },
             { label: 'SAMPLE MARKET CAP', value: '$' + ((supply * 2.45) / 1000000000).toFixed(2) + 'B', unit: 'USD', highlight: false },
-            { label: 'STAKING RATIO', value: '68.4', unit: '%', highlight: false },
+            { label: 'DISCLOSURE STATE', value: 'Sample', unit: 'Preview', highlight: false },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -127,7 +127,7 @@ export default function Tokenomics() {
                </svg>
                
                <div className="absolute bottom-4 right-4 text-xs font-mono text-red-400 bg-red-950/40 px-2 py-1 border border-red-500/20 backdrop-blur-md">
-                 LIVE BURN RATE: ~12 FCC/sec
+                 SAMPLE ECONOMICS FEED: NOT MARKET DATA
                </div>
             </div>
           </motion.div>
@@ -183,9 +183,9 @@ export default function Tokenomics() {
           className="mt-8"
         >
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-telemetry border-l-2 border-yellow-500 pl-3">ACTIVE GOVERNANCE PROPOSALS</h3>
+            <h3 className="text-telemetry border-l-2 border-yellow-500 pl-3">COMMUNITY POLICY PROPOSALS</h3>
             <button className="text-xs font-mono text-yellow-500 hover:text-yellow-400 transition-colors uppercase tracking-widest border border-yellow-500/20 px-4 py-2 bg-yellow-500/5 hover:bg-yellow-500/10">
-              New Proposal
+              Appendix Only
             </button>
           </div>
 
@@ -243,20 +243,9 @@ export default function Tokenomics() {
                       </div>
                     </div>
                     
-                    {prop.status === 'Voting Active' ? (
-                      <div className="grid grid-cols-2 gap-2">
-                        <button className="py-2 bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500/20 text-xs font-mono font-bold transition-all">
-                          VOTE FOR
-                        </button>
-                        <button className="py-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 text-xs font-mono font-bold transition-all">
-                          VOTE AGAINST
-                        </button>
-                      </div>
-                    ) : (
-                      <button className="w-full py-2 bg-zinc-800 text-zinc-500 text-xs font-mono cursor-not-allowed border border-white/5">
-                        VOTING CLOSED
-                      </button>
-                    )}
+                    <div className="border border-white/10 bg-white/[0.02] px-3 py-2 text-xs font-mono leading-relaxed text-zinc-500">
+                      Community action is disabled in the institutional preview. Production governance should link to verified participation records.
+                    </div>
                   </div>
                 </div>
               );

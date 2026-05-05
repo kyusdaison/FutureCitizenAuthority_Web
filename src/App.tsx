@@ -60,6 +60,7 @@ export default function App() {
   const navigateFn = useNavigate();
   const rawView = location.pathname === '/' ? 'home' : location.pathname.slice(1);
   const currentView = (rawView === 'passport' ? 'identity' : rawView) as View;
+  const isReviewRoom = currentView === 'review-room';
   const navigate = useCallback((view: string) => {
     navigateFn(view === 'home' ? '/' : `/${view}`);
   }, [navigateFn]);
@@ -308,8 +309,8 @@ export default function App() {
       </div>
 
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-      {currentView !== 'home' && !isLowPowerMode && <NoiseOverlay />}
-      {currentView !== 'home' && <BootSequence />}
+      {currentView !== 'home' && !isReviewRoom && !isLowPowerMode && <NoiseOverlay />}
+      {currentView !== 'home' && !isReviewRoom && <BootSequence />}
 
       {isCommandPaletteOpen && (
         <CommandPalette 
@@ -327,7 +328,7 @@ export default function App() {
       )}
 
       {/* Global CSS background effects */}
-      {currentView !== 'home' && (
+      {currentView !== 'home' && !isReviewRoom && (
         <>
           <div className="fixed inset-0 pointer-events-none z-[1] mouse-spotlight mix-blend-screen opacity-30" />
           <div className="scanline-overlay" />
@@ -339,7 +340,7 @@ export default function App() {
       <div className="fixed top-0 bottom-0 left-[50%] -translate-x-1/2 w-px bg-gradient-to-b from-transparent via-white/[0.04] to-transparent z-0 pointer-events-none hidden md:block" />
       
       {/* Global Foreground Scanline */}
-      {currentView !== 'home' && (
+      {currentView !== 'home' && !isReviewRoom && (
         <div className="fixed top-0 left-0 w-full h-[15vh] bg-gradient-to-b from-transparent via-white/[0.008] to-transparent z-[100] pointer-events-none animate-[scan_24s_linear_infinite]" />
       )}
 
@@ -364,7 +365,7 @@ export default function App() {
       {currentView === 'home' && (
       <nav className="fixed top-8 sm:top-9 w-full z-50 py-3 sm:py-4 px-4 sm:px-6 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <img src="/brand/fca-authority-crest.png" alt="Future Citizen Authority" className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
+          <img src="/hero-logo.png" alt="Future Citizen Authority" className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" />
           <div className="flex min-w-0 flex-col">
             <span className="max-w-[54vw] truncate text-[11px] font-bold tracking-[0.16em] uppercase text-white sm:max-w-none sm:text-sm sm:tracking-[0.3em]">Future Citizen Authority</span>
             <span className="hidden text-[9px] tracking-[0.2em] font-mono text-slate-500 sm:block">Digital Governance Infrastructure</span>
@@ -450,7 +451,7 @@ export default function App() {
             {/* Mobile Header for dashboard/inner pages */}
             <div className="lg:hidden fixed top-0 left-0 w-full h-16 bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 z-50 flex items-center justify-between px-6">
               <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateFn('/')}>
-                <img src="/brand/fca-authority-crest.png" alt="Logo" className="w-8 h-8 object-contain filter brightness-150" />
+                <img src="/hero-logo.png" alt="Logo" className="w-8 h-8 object-contain filter brightness-150" />
                 <span className="text-xs font-bold font-mono tracking-widest text-slate-300 uppercase">F.C.A</span>
               </div>
               <button onClick={() => setIsMobileSidebarOpen(true)} className="text-white p-2" aria-label="Toggle Mobile Menu" title="Menu">
@@ -498,12 +499,12 @@ export default function App() {
         </div>
       )}
 
-      {currentView !== 'home' && (
+      {currentView !== 'home' && !isReviewRoom && (
         <>
-          {currentView === 'review-room' && !isLowPowerMode && (
-          <Suspense fallback={null}>
-            <VanguardOrb />
-          </Suspense>
+          {!isLowPowerMode && (
+            <Suspense fallback={null}>
+              <VanguardOrb />
+            </Suspense>
           )}
           <LiveTelemetryFooter />
         </>

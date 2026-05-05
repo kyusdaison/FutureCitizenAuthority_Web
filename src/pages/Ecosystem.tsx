@@ -1,194 +1,251 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { CosmicBackground } from '../components/CosmicBackground';
-import { HologramModal } from '../components/HologramModal';
-import { mockDataService, type EcosystemApp, type CoreProduct } from '../services/mockDataService';
-import { useSoundEffects } from '../hooks/useSoundEffects';
+import { useNavigate } from 'react-router-dom';
+import {
+  ArrowRight,
+  Building2,
+  Database,
+  Eye,
+  FileSignature,
+  KeyRound,
+  Layers,
+  Network,
+  Scale,
+  ServerCog,
+  ShieldCheck,
+  Wallet,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
+type CoreComponent = {
+  icon: LucideIcon;
+  label: string;
+  title: string;
+  copy: string;
+  status: string;
+};
 
+type PartnerCategory = {
+  icon: LucideIcon;
+  label: string;
+  title: string;
+  copy: string;
+  proof: string;
+};
+
+const coreComponents: CoreComponent[] = [
+  {
+    icon: ShieldCheck,
+    label: 'Identity',
+    title: 'Identity layer',
+    copy: 'Verifiable credentials, did:key issuance, revocation registry, and audit-trail. Reviewable end-to-end without exposing raw subject data on a public chain.',
+    status: 'Live demo on /identity',
+  },
+  {
+    icon: KeyRound,
+    label: 'Wallet & custody',
+    title: 'Holder wallet + recovery',
+    copy: 'Holder wallet bound to credential status, MPC-backed recovery rules, and role-limited operator keys for institutional review.',
+    status: 'Sample preview',
+  },
+  {
+    icon: Scale,
+    label: 'Governance',
+    title: 'Approval & policy fabric',
+    copy: 'Multi-signer service approvals, policy as code, and separation of duties between credential issuance and benefit disbursement.',
+    status: 'Sample preview',
+  },
+  {
+    icon: Layers,
+    label: 'Settlement',
+    title: 'FC Chain settlement',
+    copy: 'Transaction settlement layer for benefit, registry, and audit events. The public community surface for token holders and validators lives separately at /community.',
+    status: 'Live (sample-traffic)',
+  },
+  {
+    icon: Database,
+    label: 'Audit',
+    title: 'Evidence pipeline',
+    copy: 'Webhook event log, audit export, and control attestation surface. Mixed live and sample sources with explicit labels at every row.',
+    status: 'Live + sample',
+  },
+  {
+    icon: ServerCog,
+    label: 'Operations',
+    title: 'Operating dashboard',
+    copy: 'Operator-facing tile dashboard covering control posture, throughput, and incident state. First tile feeds from a real local counter; remaining tiles are sample.',
+    status: 'Mixed source',
+  },
+];
+
+const partnerCategories: PartnerCategory[] = [
+  {
+    icon: Building2,
+    label: 'Government APIs',
+    title: 'Public agencies',
+    copy: 'Existing civil registry, social services, and treasury systems connected as one-way evidence sources, never as bidirectional rails.',
+    proof: 'Service catalogue, scope, data-minimization note',
+  },
+  {
+    icon: ShieldCheck,
+    label: 'KYC / AML',
+    title: 'Identity verifiers',
+    copy: 'Document, biometric, and sanctions-list providers feeding the issuer pipeline before any credential is minted.',
+    proof: 'Vendor list, issuer-key custody, fallback policy',
+  },
+  {
+    icon: Wallet,
+    label: 'Payment rails',
+    title: 'Disbursement networks',
+    copy: 'Local fiat rails and approved stablecoin partners for benefit, treasury, and reconciliation workflows.',
+    proof: 'Partner list, AML control map, escalation owner',
+  },
+  {
+    icon: FileSignature,
+    label: 'Audit / SIEM',
+    title: 'Audit & compliance vendors',
+    copy: 'Audit log shippers, SIEM partners, and external attestation services consuming the evidence pipeline on a defined cadence.',
+    proof: 'Export schema, retention policy, incident contact',
+  },
+  {
+    icon: Eye,
+    label: 'Operations',
+    title: 'SOC & monitoring',
+    copy: 'Security operations partners running monitoring against the operator surface, with named runbooks and on-call rotations.',
+    proof: 'Runbook, on-call rota, incident SLO',
+  },
+  {
+    icon: Network,
+    label: 'Settlement',
+    title: 'Settlement counterparties',
+    copy: 'Reserve banks, treasury counterparties, and chain operators downstream of FC Chain. Reconciled daily, never speculatively.',
+    proof: 'Counterparty list, daily reconciliation, regulator-of-record',
+  },
+];
 
 const Ecosystem = () => {
-  const [apps, setApps] = useState<EcosystemApp[]>([]);
-  const [coreProducts, setCoreProducts] = useState<CoreProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [selectedApp, setSelectedApp] = useState<EcosystemApp | null>(null);
-  const { playSuccess, playHover } = useSoundEffects();
-
-  useEffect(() => {
-    const fetchEcosystemData = async () => {
-      try {
-        const [fetchedApps, fetchedProducts] = await Promise.all([
-          mockDataService.getEcosystemApps(),
-          mockDataService.getCoreProducts()
-        ]);
-        setApps(fetchedApps);
-        setCoreProducts(fetchedProducts);
-      } catch (error) {
-        console.error('Failed to fetch ecosystem data', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchEcosystemData();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="mt-16 relative z-10 max-w-7xl mx-auto w-full pb-20 flex justify-center items-center min-h-[60vh]">
-        <CosmicBackground />
-        <div className="flex items-center gap-3">
-          <svg className="w-5 h-5 text-cyan-500 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-          <span className="text-slate-400 font-mono text-sm tracking-widest">LOADING ECOSYSTEM...</span>
-        </div>
-      </div>
-    );
-  }
+  const navigate = useNavigate();
 
   return (
-    <div className="mt-16 space-y-6 relative z-10 max-w-7xl mx-auto w-full pb-20">
-      <CosmicBackground />
+    <div className="space-y-10 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
+      {/* Sample preview banner */}
+      <div className="mt-4 border border-emerald-300/20 bg-emerald-300/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-emerald-300">Ecosystem map</span>
+        <span className="mx-3 text-slate-400">/</span>
+        Reviewable infrastructure components and integration paths. Use this to scope what is
+        already live, what is sample preview, and what each partner category needs to surface
+        before a pilot path opens.
+      </div>
 
-      {/* Series III Core Infrastructure */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        className="mb-24 pt-8"
-      >
-        <div className="text-center mb-16 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-500/5 blur-[10px] pointer-events-none -z-10"></div>
-            <h1 className="text-4xl md:text-6xl text-vanguard mb-4 text-white uppercase tracking-widest font-bold">Future Citizen Authority Core Infrastructure</h1>
-            <p className="text-cyan-500 text-telemetry text-[10px] md:text-xs mb-4 font-bold tracking-widest uppercase">Institutional Review Surfaces</p>
-            <p className="text-slate-400 text-sm max-w-2xl mx-auto font-medium">Identity, custody, compliance, and settlement components designed for reviewable digital governance deployments.</p>
+      {/* Header */}
+      <header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="max-w-3xl">
+          <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-emerald-300">Ecosystem</p>
+          <h1 className="text-3xl md:text-5xl font-serif font-light text-white leading-tight">
+            What FCA ships, what it integrates.
+          </h1>
+          <p className="mt-3 text-sm leading-[1.85] text-slate-400">
+            Two views on one page. First, the components Future Citizen Authority operates as a
+            first-party system. Second, the partner categories an institutional reviewer should
+            expect to see scoped — with named owners and reviewable evidence — before any pilot is
+            authorized.
+          </p>
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {coreProducts.map((product, i) => (
-                <motion.div 
-                  key={i} 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: i * 0.1 }}
-                  className="group relative"
-                >
-                    <div className="agency-panel overflow-hidden cursor-pointer h-full flex flex-col border border-white/5 hover:border-white/20 transition-colors">
-                        <div className="relative overflow-hidden w-full pt-[100%] bg-black/40">
-                            <img 
-                                src={product.image} 
-                                alt={product.name} 
-                                className="absolute top-0 left-0 w-full h-full object-contain p-4 transform group-hover:scale-[1.08] transition-transform duration-700 ease-out grayscale group-hover:grayscale-0" 
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80"></div>
-                        </div>
-                        <div className="p-6 flex flex-col flex-grow relative z-10 bg-black border-t border-white/5 group-hover:bg-slate-900/50 transition-colors">
-                            <h3 className="text-lg lg:text-xl font-bold uppercase tracking-widest text-vanguard text-white mb-2 group-hover:text-cyan-500 transition-colors">{product.name}</h3>
-                            <p className="text-xs text-slate-400 leading-relaxed font-medium">{product.description}</p>
-                        </div>
-                    </div>
-                </motion.div>
-            ))}
-        </div>
-      </motion.div>
+        <button
+          type="button"
+          onClick={() => navigate('/review-room')}
+          className="self-start md:self-end border border-fc-gold/35 bg-fc-gold/[0.04] px-4 py-2 text-[11px] font-mono uppercase tracking-[0.22em] text-fc-gold transition-colors hover:border-fc-gold hover:bg-fc-gold/[0.08]"
+        >
+          Open Review Room
+        </button>
+      </header>
 
-      {/* Integration Directory */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        className="pt-10 border-t border-white/10 relative"
-      >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-50"></div>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
-          <div>
-	            <h2 className="text-3xl md:text-4xl text-vanguard text-white mb-2 uppercase tracking-widest font-bold">Integration Directory</h2>
-	            <p className="text-slate-400 text-sm font-medium">Review payment, identity, governance, controls, and partner integrations as operational surfaces.</p>
-          </div>
-          <div className="relative w-full md:w-72">
-            <input 
-              type="text" 
-	              placeholder="Search integrations..." 
-              className="w-full input-neon pl-10 bg-black/40 border-white/10 focus:border-cyan-500/50 font-mono text-sm"
-            />
-            <svg className="w-4 h-4 text-slate-400 absolute left-4 top-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
+      {/* Section 1: Core components FCA operates */}
+      <section aria-label="Core infrastructure components">
+        <div className="mb-6 flex items-baseline justify-between border-b border-white/10 pb-3">
+          <h2 className="text-xl font-serif font-light text-white">Core components FCA operates</h2>
+          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500">First-party</span>
         </div>
-
-        {/* Filter Tags */}
-        <div className="flex space-x-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-	          {['All', 'Payments', 'Identity', 'Records', 'Controls', 'Governance', 'Tools'].map((tag, i) => (
-            <button key={tag} className={`px-5 py-2  text-xs font-bold transition-colors whitespace-nowrap border uppercase tracking-widest ${i === 0 ? 'bg-white text-black border-white' : 'bg-black/40 text-slate-300 hover:bg-white/10 hover:text-white border-white/10'}`}>
-              {tag}
-            </button>
-          ))}
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {coreComponents.map((c, i) => {
+            const Icon = c.icon;
+            return (
+              <article key={c.title} className="border border-white/10 bg-[#020617]/70 p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <Icon className="h-5 w-5 text-emerald-300" />
+                  <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-400">
+                    0{i + 1} // {c.label}
+                  </span>
+                </div>
+                <h3 className="text-lg font-serif font-light text-white mb-3">{c.title}</h3>
+                <p className="mb-5 text-sm leading-relaxed text-slate-400">{c.copy}</p>
+                <div className="border-t border-white/10 pt-4">
+                  <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500">Status</p>
+                  <p className="text-sm text-slate-200">{c.status}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
+      </section>
 
-        {/* Integration Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {apps.map((app, i) => (
-            <motion.div 
-              key={i} 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: (i % 3) * 0.1 }}
-              onMouseEnter={() => playHover()}
-              className="agency-panel p-6 flex flex-col group cursor-pointer relative overflow-hidden"
-            >
-               {/* Glow effect on hover */}
-               <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-md -mr-16 -mt-16 transition-all group-hover:bg-cyan-500/10"></div>
-               
-               <div className="flex justify-between items-start mb-5 relative z-10">
-                 <div className={`w-12 h-12  flex items-center justify-center ${app.icon} bg-opacity-20 border border-white/10 group-hover:border-cyan-500/30 transition-colors`}>
-                    {/* Placeholder App Icon */}
-                    <div className={`w-6 h-6  ${app.icon} grayscale group-hover:grayscale-0`}></div>
-                 </div>
-                 <span className="text-telemetry font-bold tracking-widest uppercase text-[9px] text-cyan-500/80 bg-cyan-500/10 px-2.5 py-1 border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-colors">
-                   {app.category}
-                 </span>
-               </div>
-
-               <h3 className="text-xl font-bold uppercase tracking-widest text-white mb-2 relative z-10 group-hover:text-cyan-400 transition-colors">{app.name}</h3>
-               <p className="text-sm text-slate-400 mb-6 flex-1 relative z-10 line-clamp-2 leading-relaxed">{app.description}</p>
-               
-               <div className="flex justify-between items-center mt-auto border-t border-white/5 pt-4 relative z-10 group-hover:border-cyan-500/20 transition-colors">
-                  <div>
-	                     <div className="text-[9px] text-slate-500 uppercase tracking-[0.2em] mb-1 font-bold">Operational Signal</div>
-                     <div className="text-sm font-mono text-white font-medium">{app.signal}</div>
-                  </div>
-                  <button onClick={() => { setSelectedApp(app); playSuccess(); }} className="text-cyan-500 text-xs font-bold hover:text-black hover:bg-cyan-500 border border-cyan-500/50 px-5 py-2 uppercase tracking-widest transition-colors">
-	                    Review
-                  </button>
-               </div>
-            </motion.div>
-          ))}
+      {/* Section 2: Integration partner categories */}
+      <section aria-label="Integration partner categories">
+        <div className="mb-6 flex items-baseline justify-between border-b border-white/10 pb-3">
+          <h2 className="text-xl font-serif font-light text-white">Integration partner categories</h2>
+          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500">Scoped per pilot</span>
         </div>
-        
-        <div className="flex justify-center mt-12">
-	           <button className="btn-vercel-outline px-8">Request Integration Review</button>
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {partnerCategories.map((c, i) => {
+            const Icon = c.icon;
+            return (
+              <article key={c.title} className="border border-white/10 bg-[#020617]/70 p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <Icon className="h-5 w-5 text-fc-gold" />
+                  <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-400">
+                    0{i + 1} // {c.label}
+                  </span>
+                </div>
+                <h3 className="text-lg font-serif font-light text-white mb-3">{c.title}</h3>
+                <p className="mb-5 text-sm leading-relaxed text-slate-400">{c.copy}</p>
+                <div className="border-t border-white/10 pt-4">
+                  <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500">Reviewer asks for</p>
+                  <p className="text-sm text-slate-200">{c.proof}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
-      </motion.div>
+      </section>
 
-      {/* Futuristic Extracted App Hologram Modal */}
-      <HologramModal
-        isOpen={!!selectedApp}
-        onClose={() => setSelectedApp(null)}
-        title={selectedApp?.name || ''}
-        theme="blue"
-        data={{
-          Category: selectedApp?.category,
-          Description: selectedApp?.description,
-          ReviewSignal: selectedApp?.signal,
-	          SecurityAudit: 'Verified by Security Operations',
-          DeploymentBlock: Math.floor(Math.random() * 5000000 + 10000000),
-          ContractAddress: `0xFC${Math.random().toString(16).slice(2, 10).toUpperCase()}...${Math.random().toString(16).slice(2, 6).toUpperCase()}`,
-        }}
-      />
+      {/* Default posture + dual CTA */}
+      <section className="border border-white/10 bg-[#020617]/70 p-6 md:p-8">
+        <p className="text-[10px] uppercase tracking-[0.28em] text-emerald-300 mb-3">Default partner posture</p>
+        <p className="max-w-3xl text-sm leading-relaxed text-slate-300">
+          New partners enter the ecosystem in a sandbox, carry sample labels until verified sources
+          are connected, and never require a reviewer to inspect token mechanics before the use case
+          is understood. Every partner contract starts with a one-page scope, a named owner, and a
+          reviewable evidence path on the audit pipeline.
+        </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <button
+            type="button"
+            onClick={() => navigate('/developer')}
+            className="group inline-flex items-center justify-between gap-4 border border-emerald-300/30 bg-emerald-300/[0.03] px-5 py-3 text-[11px] font-mono uppercase tracking-[0.22em] text-emerald-200 transition-colors hover:border-emerald-300/60 hover:bg-emerald-300/[0.07]"
+          >
+            <span>See integration portal</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/review-room')}
+            className="group inline-flex items-center justify-between gap-4 border border-fc-gold/30 bg-fc-gold/[0.04] px-5 py-3 text-[11px] font-mono uppercase tracking-[0.22em] text-fc-gold transition-colors hover:border-fc-gold/60 hover:bg-fc-gold/[0.08]"
+          >
+            <span>Open Review Room</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </button>
+        </div>
+      </section>
     </div>
   );
-}
+};
 
 export default Ecosystem;

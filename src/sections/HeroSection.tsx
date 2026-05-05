@@ -66,7 +66,7 @@ export const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="hero" className="min-h-screen w-full px-6 pb-28 pt-36 lg:px-12 relative overflow-hidden flex items-center">
+    <section id="hero" className="min-h-[100svh] w-full px-5 pb-28 pt-32 sm:px-6 sm:pt-36 lg:px-12 relative overflow-hidden flex items-start sm:items-center">
       {/* Institutional review coordinates */}
       <div className="absolute top-1/4 left-12 hidden xl:flex flex-col gap-2 text-left opacity-80">
          <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">REVIEW DESK <span className="text-slate-400">//</span> PUBLIC-SECTOR</div>
@@ -92,12 +92,12 @@ export const HeroSection = () => {
          </h2>
       </div>
 
-      <motion.div style={{ opacity: opacityHeroText, y: yHeroText }} className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[1.04fr_0.96fr] lg:items-center">
-        <div className="text-left">
+      <motion.div style={{ opacity: opacityHeroText, y: yHeroText }} className="hero-mobile-frame relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[1.04fr_0.96fr] lg:items-center">
+        <div className="min-w-0 text-left">
           <FadeInUp delay={0.55}>
-            <div className="inline-flex items-center gap-3 border border-fc-gold/20 bg-[#020617]/75 px-5 py-3 backdrop-blur-xl">
+            <div className="inline-flex max-w-full items-center gap-3 border border-fc-gold/20 bg-[#020617]/75 px-4 py-3 backdrop-blur-xl sm:px-5">
               <ShieldCheck className="h-4 w-4 text-fc-gold" />
-              <span className="text-[10px] font-mono uppercase tracking-[0.34em] text-fc-gold">Institutional review entry</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-fc-gold sm:tracking-[0.34em]">Institutional review entry</span>
             </div>
           </FadeInUp>
 
@@ -105,7 +105,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 1.6, ease: "easeInOut" }}
-            className="my-9 max-w-4xl text-[3.1rem] font-serif font-light leading-[1.02] tracking-[0.04em] text-white drop-shadow-md sm:text-[4.2rem] md:text-[5.4rem] xl:text-[6.4rem]"
+            className="my-7 max-w-4xl text-[2.65rem] font-serif font-light leading-[1.03] tracking-[0.02em] text-white drop-shadow-md sm:my-9 sm:text-[4.2rem] sm:tracking-[0.04em] md:text-[5.4rem] xl:text-[6.4rem]"
           >
             Future Citizen
             <span className="block text-gold-gradient font-serif italic font-normal">
@@ -113,8 +113,8 @@ export const HeroSection = () => {
             </span>
           </motion.h1>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4, delay: 0.35 }} className="relative z-20 max-w-3xl">
-            <p className="border-l border-fc-gold/35 pl-6 text-base leading-[1.9] text-slate-300 md:text-lg">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4, delay: 0.35 }} className="relative z-20 w-full max-w-3xl min-w-0">
+            <p className="hero-copy whitespace-normal break-words border-l border-fc-gold/35 pl-5 text-sm leading-[1.85] text-slate-300 [overflow-wrap:anywhere] sm:pl-6 md:text-lg md:leading-[1.9]">
               Identity-first digital governance infrastructure for public agencies, regulated institutions, and infrastructure partners. FCA presents identity, wallet access, governance approvals, and FC Chain settlement as one reviewable operating layer before any pilot.
             </p>
 
@@ -123,16 +123,16 @@ export const HeroSection = () => {
                 <button
                   type="button"
                   onClick={() => navigate('/review-room')}
-                  className="premium-btn w-full px-8 py-4 auth-glass-panel rounded-sm sm:w-auto"
+                  className="premium-btn w-full px-5 py-4 auth-glass-panel rounded-sm sm:w-auto sm:px-8"
                 >
-	                <span className="relative z-10 text-[11px] font-mono tracking-[0.34em] text-gold-gradient uppercase">Open Review Room</span>
+	                <span className="relative z-10 text-[11px] font-mono tracking-[0.18em] text-gold-gradient uppercase sm:tracking-[0.34em]">Open Review Room</span>
                 </button>
               </MagneticButton>
               <MagneticButton intensity={0.12}>
                 <button
                   type="button"
                   onClick={() => navigate('/identity')}
-                  className="group inline-flex w-full items-center justify-center gap-3 border border-white/10 bg-[#020617]/80 px-8 py-4 text-[11px] font-mono uppercase tracking-[0.3em] text-slate-300 transition-colors hover:border-cyan-500/40 hover:text-white sm:w-auto"
+                  className="group inline-flex w-full items-center justify-center gap-3 border border-white/10 bg-[#020617]/80 px-5 py-4 text-[11px] font-mono uppercase tracking-[0.18em] text-slate-300 transition-colors hover:border-cyan-500/40 hover:text-white sm:w-auto sm:px-8 sm:tracking-[0.3em]"
                 >
 	                Review Identity Model
                   <ArrowRight className="h-3.5 w-3.5 text-fc-gold transition-transform group-hover:translate-x-1" />
@@ -140,10 +140,10 @@ export const HeroSection = () => {
               </MagneticButton>
             </div>
 
-            <p className="mt-5 text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500">
+            <p className="hero-copy mt-5 whitespace-normal break-words text-[10px] font-mono uppercase tracking-[0.12em] text-slate-500 [overflow-wrap:anywhere] sm:tracking-[0.28em]">
               Use the Review Room as the first institutional link after an introduction.
             </p>
-            <div className="mt-6 grid max-w-3xl grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="hero-mobile-frame mt-6 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 sm:grid-cols-4">
               {reviewOutputs.map((output) => (
                 <div key={output} className="border border-white/10 bg-white/[0.025] px-3 py-2">
                   <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-slate-500">Output</div>
@@ -179,7 +179,7 @@ export const HeroSection = () => {
                   What a reviewer needs to understand before a pilot.
                 </h2>
               </div>
-              <img src="/brand/fca-authority-crest.png" alt="Future Citizen Authority crest" className="h-14 w-14 shrink-0 object-contain grayscale transition-all duration-500 hover:grayscale-0" />
+              <img src="/hero-logo.png" alt="Future Citizen Authority crest" className="h-14 w-14 shrink-0 object-contain grayscale transition-all duration-500 hover:grayscale-0" />
             </div>
 
             <div className="relative space-y-3">

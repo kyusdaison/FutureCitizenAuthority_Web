@@ -17,6 +17,27 @@ section[id] {
   scroll-margin-top: 8rem;
 }
 
+.hero-mobile-frame {
+  width: min(100%, calc(100vw - 2.5rem));
+  max-width: 100%;
+  min-width: 0;
+}
+
+.hero-copy {
+  width: min(100%, calc(100vw - 2.5rem));
+  max-width: min(100%, calc(100vw - 2.5rem));
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 640px) {
+  .hero-mobile-frame,
+  .hero-copy {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 ::selection {
   background: rgba(212, 175, 55, 0.25);
   color: #fff;

@@ -139,7 +139,7 @@ export const VanguardOrb = () => {
       if (normalizedCmd.includes('status')) {
         response = "All monitored services are nominal in this demo environment. Network latency is 12ms and no active security incident is flagged.";
       } else if (normalizedCmd.includes('fcc') || normalizedCmd.includes('token') || normalizedCmd.includes('price')) {
-        response = "The demo telemetry shows FCC at $1.24, with 1.4B routed through the liquidity layer. Production figures should be connected to verified market data.";
+        response = "FCC economics are kept in the community appendix so institutional reviewers can inspect identity, custody, governance, and pilot controls first. Production economics should link to verified disclosures.";
       } else if (normalizedCmd.includes('hack') || normalizedCmd.includes('breach')) {
         response = "Security simulation recognized. The appropriate review path is incident classification, operator notification, containment, and audit logging.";
       } else if (normalizedCmd.includes('mint') || normalizedCmd.includes('identity')) {
