@@ -1,5 +1,6 @@
 export const siteUrl = 'https://fca.ms';
-export const defaultSeoImage = `${siteUrl}/hero-logo.png`;
+export const siteLogo = `${siteUrl}/hero-logo.png`;
+export const defaultSeoImage = `${siteUrl}/og-card.png`;
 export const siteName = 'Future Citizen Authority';
 
 type RouteSeo = {
@@ -90,70 +91,6 @@ export const routeSeo: Record<string, RouteSeo> = {
     path: '/developer',
     keywords: 'developer portal, SDK, proof hooks, policy API, integration tooling',
   },
-  community: {
-    title: 'Community Appendix - Future Citizen Authority',
-    description:
-      'Community-oriented appendix pages for specialist audiences, separated from the institutional pilot review path.',
-    path: '/community',
-    keywords: 'community appendix, specialist materials, Future Citizen Authority',
-    noindex: true,
-  },
-  tokenomics: {
-    title: 'Economics Appendix - Future Citizen Authority',
-    description: 'Representative economics appendix for community review, separated from institutional pilot materials.',
-    path: '/tokenomics',
-    keywords: 'economics appendix, community review',
-    noindex: true,
-  },
-  staking: {
-    title: 'Network Operations Console - Future Citizen Authority',
-    description: 'Representative network operations appendix for community and specialist review.',
-    path: '/staking',
-    keywords: 'network operations, specialist appendix',
-    noindex: true,
-  },
-  bridge: {
-    title: 'Controlled Interoperability - Future Citizen Authority',
-    description: 'Representative interoperability appendix for specialist review.',
-    path: '/bridge',
-    keywords: 'controlled interoperability, specialist appendix',
-    noindex: true,
-  },
-  swap: {
-    title: 'Settlement Routing Appendix - Future Citizen Authority',
-    description: 'Representative settlement routing appendix for specialist review.',
-    path: '/swap',
-    keywords: 'settlement routing, specialist appendix',
-    noindex: true,
-  },
-  artifacts: {
-    title: 'Public Records Appendix - Future Citizen Authority',
-    description: 'Representative public records appendix for specialist review.',
-    path: '/artifacts',
-    keywords: 'public records appendix, specialist review',
-    noindex: true,
-  },
-  oracle: {
-    title: 'Policy Intelligence Appendix - Future Citizen Authority',
-    description: 'Representative policy intelligence appendix for specialist review.',
-    path: '/oracle',
-    keywords: 'policy intelligence, specialist appendix',
-    noindex: true,
-  },
-  sentinel: {
-    title: 'FC Sentinel Appendix - Future Citizen Authority',
-    description: 'Representative security operations appendix for specialist review.',
-    path: '/sentinel',
-    keywords: 'security operations, specialist appendix',
-    noindex: true,
-  },
-  whisper: {
-    title: 'Communications Appendix - Future Citizen Authority',
-    description: 'Representative communications appendix for specialist review.',
-    path: '/whisper',
-    keywords: 'communications appendix, specialist review',
-    noindex: true,
-  },
 };
 
 export const getSeoForView = (view: string) => {
@@ -175,7 +112,7 @@ export const buildRouteJsonLd = (view: string) => {
       '@type': 'Organization',
       name: siteName,
       url: siteUrl,
-      logo: defaultSeoImage,
+      logo: siteLogo,
       contactPoint: {
         '@type': 'ContactPoint',
         email: 'review@fca.ms',
