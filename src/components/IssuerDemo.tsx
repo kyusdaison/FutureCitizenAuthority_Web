@@ -10,6 +10,7 @@ import {
   type VerificationResult,
 } from '../lib/vc';
 import { recordIssuance, useIssuanceCounter } from '../lib/issuanceCounter';
+import { recordLastIssued } from '../lib/lastIssued';
 
 type DemoState = 'idle' | 'issuing' | 'issued' | 'verifying' | 'verified';
 
@@ -57,6 +58,8 @@ export const IssuerDemo = () => {
     setState('issued');
     // Wire this real issuance into the live dashboard counter.
     recordIssuance();
+    // Stash the JWT for the verifier demo to pick up below.
+    recordLastIssued(cred.jwt);
   }, []);
 
   const handleVerify = useCallback(async () => {

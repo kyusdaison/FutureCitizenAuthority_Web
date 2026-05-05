@@ -69,6 +69,53 @@ function publicKeyToDidKey(pubKey: Uint8Array): string {
   return `did:key:z${base58btcEncode(buf)}`;
 }
 
+function base58btcDecode(s: string): Uint8Array {
+  let n = 0n;
+  for (const c of s) {
+    const idx = BASE58_ALPHABET.indexOf(c);
+    if (idx < 0) throw new Error(`invalid base58btc character: ${c}`);
+    n = n * 58n + BigInt(idx);
+  }
+  const out: number[] = [];
+  while (n > 0n) {
+    out.unshift(Number(n & 0xffn));
+    n = n >> 8n;
+  }
+  return new Uint8Array(out);
+}
+
+/**
+ * Resolve a did:key DID into its embedded Ed25519 public key.
+ *
+ * This is the relying-party path — given only a credential's issuer DID,
+ * extract the public key needed to verify the signature, with no external
+ * lookup. The whole point of did:key.
+ */
+export function resolveDidKeyPublicKey(did: string): Uint8Array {
+  const prefix = 'did:key:z';
+  if (!did.startsWith(prefix)) {
+    throw new Error(`not a did:key — expected prefix '${prefix}', got '${did.slice(0, 20)}'`);
+  }
+  const b58 = did.slice(prefix.length);
+  if (!b58) throw new Error('did:key has empty multibase body');
+  const decoded = base58btcDecode(b58);
+  if (decoded.length < ED25519_PUB_MULTICODEC.length + 32) {
+    throw new Error(`did:key payload too short (${decoded.length} bytes)`);
+  }
+  if (decoded[0] !== ED25519_PUB_MULTICODEC[0] || decoded[1] !== ED25519_PUB_MULTICODEC[1]) {
+    throw new Error(
+      `unsupported multicodec — expected ed25519-pub (0xed 0x01), got 0x${decoded[0]
+        .toString(16)
+        .padStart(2, '0')} 0x${decoded[1].toString(16).padStart(2, '0')}`,
+    );
+  }
+  const pk = decoded.slice(ED25519_PUB_MULTICODEC.length);
+  if (pk.length !== 32) {
+    throw new Error(`Ed25519 public key must be 32 bytes, got ${pk.length}`);
+  }
+  return pk;
+}
+
 // ---- public API ----------------------------------------------------------
 
 export interface IssuerKeyset {

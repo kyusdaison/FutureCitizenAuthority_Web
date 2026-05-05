@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { IssuerDemo } from '../components/IssuerDemo';
+import { VerifierDemo } from '../components/VerifierDemo';
 import { DataSourceBadge } from '../components/DataSourceBadge';
 
 const issuerPillars = [
@@ -106,6 +107,7 @@ export default function Identity() {
       </section>
 
       <IssuerDemo />
+      <VerifierDemo />
     </div>
   );
 }
