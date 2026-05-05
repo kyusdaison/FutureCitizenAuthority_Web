@@ -15,6 +15,7 @@ import { Sidebar } from './components/Sidebar';
 import React, { Suspense } from 'react';
 import { PageLoader } from './components/PageLoader';
 import { SeoMeta } from './components/SeoMeta';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Ecosystem = React.lazy(() => import('./pages/Ecosystem'));
@@ -33,6 +34,35 @@ import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
 
 type View = 'home' | 'dashboard' | 'ecosystem' | 'explorer' | 'developer' | 'identity' | 'review-room' | 'pilot-application' | 'privacy' | 'terms' | 'security';
+
+const pageErrorFallback = (
+  <div className="mx-auto w-full max-w-3xl px-4 py-20">
+    <div className="border border-fc-gold/25 bg-[#020617]/70 p-8">
+      <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-fc-gold">Unexpected condition</p>
+      <h2 className="text-2xl md:text-3xl font-serif font-light text-white mb-4 leading-tight">
+        Something went wrong on this surface.
+      </h2>
+      <p className="text-sm leading-[1.85] text-slate-400 mb-6">
+        This page hit an unexpected condition. Use the navigation to go elsewhere, reload to recover this page, or report the issue if it keeps happening.
+      </p>
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="inline-flex items-center justify-center gap-2 min-h-[44px] border border-fc-gold/40 bg-fc-gold/[0.04] px-6 py-3 text-[11px] font-mono uppercase tracking-[0.2em] text-fc-gold transition-colors hover:border-fc-gold hover:bg-fc-gold/[0.08]"
+        >
+          Reload page
+        </button>
+        <a
+          href="mailto:security@fca.ms?subject=fca.ms%20unexpected%20error"
+          className="inline-flex items-center justify-center gap-2 min-h-[44px] border border-cyan-300/30 bg-cyan-300/[0.04] px-6 py-3 text-[11px] font-mono uppercase tracking-[0.2em] text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/10"
+        >
+          Email security@fca.ms
+        </a>
+      </div>
+    </div>
+  </div>
+);
 
 const homeNavItems = [
   { label: 'Model', target: 'model' },
@@ -357,6 +387,7 @@ export default function App() {
               onConnectClick={() => setIsWalletModalOpen(true)}
             />
             <main className="w-full lg:ml-64 lg:w-[calc(100%-16rem)] min-h-screen mt-16 lg:mt-0 relative z-10 overflow-y-auto">
+              <ErrorBoundary key={currentView} fallback={pageErrorFallback}>
               <Suspense fallback={<PageLoader />}>
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -380,6 +411,7 @@ export default function App() {
                     </motion.div>
                   </AnimatePresence>
                 </Suspense>
+              </ErrorBoundary>
               </main>
             </>
         </div>
