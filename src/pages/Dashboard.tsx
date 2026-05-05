@@ -11,6 +11,7 @@ import {
   Activity,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { useIssuanceCounter, formatLastIssued } from '../lib/issuanceCounter';
 
 type KpiTile = {
   icon: LucideIcon;
@@ -19,23 +20,18 @@ type KpiTile = {
   value: string;
   delta?: string;
   sub: string;
+  /** 'sample' = mock walkthrough data; 'live' = wired to a real source. */
+  source: 'sample' | 'live';
 };
 
-const kpiTiles: KpiTile[] = [
-  {
-    icon: FileCheck2,
-    kicker: 'Issuance',
-    label: 'Credentials issued · 30d',
-    value: '2,418',
-    delta: '+11.4% vs prior 30d',
-    sub: '38 templates · 4 jurisdictions',
-  },
+const sampleKpiTiles: KpiTile[] = [
   {
     icon: Clock,
     kicker: 'Approvals',
     label: 'Approvals pending',
     value: '47',
     sub: '6 high-risk · 41 standard',
+    source: 'sample',
   },
   {
     icon: AlertTriangle,
@@ -43,6 +39,7 @@ const kpiTiles: KpiTile[] = [
     label: 'Policy flags · 7d',
     value: '3',
     sub: '1 active · 2 resolved this week',
+    source: 'sample',
   },
   {
     icon: KeyRound,
@@ -50,6 +47,7 @@ const kpiTiles: KpiTile[] = [
     label: 'Recovery cases',
     value: '5',
     sub: '2 open · 3 closed · avg 18h',
+    source: 'sample',
   },
   {
     icon: ScrollText,
@@ -57,6 +55,7 @@ const kpiTiles: KpiTile[] = [
     label: 'Audit events · 24h',
     value: '14,902',
     sub: 'integrity ✓ · 0 missing',
+    source: 'sample',
   },
   {
     icon: Activity,
@@ -64,6 +63,7 @@ const kpiTiles: KpiTile[] = [
     label: 'Service SLA · 30d',
     value: '99.6%',
     sub: 'issuance · recovery · escalation',
+    source: 'sample',
   },
 ];
 
@@ -117,14 +117,38 @@ const Dashboard = () => {
   const navigate = useNavigate();
   // Static sample timestamp; production wires this to a real telemetry source.
   const [now] = useState(() => new Date().toISOString().slice(11, 16));
+  // Live issuance counter — bumped by the /identity demo, persisted in localStorage.
+  const issuance = useIssuanceCounter();
+
+  // The Issuance tile is wired to a real source: every credential the user
+  // mints on /identity increments this counter. The remaining tiles stay
+  // sample data (clearly labeled). This proves the architecture: the same
+  // surface that runs a pilot reads from the issuance event stream.
+  const liveIssuanceTile: KpiTile = {
+    icon: FileCheck2,
+    kicker: 'Issuance',
+    label: 'Credentials issued · this browser',
+    value: issuance.total.toLocaleString(),
+    delta:
+      issuance.lastIssuedAt
+        ? `last at ${formatLastIssued(issuance.lastIssuedAt)}`
+        : 'mint one on /identity to move this number',
+    sub:
+      issuance.total === 0
+        ? 'wired to /identity · click "Issue credential" and watch this tile'
+        : `wired to /identity · persisted across reloads`,
+    source: 'live',
+  };
+
+  const kpiTiles: KpiTile[] = [liveIssuanceTile, ...sampleKpiTiles];
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto w-full px-4 lg:px-8 pb-20">
-      {/* Sample preview banner */}
+      {/* Sample preview banner — now honest: one tile is live, the rest are sample */}
       <div className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Sample preview</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Mixed source</span>
         <span className="mx-3 text-slate-400">/</span>
-        Operating dashboard for institutional walkthroughs. Production pilots connect this surface to verified identity, treasury, audit, and recovery sources. Numbers are representative.
+        The <span className="text-cyan-200">Issuance</span> tile reads a real counter wired to the <a href="/identity" className="underline decoration-cyan-300/40 underline-offset-2 hover:text-white">/identity</a> demo — every credential you mint there increments it here. Remaining tiles are sample data; production pilots replace them with verified identity, treasury, audit, and recovery sources.
       </div>
 
       {/* Header */}
@@ -156,12 +180,29 @@ const Dashboard = () => {
       <section aria-label="Operating KPIs" className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {kpiTiles.map((tile, i) => {
           const Icon = tile.icon;
+          const isLive = tile.source === 'live';
           return (
-            <article key={tile.label} className="border border-white/10 bg-[#020617]/70 p-5">
+            <article
+              key={tile.label}
+              className={
+                'border p-5 ' +
+                (isLive
+                  ? 'border-cyan-300/30 bg-cyan-300/[0.025]'
+                  : 'border-white/10 bg-[#020617]/70')
+              }
+            >
               <div className="mb-4 flex items-center justify-between">
-                <Icon className="h-5 w-5 text-cyan-300" />
-                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-400">
-                  0{i + 1} // {tile.kicker}
+                <Icon className={'h-5 w-5 ' + (isLive ? 'text-cyan-200' : 'text-cyan-300')} />
+                <span className="flex items-center gap-2">
+                  {isLive && (
+                    <span className="inline-flex items-center gap-1.5 border border-cyan-300/40 bg-cyan-300/10 px-2 py-0.5 text-[9px] font-mono uppercase tracking-[0.24em] text-cyan-200">
+                      <span className="h-1 w-1 rounded-full bg-cyan-300 animate-pulse" aria-hidden />
+                      Live
+                    </span>
+                  )}
+                  <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-400">
+                    0{i + 1} // {tile.kicker}
+                  </span>
                 </span>
               </div>
               <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500">{tile.label}</p>

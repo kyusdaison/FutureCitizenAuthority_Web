@@ -31,13 +31,13 @@ const audiencePaths = [
   },
   {
     icon: Code2,
-    audience: 'Builders',
-    title: 'Identity-aware applications and service APIs',
-    copy: 'Integrate credentials, wallet permissions, governance events, and policy controls without rebuilding trust infrastructure or storing unnecessary identity data.',
-    reviewerQuestion: 'Can developers consume trust signals without taking on full identity custody risk?',
-    firstStep: 'Review SDK, proof, and event surfaces',
+    audience: 'Infrastructure Partners',
+    title: 'Identity-aware services and integration APIs',
+    copy: 'Connect approved services to credentials, wallet permissions, governance events, and policy controls without rebuilding trust infrastructure or storing unnecessary identity data.',
+    reviewerQuestion: 'Can partners consume trust signals without taking on full identity custody risk?',
+    firstStep: 'Review trust signals, proof hooks, and event surfaces',
     route: '/developer',
-    action: 'Developer portal',
+    action: 'Integration portal',
     accent: 'text-emerald-300',
     border: 'hover:border-emerald-300/40',
   },
@@ -101,15 +101,16 @@ export const AudiencePathsSection = () => {
                     <span>Map to a deployment path</span>
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </button>
-                  <a
-                    href="mailto:pilots@fca.ms?subject=Pilot%20readiness%20review"
+                  <button
+                    type="button"
+                    onClick={() => navigate('/review-room')}
                     className="inline-flex flex-1 items-center justify-center gap-2 border border-white/10 bg-white/[0.02] px-5 py-3.5 text-sm text-slate-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-300/5 hover:text-white"
                   >
-                    Discuss a pilot
-                  </a>
+                    Open Review Room
+                  </button>
                 </div>
                 <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-slate-400">
-                  Self-check first. We do not run open evaluations.
+                  Self-check first. The review room packages the next conversation.
                 </p>
               </div>
             </div>

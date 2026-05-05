@@ -36,7 +36,7 @@ export const FooterSection = () => {
             className="inline-flex w-full sm:w-auto items-center justify-center gap-3 border border-white/10 bg-white/[0.02] px-8 md:px-12 py-5 text-xs font-bold uppercase text-slate-300 transition-colors hover:border-cyan-400/40 hover:text-white"
           >
             <Gauge className="w-4 h-4 text-cyan-300" />
-            Preview Dashboard
+            Review Control Dashboard
           </button>
         </div>
         <MagneticButton className="mt-8">
@@ -60,7 +60,7 @@ export const FooterSection = () => {
             <button type="button" onClick={() => navigate('/identity')} className="hover:text-white transition-colors duration-300 uppercase">Identity</button>
             <button type="button" onClick={() => navigate('/review-room')} className="hover:text-white transition-colors duration-300 uppercase">Review Room</button>
             <button type="button" onClick={() => navigate('/#deployment')} className="hover:text-white transition-colors duration-300 uppercase">Deployment</button>
-            <button type="button" onClick={() => navigate('/explorer')} className="hover:text-white transition-colors duration-300 uppercase">Network</button>
+            <button type="button" onClick={() => navigate('/explorer')} className="hover:text-white transition-colors duration-300 uppercase">Explorer</button>
             <button type="button" onClick={() => navigate('/developer')} className="hover:text-white transition-colors duration-300 uppercase">Developers</button>
             <button type="button" onClick={() => navigate('/community')} className="hover:text-white transition-colors duration-300 uppercase">Community</button>
           </div>

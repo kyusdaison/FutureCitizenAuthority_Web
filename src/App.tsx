@@ -48,11 +48,11 @@ import { useSoundEffects } from './hooks/useSoundEffects';
 type View = 'home' | 'dashboard' | 'ecosystem' | 'staking' | 'explorer' | 'developer' | 'tokenomics' | 'bridge' | 'swap' | 'artifacts' | 'oracle' | 'identity' | 'sentinel' | 'whisper' | 'community' | 'review-room';
 
 const homeNavItems = [
-  { label: 'Audiences', target: 'audiences' },
+  { label: 'Review Paths', target: 'audiences' },
   { label: 'Model', target: 'model' },
   { label: 'Identity', target: 'identity' },
   { label: 'Assurance', target: 'assurance' },
-  { label: 'Deployment', target: 'deployment' },
+  { label: 'Pilot', target: 'deployment' },
 ];
 
 export default function App() {
@@ -146,19 +146,19 @@ export default function App() {
   const commands: Command[] = useMemo(() => [
     {
       id: 'nav-dashboard',
-      title: 'Go to Dashboard',
+      title: 'Open Control Dashboard',
       subtitle: 'Operating metrics and institutional review dashboards',
       action: () => { navigate('dashboard'); closeCommandPalette(); }
     },
     {
       id: 'nav-ecosystem',
-      title: 'Go to Integration Directory',
+      title: 'Open Integration Directory',
       subtitle: 'Payment, asset, identity, and governance integrations',
       action: () => { navigate('ecosystem'); closeCommandPalette(); }
     },
     {
       id: 'nav-explorer',
-      title: 'Go to Network Explorer',
+      title: 'Open Evidence Explorer',
       subtitle: 'Audit events and network telemetry',
       action: () => { navigate('explorer'); closeCommandPalette(); }
     },
@@ -200,37 +200,37 @@ export default function App() {
     },
     {
       id: 'nav-staking',
-      title: 'Go to Validator Operations',
+      title: 'Community: Validator Operations',
       subtitle: 'Manage validator delegation and yields',
       action: () => { navigate('staking'); closeCommandPalette(); }
     },
     {
       id: 'nav-developer',
-      title: 'Go to Developer Portal',
+      title: 'Open Integration Portal',
       subtitle: 'SDKs, integration paths, and deployment tooling',
       action: () => { navigate('developer'); closeCommandPalette(); }
     },
     {
       id: 'nav-bridge',
-      title: 'Go to Interoperability Bridge',
+      title: 'Community: Interoperability Bridge',
       subtitle: 'Cross-chain asset transfer',
       action: () => { navigate('bridge'); closeCommandPalette(); }
     },
     {
       id: 'nav-swap',
-      title: 'Go to Liquidity Router',
+      title: 'Community: Liquidity Router',
       subtitle: 'Stablecoin and liquidity routing',
       action: () => { navigate('swap'); closeCommandPalette(); }
     },
     {
       id: 'nav-whisper',
-      title: 'Go to Secure Messaging',
+      title: 'Community: Secure Messaging',
       subtitle: 'Encrypted communications and proof exchange',
       action: () => { navigate('whisper'); closeCommandPalette(); }
     },
     {
       id: 'nav-sentinel',
-      title: 'Go to Security Operations',
+      title: 'Community: Security Operations',
       subtitle: 'Network Security Operations',
       action: () => { navigate('sentinel'); closeCommandPalette(); }
     },
@@ -242,19 +242,19 @@ export default function App() {
     },
     {
       id: 'nav-artifacts',
-      title: 'Go to Digital Assets',
+      title: 'Community: Digital Assets',
       subtitle: 'Credential and asset records',
       action: () => { navigate('artifacts'); closeCommandPalette(); }
     },
     {
       id: 'nav-oracle',
-      title: 'Go to Policy Intelligence',
+      title: 'Community: Policy Intelligence',
       subtitle: 'Network intelligence and policy telemetry',
       action: () => { navigate('oracle'); closeCommandPalette(); }
     },
     {
       id: 'nav-tokenomics',
-      title: 'Go to Network Economics',
+      title: 'Community: Network Economics',
       subtitle: 'FCC utility, supply, and reserve model',
       action: () => { navigate('tokenomics'); closeCommandPalette(); }
     },
@@ -396,14 +396,14 @@ export default function App() {
             </span>
           </button>
           
-          <button onClick={() => navigate('/review-room')} className="hidden lg:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
+          <button onClick={() => navigate('review-room')} className="hidden lg:block relative p-[1px] bg-slate-800 hover:bg-slate-600 transition-colors overflow-hidden group">
             <div className="relative bg-slate-950 px-6 py-2 flex items-center justify-center">
-              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Review Room</span>
+              <span className="text-[10px] font-mono tracking-widest text-slate-300 group-hover:text-white transition-colors z-10">Open Review Room</span>
             </div>
           </button>
           <button
             type="button"
-            onClick={() => navigate('/explorer')}
+            onClick={() => navigate('explorer')}
             className="hidden 2xl:flex items-center gap-2 border border-white/10 bg-[#020306]/80 px-3 py-2 transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/5"
           >
             <FCChainNetworkSeal className="h-5 w-5" />
@@ -412,14 +412,14 @@ export default function App() {
           {connectedIdentity ? (
             <button
               type="button"
-              onClick={() => navigate('/identity')}
+              onClick={() => navigate('identity')}
               className="hidden md:flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full transition-colors hover:bg-green-500/15"
             >
               <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
               <span className="text-[10px] font-mono text-cyan-400 font-bold tracking-widest">{connectedIdentity}</span>
             </button>
           ) : (
-            <button onClick={() => navigate('/identity')} className="hidden md:block btn-vercel-primary px-8 py-3 text-[10px] font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+            <button onClick={() => navigate('identity')} className="hidden md:block btn-vercel-primary px-8 py-3 text-[10px] font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(255,255,255,0.05)]">
               Review Identity
             </button>
           )}

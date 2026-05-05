@@ -101,7 +101,7 @@ export const HeroSection = () => {
             </div>
           </FadeInUp>
 
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 1.6, ease: "easeInOut" }}
@@ -113,6 +113,23 @@ export const HeroSection = () => {
             </span>
           </motion.h1>
 
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.0, delay: 0.6 }}
+            className="relative z-20 mb-7 max-w-3xl"
+          >
+            <div className="inline-flex items-start gap-3 border-l border-fc-gold/35 bg-[#020617]/40 py-2 pl-4 pr-2 backdrop-blur-sm">
+              <span className="mt-[5px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-fc-gold/80" aria-hidden />
+              <p className="text-[12px] leading-[1.7] text-slate-300 md:text-[13px]">
+                Built by a team behind a multi-billion-dollar digital governance infrastructure project.
+                <span className="ml-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-500">
+                  Operator credentials available on request.
+                </span>
+              </p>
+            </div>
+          </motion.div>
+
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4, delay: 0.35 }} className="relative z-20 max-w-3xl">
             <p className="border-l border-fc-gold/35 pl-6 text-base leading-[1.9] text-slate-300 md:text-lg">
               Identity-first digital governance infrastructure for public agencies, regulated institutions, and infrastructure partners. FCA presents identity, wallet access, governance approvals, and FC Chain settlement as one reviewable operating layer before any pilot.
@@ -122,26 +139,26 @@ export const HeroSection = () => {
               <MagneticButton intensity={0.16}>
                 <button
                   type="button"
-                  onClick={() => navigate('/identity')}
+                  onClick={() => navigate('/review-room')}
                   className="premium-btn w-full px-8 py-4 auth-glass-panel rounded-sm sm:w-auto"
                 >
-	                <span className="relative z-10 text-[11px] font-mono tracking-[0.34em] text-gold-gradient uppercase">Review Identity</span>
+	                <span className="relative z-10 text-[11px] font-mono tracking-[0.34em] text-gold-gradient uppercase">Open Review Room</span>
                 </button>
               </MagneticButton>
               <MagneticButton intensity={0.12}>
                 <button
                   type="button"
-                  onClick={() => document.getElementById('model')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  onClick={() => navigate('/identity')}
                   className="group inline-flex w-full items-center justify-center gap-3 border border-white/10 bg-[#020617]/80 px-8 py-4 text-[11px] font-mono uppercase tracking-[0.3em] text-slate-300 transition-colors hover:border-cyan-500/40 hover:text-white sm:w-auto"
                 >
-	                Operating Model
+	                Review Identity Model
                   <ArrowRight className="h-3.5 w-3.5 text-fc-gold transition-transform group-hover:translate-x-1" />
                 </button>
               </MagneticButton>
             </div>
 
             <p className="mt-5 text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500">
-              Designed for control review, pilot authorization, and institutional procurement conversations.
+              Use the Review Room as the first institutional link after an introduction.
             </p>
             <div className="mt-6 grid max-w-3xl grid-cols-2 gap-2 sm:grid-cols-4">
               {reviewOutputs.map((output) => (
@@ -208,7 +225,7 @@ export const HeroSection = () => {
               <FCChainNetworkSeal className="h-10 w-10 shrink-0" />
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-fc-gold/80">Powered by FC Chain</div>
-                <div className="mt-1 text-xs leading-relaxed text-slate-500">FC Chain is the settlement network; FCC is the gas and utility denomination, not the primary institutional story.</div>
+                <div className="mt-1 text-xs leading-relaxed text-slate-500">FC Chain is the settlement network; FCC is the gas and utility denomination. Both belong in the appendix until the operating model is understood.</div>
               </div>
             </div>
           </aside>

@@ -31,12 +31,12 @@ const deploymentPaths = [
   },
   {
     icon: Code2,
-    audience: 'Ecosystem Builders',
+    audience: 'Infrastructure Partners',
     title: 'Identity-aware applications',
-    summary: 'Build services that consume identity proofs, wallet permissions, governance events, and settlement rails without rebuilding trust infrastructure.',
+    summary: 'Connect approved services that consume identity proofs, wallet permissions, governance events, and settlement rails without rebuilding trust infrastructure.',
     proof: 'SDK access, policy data hooks, compliance gates',
     checkpoint: 'Confirm what trust signal is consumed, what data is not stored, and how policy changes are handled.',
-    action: 'Developer Portal',
+    action: 'Integration Portal',
     route: '/developer',
     accent: 'text-emerald-300',
     border: 'hover:border-emerald-400/45',
@@ -76,29 +76,34 @@ const pilotCadence = [
 
 const supportingMaterials = [
   {
+    lane: 'Institutional packet',
     label: 'Review room',
     copy: 'Pilot packet, approval matrix, custody boundary, and audit evidence.',
     route: '/review-room',
   },
   {
+    lane: 'Control file',
     label: 'Identity specification',
     copy: 'Credential issuance, recovery, and service permission detail.',
     route: '/identity',
   },
   {
+    lane: 'Evidence surface',
     label: 'Network explorer',
     copy: 'Representative FC Chain blocks, transactions, and validator telemetry.',
     route: '/explorer',
   },
   {
-    label: 'FCC economics',
-    copy: 'Gas, validator incentives, reserves, and treasury utility.',
-    route: '/tokenomics',
-  },
-  {
+    lane: 'Technical appendix',
     label: 'Developer portal',
     copy: 'SDKs, proof hooks, policy surfaces, and integration tooling.',
     route: '/developer',
+  },
+  {
+    lane: 'Community appendix',
+    label: 'FCC economics',
+    copy: 'Gas, validator incentives, reserves, and treasury utility for token-facing review.',
+    route: '/tokenomics',
   },
 ];
 
@@ -280,7 +285,7 @@ export const ConversionSection = () => {
                   <h4 className="text-2xl md:text-3xl font-serif font-light text-white">Deeper material lives off the institutional homepage.</h4>
                 </div>
                 <p className="max-w-md text-sm leading-relaxed text-slate-500">
-                  The homepage should close the review conversation. Token, explorer, and developer material remain available as depth pages for specialist audiences.
+                  The homepage should close the review conversation. Network, developer, and token material remain available as appendix pages for specialist audiences.
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -291,6 +296,7 @@ export const ConversionSection = () => {
                     onClick={() => navigate(item.route)}
                     className="group border border-white/10 bg-white/[0.02] p-5 text-left transition-colors hover:border-fc-gold/35 hover:bg-fc-gold/[0.04]"
                   >
+                    <div className="mb-3 text-[9px] font-mono uppercase tracking-[0.24em] text-fc-gold/70">{item.lane}</div>
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <span className="text-sm font-medium text-white">{item.label}</span>
                       <ArrowRight className="h-3.5 w-3.5 text-fc-gold transition-transform group-hover:translate-x-1" />

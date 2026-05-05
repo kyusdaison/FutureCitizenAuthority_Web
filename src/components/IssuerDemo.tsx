@@ -9,6 +9,7 @@ import {
   type IssuedCredential,
   type VerificationResult,
 } from '../lib/vc';
+import { recordIssuance, useIssuanceCounter } from '../lib/issuanceCounter';
 
 type DemoState = 'idle' | 'issuing' | 'issued' | 'verifying' | 'verified';
 
@@ -35,6 +36,7 @@ export const IssuerDemo = () => {
   const [credential, setCredential] = useState<IssuedCredential | null>(null);
   const [verification, setVerification] = useState<VerificationResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const counter = useIssuanceCounter();
 
   const handleIssue = useCallback(async () => {
     setState('issuing');
@@ -53,6 +55,8 @@ export const IssuerDemo = () => {
     setIssuer(keyset);
     setCredential(cred);
     setState('issued');
+    // Wire this real issuance into the live dashboard counter.
+    recordIssuance();
   }, []);
 
   const handleVerify = useCallback(async () => {
@@ -109,6 +113,10 @@ export const IssuerDemo = () => {
             the signature locally. No backend, no chain. The resulting JWT is interoperable with any
             standard VC verifier that supports <span className="font-mono text-cyan-300">EdDSA</span> and{' '}
             <span className="font-mono text-cyan-300">did:key</span>.
+          </p>
+          <p className="mt-3 inline-flex items-center gap-2 border border-cyan-300/25 bg-cyan-300/[0.03] px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.22em] text-cyan-200">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 animate-pulse" aria-hidden />
+            Live · {counter.total.toLocaleString()} issued from this browser · feeds /dashboard
           </p>
         </div>
         {state !== 'idle' && (

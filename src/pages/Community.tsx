@@ -90,7 +90,7 @@ const Community = () => {
         <span className="mx-3 text-slate-400">/</span>
         Network economics, cross-chain rails, validator operations, and other community-facing
         experiences. These are separate from the institutional pitch — buyers evaluating the
-        identity and governance layer should start at <button type="button" onClick={() => navigate('/identity')} className="underline underline-offset-4 decoration-fc-gold/50 hover:decoration-fc-gold transition-colors">Identity</button> and <button type="button" onClick={() => navigate('/dashboard')} className="underline underline-offset-4 decoration-fc-gold/50 hover:decoration-fc-gold transition-colors">Dashboard</button>.
+        identity and governance layer should start in the <button type="button" onClick={() => navigate('/review-room')} className="underline underline-offset-4 decoration-fc-gold/50 hover:decoration-fc-gold transition-colors">Review Room</button>.
       </div>
 
       {/* Header */}
@@ -101,9 +101,9 @@ const Community = () => {
             Network surfaces for participants.
           </h1>
           <p className="mt-3 text-sm leading-[1.85] text-slate-400">
-            FC Chain operates as the settlement layer underneath the institutional pitch. These
-            views serve token holders, validators, builders, and on-chain analysts — separate
-            audiences from procurement reviewers.
+          FC Chain operates as the settlement layer underneath the institutional review path. These
+          views serve token holders, validators, builders, and on-chain analysts — separate
+          audiences from procurement reviewers.
           </p>
         </div>
         <button

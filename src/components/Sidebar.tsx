@@ -38,7 +38,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
       </div>
 
       <div className="p-4 flex-1">
-        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 px-6">Platform Sections</div>
+        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 px-6">Review Sections</div>
         <nav className="flex-1 mt-2">
           <ul className="space-y-1 px-4">
             <li>
@@ -71,7 +71,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'dashboard' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
-                <span className="text-xs font-bold tracking-widest uppercase">Dashboard</span>
+                <span className="text-xs font-bold tracking-widest uppercase">Control Dashboard</span>
               </button>
             </li>
             
@@ -81,7 +81,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'ecosystem' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Ecosystem</span>
+                 <span className="text-xs font-bold tracking-widest uppercase">Integration Directory</span>
               </button>
             </li>
 
@@ -91,7 +91,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'explorer' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                 <span className="text-xs font-bold tracking-widest uppercase">Telemetry</span>
+                 <span className="text-xs font-bold tracking-widest uppercase">Explorer</span>
               </button>
             </li>
 
@@ -101,7 +101,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
                 className={`w-full flex items-center space-x-3 px-4 py-2.5  transition-all group ${currentView === 'developer' ? 'text-cyan-400 bg-slate-800/50 border-l-2 border-cyan-500' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border-l-2 border-transparent'}`}
               >
                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-	                 <span className="text-xs font-bold tracking-widest uppercase">Developer Portal</span>
+	                 <span className="text-xs font-bold tracking-widest uppercase">Integration Portal</span>
               </button>
             </li>
           </ul>
@@ -113,7 +113,7 @@ export const Sidebar = ({ onConnectClick, isMobileOpen = false, onCloseMobile }:
           onClick={() => onNavigate('community')}
           className={`w-full flex items-center justify-between px-4 py-2.5 transition-all group ${currentView === 'community' ? 'text-cyan-300 bg-slate-800/40' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900/40'}`}
         >
-          <span className="text-[10px] font-mono tracking-[0.28em] uppercase">Community surfaces</span>
+          <span className="text-[10px] font-mono tracking-[0.28em] uppercase">Community appendix</span>
           <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
