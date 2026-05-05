@@ -5,6 +5,10 @@ import { pilotApplicationRoute, reviewPacketHref, trackConversionEvent } from '.
 
 export const FooterSection = () => {
   const navigate = useNavigate();
+  const openReviewRoom = () => {
+    trackConversionEvent('review_room_opened', 'homepage-footer');
+    navigate('/review-room');
+  };
   const startPilotRequest = () => {
     trackConversionEvent('pilot_request_started', 'homepage-footer');
     navigate(pilotApplicationRoute);
@@ -28,24 +32,24 @@ export const FooterSection = () => {
           <MagneticButton className="w-full sm:w-auto">
             <button
               type="button"
-              onClick={startPilotRequest}
+              onClick={openReviewRoom}
               className="relative p-[1px] bg-white/15 hover:bg-fc-gold transition-colors overflow-hidden group w-full h-full block"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-fc-gold to-transparent -translate-x-full group-hover:translate-x-full duration-1000 ease-in-out pointer-events-none"></div>
               <div className="relative bg-[#010204] px-8 md:px-12 py-5 flex items-center justify-center gap-3 border border-white/5 w-full h-full">
-                <Mail className="w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
-		                <span className="text-xs font-bold uppercase text-fc-gold group-hover:text-white transition-colors z-10 drop-shadow-md">Request A Pilot</span>
+                <ShieldCheck className="w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
+                <span className="text-xs font-bold uppercase text-fc-gold group-hover:text-white transition-colors z-10 drop-shadow-md">Open Review Room</span>
                 <ArrowRight className="w-4 h-4 text-fc-gold group-hover:text-white transition-colors" />
               </div>
             </button>
           </MagneticButton>
           <button
             type="button"
-            onClick={() => navigate('/review-room')}
+            onClick={startPilotRequest}
             className="inline-flex w-full sm:w-auto items-center justify-center gap-3 border border-white/10 bg-white/[0.02] px-8 md:px-12 py-5 text-xs font-bold uppercase text-slate-300 transition-colors hover:border-cyan-400/40 hover:text-white"
           >
-            <ShieldCheck className="w-4 h-4 text-cyan-300" />
-            Open Review Room
+            <Mail className="w-4 h-4 text-cyan-300" />
+            Request A Pilot
           </button>
         </div>
         <div className="mt-4 flex flex-col items-center justify-center gap-4 sm:flex-row">
