@@ -83,21 +83,6 @@ section[id] {
   --font-display: "Playfair Display", serif;
 }
 
-/* Tactical Geometric Backgrounds */
-@utility bg-tactical-grid {
-  background-image: 
-    linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  background-position: center center;
-}
-
-@utility bg-tactical-dots {
-  background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
-  background-size: 24px 24px;
-  background-position: center center;
-}
-
 /* Cinematic Scanline */
 @utility scanline {
   background: linear-gradient(

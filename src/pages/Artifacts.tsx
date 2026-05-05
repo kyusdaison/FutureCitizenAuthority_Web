@@ -4,7 +4,7 @@ import { CosmicBackground } from '../components/CosmicBackground';
 import { DecipherText } from '../components/DecipherText';
 import { CipherHeading } from '../components/CipherHeading';
 
-import { mockDataService, type ArtifactData } from '../services/mockDataService';
+import { previewDataService, type ArtifactData } from '../services/previewDataService';
 const ArtifactCard = ({ artifact }: { artifact: ArtifactData }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -64,7 +64,7 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactData }) => {
       <div 
         className={`w-full h-full relative border  overflow-hidden agency-panel ${getRarityColor(artifact.rarity)}`}
       >
-        <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/80 to-transparent z-10 flex justify-between items-center px-4" style={{ transform: "translateZ(20px)" }}>
+        <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/80 to-transparent z-10 flex justify-between items-center px-4 [transform:translateZ(20px)]">
            <span className="font-mono text-[10px] tracking-widest">{artifact.id}</span>
            <span className="font-mono text-[10px] bg-black/50 px-2 py-0.5 border border-white/10 uppercase">{artifact.type}</span>
         </div>
@@ -74,7 +74,7 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactData }) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-4 z-10" style={{ transform: "translateZ(30px)" }}>
+        <div className="absolute inset-x-0 bottom-0 p-4 z-10 [transform:translateZ(30px)]">
            <h3 className="text-xl font-bold text-white mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-tight">{artifact.rarity} Artifact</h3>
            
            <div className="flex gap-2 mb-3 flex-wrap">
@@ -199,7 +199,7 @@ const Artifacts = () => {
   useEffect(() => {
     const fetchArtifacts = async () => {
       try {
-        const data = await mockDataService.getArtifacts();
+        const data = await previewDataService.getArtifacts();
         setArtifacts(data);
       } catch (error) {
         console.error('Failed to fetch artifacts', error);

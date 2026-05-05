@@ -119,7 +119,6 @@ export const ConversionSection = () => {
 
   return (
     <section id="deployment" className="py-24 px-6 lg:px-12 bg-[#05070b] border-y border-white/5 relative overflow-hidden">
-      <div className="absolute inset-0 bg-tactical-dots opacity-25 pointer-events-none" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-fc-gold/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -129,7 +128,7 @@ export const ConversionSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  05 // Deployment Paths
+                  03 // Pilot Path
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-6">

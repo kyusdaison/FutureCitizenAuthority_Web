@@ -41,50 +41,11 @@ const assuranceBoundaries = [
   'Public rollout follows a bounded pilot, not an unreviewed platform launch.',
 ];
 
-const termTranslations = [
-  {
-    term: 'ZK proofs',
-    meaning: 'Eligibility can be verified without publishing the underlying personal record.',
-  },
-  {
-    term: 'MPC custody',
-    meaning: 'Wallet recovery and signing can be split across approved controls instead of one seed phrase.',
-  },
-  {
-    term: 'Governance gates',
-    meaning: 'Sensitive actions can require named roles, approval paths, and audit records.',
-  },
-];
-
-const reviewPacket = [
-  {
-    file: 'Identity & enrollment model',
-    evidence: 'Credential schema, proof flow, privacy boundary',
-    decision: 'Can this participant group be verified safely?',
-  },
-  {
-    file: 'Wallet custody model',
-    evidence: 'MPC roles, recovery process, operator permissions',
-    decision: 'Who can initiate, recover, or approve wallet access?',
-  },
-  {
-    file: 'Governance approval trail',
-    evidence: 'Committee ownership, policy gates, treasury controls',
-    decision: 'Can every sensitive action be attributed and reviewed?',
-  },
-  {
-    file: 'Pilot operating plan',
-    evidence: 'Scope, success metrics, escalation path, reporting cadence',
-    decision: 'Is this ready for a controlled 60-90 day pilot?',
-  },
-];
-
 export const AssuranceSection = () => {
   const navigate = useNavigate();
 
   return (
     <section id="assurance" className="py-24 px-6 lg:px-12 bg-[#070a10] border-y border-white/5 relative overflow-hidden">
-      <div className="absolute inset-0 bg-tactical-grid opacity-20 pointer-events-none" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -94,7 +55,7 @@ export const AssuranceSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-cyan-300/45" />
                 <h2 className="text-xs font-bold text-cyan-300 uppercase">
-                  04 // Institutional Assurance
+                  02 // Institutional Assurance
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-8">
@@ -186,61 +147,6 @@ export const AssuranceSection = () => {
                     <span className="text-xs text-slate-400">0{index + 1}</span>
                   </div>
                   <p className="text-sm text-slate-300 leading-relaxed">{boundary}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </FadeInUp>
-
-        <FadeInUp delay={0.34}>
-          <div className="mt-10 border border-white/10 bg-white/[0.025] p-6 md:p-8">
-            <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="mb-3 text-xs uppercase tracking-[0.25em] text-cyan-300">Plain-language controls</p>
-                <h4 className="text-3xl md:text-4xl font-serif font-light text-white">Translate the technical layer into review language.</h4>
-              </div>
-              <p className="max-w-md text-sm leading-relaxed text-slate-500">
-                This is the layer that helps non-technical decision makers understand what risk is being reduced.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-              {termTranslations.map((item) => (
-                <div key={item.term} className="border border-white/10 bg-[#020617]/70 p-5">
-                  <div className="mb-3 text-sm font-medium text-white">{item.term}</div>
-                  <p className="text-sm leading-relaxed text-slate-400">{item.meaning}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </FadeInUp>
-
-        <FadeInUp delay={0.38}>
-          <div className="mt-10 border border-white/10 bg-[#030712]/90 p-6 md:p-8">
-            <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="mb-3 text-xs uppercase tracking-[0.25em] text-fc-gold">Review packet</p>
-                <h4 className="text-3xl md:text-4xl font-serif font-light text-white">The materials a serious evaluator should ask for.</h4>
-              </div>
-              <p className="max-w-md text-sm leading-relaxed text-slate-500">
-                This makes procurement, pilot approval, and internal risk review easier because each file connects evidence to a concrete decision.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3">
-              {reviewPacket.map((item, index) => (
-                <div key={item.file} className="grid grid-cols-1 gap-4 border border-white/10 bg-white/[0.02] p-5 md:grid-cols-[0.24fr_0.38fr_0.38fr] md:items-center">
-                  <div>
-                    <div className="mb-2 text-[10px] uppercase tracking-[0.28em] text-slate-400">File 0{index + 1}</div>
-                    <div className="text-sm font-medium text-white">{item.file}</div>
-                  </div>
-                  <div>
-                    <div className="mb-2 text-[10px] uppercase tracking-[0.22em] text-cyan-300/70">Evidence</div>
-                    <div className="text-sm leading-relaxed text-slate-400">{item.evidence}</div>
-                  </div>
-                  <div>
-                    <div className="mb-2 text-[10px] uppercase tracking-[0.22em] text-fc-gold/70">Decision supported</div>
-                    <div className="text-sm leading-relaxed text-slate-300">{item.decision}</div>
-                  </div>
                 </div>
               ))}
             </div>

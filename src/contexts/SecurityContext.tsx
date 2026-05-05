@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useWallet } from './WalletContext';
-import { useMarket } from './MarketContext';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
 interface SecurityContextType {
@@ -17,32 +16,18 @@ export function SecurityProvider({ children }: { children: React.ReactNode }) {
   const isBreached = threatLevel >= 80;
   const { gainXP } = useWallet();
   const { playSuccess } = useSoundEffects();
-  const { recentMegaTx } = useMarket();
 
-  const triggerSimulatedBreach = () => {
+  const triggerSimulatedBreach = useCallback(() => {
     setThreatLevel(85 + Math.random() * 15); // Random threat between 85-100%
-  };
+  }, []);
 
-  const neutralizeThreat = () => {
+  const neutralizeThreat = useCallback(() => {
     if (isBreached) {
       setThreatLevel(0);
       playSuccess();
       gainXP(500); // Massive XP bonus for defending the network
     }
-  };
-
-  // React to market anomalies (demo-only: disabled in production)
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-    if (recentMegaTx && !isBreached) {
-       if (Math.random() < 0.3) {
-         const timer = setTimeout(() => {
-           triggerSimulatedBreach();
-         }, 1500);
-         return () => clearTimeout(timer);
-       }
-    }
-  }, [recentMegaTx, isBreached]);
+  }, [gainXP, isBreached, playSuccess]);
 
   // Randomly simulate a breach event (demo-only: disabled in production)
   useEffect(() => {
@@ -54,10 +39,15 @@ export function SecurityProvider({ children }: { children: React.ReactNode }) {
     }, 20000);
 
     return () => clearInterval(interval);
-  }, [isBreached]);
+  }, [isBreached, triggerSimulatedBreach]);
+
+  const value = useMemo(
+    () => ({ threatLevel, isBreached, neutralizeThreat, triggerSimulatedBreach }),
+    [isBreached, neutralizeThreat, threatLevel, triggerSimulatedBreach]
+  );
 
   return (
-    <SecurityContext.Provider value={{ threatLevel, isBreached, neutralizeThreat, triggerSimulatedBreach }}>
+    <SecurityContext.Provider value={value}>
       {children}
     </SecurityContext.Provider>
   );

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { CipherHeading } from '../components/CipherHeading';
 import { useToast } from '../contexts/ToastContext';
 import { useWallet } from '../contexts/WalletContext';
-import { mockDataService, type ValidatorData } from '../services/mockDataService';
+import { previewDataService, type ValidatorData } from '../services/previewDataService';
 
 const Staking = () => {
   // Staking & Synthesis simulator state
@@ -33,7 +33,7 @@ const Staking = () => {
   useEffect(() => {
     const fetchValidators = async () => {
       try {
-        const data = await mockDataService.getValidators();
+        const data = await previewDataService.getValidators();
         setValidators(data);
       } catch (error) {
         console.error('Failed to fetch validators', error);

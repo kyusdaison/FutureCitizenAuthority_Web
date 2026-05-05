@@ -15,7 +15,7 @@ const operatingSteps = [
   {
     icon: WalletCards,
     title: 'Activate the wallet rail',
-    copy: 'Connect verified users to seedless MPC wallets, recovery boundaries, stablecoin routing, and settlement status.',
+    copy: 'Connect verified users to seedless MPC wallets, recovery boundaries, policy-bound payment routing, and settlement status.',
     plain: 'This answers: how do they transact safely?',
     proof: 'Custody boundary',
     evidence: 'Operator roles, recovery process, signing policy, limit rules',
@@ -45,38 +45,11 @@ const reviewQuestions = [
   'Which pilot proves value before expansion?',
 ];
 
-const decisionPath = [
-  {
-    phase: 'Briefing',
-    outcome: 'Agree the first citizen, treasury, or institutional workflow worth testing and name the responsible owner.',
-  },
-  {
-    phase: 'Control review',
-    outcome: 'Inspect identity proofs, wallet boundaries, approval ownership, reporting needs, and privacy exposure.',
-  },
-  {
-    phase: 'Pilot authorization',
-    outcome: 'Define operators, success metrics, escalation paths, data handling rules, and decision authority.',
-  },
-  {
-    phase: 'Scale decision',
-    outcome: 'Expand only after the pilot shows measurable service value and governance clarity.',
-  },
-];
-
-const decisionCriteria = [
-  'Clear responsible authority',
-  'Measurable public or institutional value',
-  'Inspectable audit and reporting surface',
-  'Bounded privacy and custody exposure',
-];
-
 export const OperatingModelSection = () => {
   const navigate = useNavigate();
 
   return (
     <section id="model" className="py-24 px-6 lg:px-12 bg-[#020617] border-y border-white/5 relative overflow-hidden">
-      <div className="absolute inset-0 bg-tactical-grid opacity-15 pointer-events-none" />
       <div className="absolute right-0 top-0 w-[720px] h-[720px] rounded-full bg-cyan-500/[0.035] blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -86,7 +59,7 @@ export const OperatingModelSection = () => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-fc-gold/45" />
                 <h2 className="text-xs font-bold text-fc-gold uppercase">
-                  02 // Operating Model
+                  01 // Operating Model
                 </h2>
               </div>
               <h3 className="text-5xl md:text-7xl font-serif font-light text-white leading-tight mb-8">
@@ -152,53 +125,6 @@ export const OperatingModelSection = () => {
                   </FadeInUp>
                 );
               })}
-            </div>
-          </div>
-        </FadeInUp>
-
-        <FadeInUp delay={0.35}>
-          <div className="mt-10 grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-6">
-            <div className="border border-white/10 bg-[#05070b]/90 p-6 md:p-8">
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.25em] text-fc-gold mb-3">Institutional decision path</p>
-                  <h4 className="text-2xl md:text-3xl font-serif font-light text-white">From executive interest to controlled pilot.</h4>
-                </div>
-                <p className="max-w-sm text-sm text-slate-500 leading-relaxed">
-                  The site should help a reviewer understand not only what the system can do, but how a serious organization can safely evaluate it.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                {decisionPath.map((item, index) => (
-                  <div key={item.phase} className="relative border border-white/10 bg-white/[0.02] p-5 min-h-[190px]">
-                    <div className="mb-8 flex items-center justify-between">
-                      <span className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Gate</span>
-                      <span className="text-xs text-slate-400">0{index + 1}</span>
-                    </div>
-                    <h5 className="text-lg font-serif font-light text-white mb-4">{item.phase}</h5>
-                    <p className="text-sm text-slate-400 leading-relaxed">{item.outcome}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="border border-white/10 bg-white/[0.025] p-6 md:p-8">
-              <div className="flex items-center gap-3 text-white mb-6">
-                <ShieldCheck className="w-5 h-5 text-cyan-300" />
-                <h4 className="text-2xl md:text-3xl font-serif font-light">Pilot readiness criteria</h4>
-              </div>
-              <p className="text-sm text-slate-400 leading-relaxed mb-7">
-                A professional reviewer should be able to answer these before moving from a concept conversation into a formal pilot.
-              </p>
-              <div className="space-y-3">
-                {decisionCriteria.map((criterion, index) => (
-                  <div key={criterion} className="flex items-center justify-between gap-5 border border-white/10 bg-[#020617]/80 px-4 py-3">
-                    <span className="text-sm text-slate-200">{criterion}</span>
-                    <span className="text-xs text-cyan-300/70">0{index + 1}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </FadeInUp>

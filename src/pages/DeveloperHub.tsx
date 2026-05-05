@@ -194,7 +194,7 @@ const DeveloperHub = () => {
           <div className="mt-7 border border-white/10 bg-[#020617]/70 p-5">
             <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.24em] text-slate-500">Default rule</p>
             <p className="text-sm leading-relaxed text-slate-400">
-              Integrations start in a sandbox, carry sample labels until verified sources are connected, and never require a reviewer to inspect token mechanics before the use case is understood.
+              Integrations start in a sandbox, carry sample labels until verified sources are connected, and never require a reviewer to inspect network economics before the use case is understood.
             </p>
           </div>
         </motion.section>

@@ -3,21 +3,20 @@ import { ArrowRight, BadgeCheck, ChevronDown, FileCheck2, Landmark, Network, Shi
 import { useNavigate } from 'react-router-dom';
 import { FadeInUp } from '../components/FadeInUp';
 import { MagneticButton } from '../components/MagneticButton';
-import { HexGridBackground } from '../components/HexGridBackground';
 import { FCChainNetworkSeal } from '../components/BrandMarks';
 
 const institutionalSignals = [
   {
-    label: 'Reviewable identity',
-    copy: 'Access, wallet use, and service eligibility begin with a credential model that can be inspected before launch.',
+    label: 'Decision ready',
+    copy: 'The first conversation is framed around scope, authority, risk ownership, and evidence required for a pilot decision.',
   },
   {
-    label: 'Visible controls',
-    copy: 'Custody, approval, reporting, and governance rules are framed as operating controls rather than technical decoration.',
+    label: 'Clear controls',
+    copy: 'Identity, custody, approval, reporting, and data boundaries are presented as operating controls a reviewer can inspect.',
   },
   {
     label: 'Bounded pilot',
-    copy: 'The first deployment is scoped around one measurable service path, named owners, and a documented scale decision.',
+    copy: 'The first deployment is scoped around one measurable service path, named owners, and a documented scale / pause decision.',
   },
 ];
 
@@ -41,7 +40,7 @@ const reviewPacket = [
     step: '03',
     label: 'Network',
     title: 'Settlement evidence rail',
-    copy: 'Settlement references, wallet operations, and audit evidence without leading with network economics.',
+    copy: 'Settlement references, wallet operations, and audit evidence kept behind the institutional review story.',
   },
   {
     icon: FileCheck2,
@@ -68,23 +67,18 @@ export const HeroSection = () => {
   return (
     <section id="hero" className="min-h-[100svh] w-full px-5 pb-28 pt-32 sm:px-6 sm:pt-36 lg:px-12 relative overflow-hidden flex items-start sm:items-center">
       {/* Institutional review coordinates */}
-      <div className="absolute top-1/4 left-12 hidden xl:flex flex-col gap-2 text-left opacity-80">
+      <div className="absolute top-1/4 left-12 hidden 2xl:flex flex-col gap-2 text-left opacity-80">
          <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md">REVIEW DESK <span className="text-slate-400">//</span> PUBLIC-SECTOR</div>
          <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]">PILOT STATUS <span className="text-slate-400">//</span> SCOPED</div>
          <div className="w-32 h-px bg-gradient-to-r from-fc-gold/40 to-transparent mt-2"></div>
       </div>
       
-      <div className="absolute bottom-1/3 right-12 hidden xl:flex flex-col gap-2 text-right opacity-80">
+      <div className="absolute bottom-1/3 right-12 hidden 2xl:flex flex-col gap-2 text-right opacity-80">
          <div className="text-[10px] font-mono tracking-[0.5em] text-fc-gold uppercase drop-shadow-[0_0_8px_rgba(212,175,55,0.25)]"><span className="text-slate-400">//</span> PRIVACY + CUSTODY</div>
-	         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-400">//</span> ASSURANCE FILE READY</div>
+         <div className="text-[10px] font-mono tracking-[0.5em] text-slate-400 uppercase drop-shadow-md"><span className="text-slate-400">//</span> ASSURANCE FILE READY</div>
          <div className="w-32 h-px bg-gradient-to-l from-fc-gold/40 to-transparent mt-2 ml-auto"></div>
       </div>
       
-      {/* Hex Grid and Node Network Layer */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <HexGridBackground />
-      </div>
-
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.018] rotate-180 pointer-events-none vertical-text">
          <h2 className="text-[7rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
@@ -115,7 +109,7 @@ export const HeroSection = () => {
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.4, delay: 0.35 }} className="relative z-20 w-full max-w-3xl min-w-0">
             <p className="hero-copy whitespace-normal break-words border-l border-fc-gold/35 pl-5 text-sm leading-[1.85] text-slate-300 [overflow-wrap:anywhere] sm:pl-6 md:text-lg md:leading-[1.9]">
-              Identity-first governance infrastructure for agencies and regulated institutions. FCA packages credentials, wallet access, approvals, and FC Chain settlement into one reviewable pilot layer.
+              Identity-first governance infrastructure for agencies and regulated institutions. FCA packages credentials, wallet access, approvals, and FC Chain settlement into one reviewable pilot layer, so teams can evaluate authority, evidence, and rollout risk before deployment.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -141,12 +135,12 @@ export const HeroSection = () => {
             </div>
 
             <p className="hero-copy mt-5 whitespace-normal break-words text-[10px] font-mono uppercase tracking-[0.12em] text-slate-500 [overflow-wrap:anywhere] sm:tracking-[0.28em]">
-              Review Room is the first institutional link after an introduction.
+              Send the Review Room after an introduction; keep technical appendices behind the evaluation path.
             </p>
             <div className="hero-mobile-frame mt-6 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 sm:grid-cols-4">
               {reviewOutputs.map((output) => (
                 <div key={output} className="border border-white/10 bg-white/[0.025] px-3 py-2">
-                  <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-slate-500">Output</div>
+                  <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-slate-500">Review file</div>
                   <div className="mt-1 text-xs text-slate-200">{output}</div>
                 </div>
               ))}
@@ -176,7 +170,7 @@ export const HeroSection = () => {
               <div>
                 <p className="mb-3 text-[10px] font-mono uppercase tracking-[0.32em] text-fc-gold/80">Institutional packet</p>
                 <h2 className="max-w-sm text-2xl font-serif font-light leading-tight text-white md:text-3xl xl:text-4xl">
-                  What a reviewer needs to understand before a pilot.
+                  What an evaluator needs before pilot authorization.
                 </h2>
               </div>
               <img src="/hero-logo.webp" alt="Future Citizen Authority crest" className="h-14 w-14 shrink-0 object-contain grayscale transition-all duration-500 hover:grayscale-0" loading="eager" decoding="async" />
@@ -208,7 +202,7 @@ export const HeroSection = () => {
               <FCChainNetworkSeal className="h-10 w-10 shrink-0" />
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-fc-gold/80">Powered by FC Chain</div>
-                <div className="mt-1 text-xs leading-relaxed text-slate-500">FC Chain is the settlement network. Network economics remain in the appendix until the operating model is understood.</div>
+                <div className="mt-1 text-xs leading-relaxed text-slate-500">FC Chain is the settlement network. Network economics stay in the appendix until authority, controls, and pilot scope are understood.</div>
               </div>
             </div>
           </aside>

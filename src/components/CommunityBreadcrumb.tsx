@@ -29,7 +29,7 @@ export const CommunityBreadcrumb = () => {
           <span>Community</span>
         </button>
         <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-cyan-300/60 self-start sm:self-end">
-          Community surface · Sample preview
+          Community appendix · Sample preview
         </span>
       </div>
     </nav>

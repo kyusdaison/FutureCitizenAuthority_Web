@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CipherHeading } from '../components/CipherHeading';
-import { mockDataService, type SystemNode } from '../services/mockDataService';
+import { previewDataService, type SystemNode } from '../services/previewDataService';
 import { useSecurity } from '../contexts/SecurityContext';
 
 export default function Sentinel() {
@@ -66,7 +66,7 @@ export default function Sentinel() {
 
   useEffect(() => {
     let mounted = true;
-    mockDataService.getSystemNodes().then(data => {
+    previewDataService.getSystemNodes().then(data => {
       if (mounted) {
         setSystems(data);
         setIsLoading(false);

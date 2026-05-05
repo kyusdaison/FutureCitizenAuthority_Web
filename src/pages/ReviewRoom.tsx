@@ -156,6 +156,12 @@ const pilotPlan = [
   },
 ];
 
+const fileStatus = [
+  ['Status', 'Representative pilot-ready preview'],
+  ['Use', 'Internal review and scoping conversation'],
+  ['Data', 'Sample evidence model, not production telemetry'],
+];
+
 const ReviewRoom = () => {
   const navigate = useNavigate();
 
@@ -164,13 +170,14 @@ const ReviewRoom = () => {
       <section className="mt-4 border border-fc-gold/20 bg-fc-gold/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-fc-gold">Review room</span>
         <span className="mx-3 text-slate-600">/</span>
-        Institutional pilot packet for serious internal review. This is a structured evaluation
-        surface, not a token or community pitch.
+        Representative pilot-ready review file for institutional scoping. It shows the control
+        model, evidence structure, and pilot path before production data or partner-specific
+        records are connected.
       </section>
 
       <header className="grid grid-cols-1 gap-8 border-b border-white/10 pb-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div>
-          <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-fc-gold">Pilot packet</p>
+          <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-fc-gold">Pilot-ready review file</p>
           <h1 className="max-w-4xl text-4xl font-serif font-light leading-tight text-white md:text-6xl">
             Everything a reviewer needs before a controlled pilot.
           </h1>
@@ -179,6 +186,14 @@ const ReviewRoom = () => {
             packet: scope, identity model, custody boundary, approval matrix, audit trail, data
             boundary, and a 60-90 day pilot path.
           </p>
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {fileStatus.map(([label, value]) => (
+              <div key={label} className="border border-white/10 bg-white/[0.02] p-4">
+                <div className="mb-2 text-[10px] uppercase tracking-[0.24em] text-slate-500">{label}</div>
+                <div className="text-sm leading-relaxed text-slate-200">{value}</div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="border border-white/10 bg-[#020617]/70 p-6">
           <div className="mb-5 flex items-center gap-3 text-white">
@@ -189,6 +204,13 @@ const ReviewRoom = () => {
             A procurement reviewer should leave this page knowing what can be piloted, who owns each
             decision, what evidence will be produced, and what data does not leave approved systems.
           </p>
+          <div className="mt-5 border border-cyan-300/15 bg-cyan-300/[0.035] p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-[0.24em] text-cyan-300/80">Disclosure</p>
+            <p className="text-sm leading-relaxed text-slate-300">
+              Figures and event examples on this page are representative. A formal pilot should
+              replace them with partner-approved evidence, system boundaries, and reporting terms.
+            </p>
+          </div>
           <div className="mt-6 grid grid-cols-3 gap-3">
             {[
               ['1', 'use case'],

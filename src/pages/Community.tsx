@@ -24,37 +24,37 @@ const communityPaths: CommunityPath[] = [
   {
     icon: Coins,
     kicker: 'Economics',
-    title: 'Tokenomics',
+    title: 'Network economics appendix',
     route: '/tokenomics',
-    copy: 'FCC supply, distribution, fee flow, and reserve model. For token holders and on-chain analysts.',
+    copy: 'Supply, reserve policy, fee treatment, and network disclosures for specialist review.',
   },
   {
     icon: Layers,
-    kicker: 'Validator',
-    title: 'Validator operations',
+    kicker: 'Operations',
+    title: 'Network operations appendix',
     route: '/staking',
-    copy: 'Delegation, validator selection, rewards, and uptime accountability.',
+    copy: 'Participation records, node accountability, and operating telemetry for network-side reviewers.',
   },
   {
     icon: ArrowLeftRight,
     kicker: 'Interop',
-    title: 'Cross-chain bridge',
+    title: 'Interoperability appendix',
     route: '/bridge',
-    copy: 'Asset movement between FC Chain and supported networks.',
+    copy: 'Controlled network interoperability references, separated from the institutional review path.',
   },
   {
     icon: Repeat,
-    kicker: 'Liquidity',
-    title: 'Liquidity router',
+    kicker: 'Routing',
+    title: 'Settlement routing appendix',
     route: '/swap',
-    copy: 'Stablecoin and liquidity routing across the FC Chain ecosystem.',
+    copy: 'Specialist settlement-routing material for community and network operations contexts.',
   },
   {
     icon: Boxes,
-    kicker: 'Assets',
-    title: 'Digital asset registry',
+    kicker: 'Records',
+    title: 'Public record appendix',
     route: '/artifacts',
-    copy: 'Credential and on-chain asset records — the public-facing artifact view.',
+    copy: 'Public-facing credential and record examples kept outside the institutional homepage.',
   },
   {
     icon: Compass,
@@ -88,8 +88,8 @@ const Community = () => {
       <div className="mt-4 border border-cyan-300/20 bg-cyan-300/[0.04] px-5 py-4 text-sm leading-relaxed text-slate-300">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-cyan-300">Community surfaces</span>
         <span className="mx-3 text-slate-400">/</span>
-        Network economics, cross-chain rails, validator operations, and other community-facing
-        experiences. These are separate from the institutional pitch — buyers evaluating the
+        Network economics, interoperability rails, operator records, and other community-facing
+        appendix material. These are separate from the institutional pitch — buyers evaluating the
         identity and governance layer should start in the <button type="button" onClick={() => navigate('/review-room')} className="underline underline-offset-4 decoration-fc-gold/50 hover:decoration-fc-gold transition-colors">Review Room</button>.
       </div>
 
@@ -102,7 +102,7 @@ const Community = () => {
           </h1>
           <p className="mt-3 text-sm leading-[1.85] text-slate-400">
           FC Chain operates as the settlement layer underneath the institutional review path. These
-          views serve token holders, validators, builders, and on-chain analysts — separate
+          views serve specialist network participants, builders, and community analysts — separate
           audiences from procurement reviewers.
           </p>
         </div>
@@ -147,8 +147,8 @@ const Community = () => {
         <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300 mb-3">Why this is a separate area</p>
         <p className="max-w-3xl text-sm leading-relaxed text-slate-300">
           Future Citizen Authority is built for two distinct audiences: governments and regulated
-          institutions evaluating identity infrastructure, and the community of token holders,
-          validators, and builders running the underlying network. Mixing them on the same surface
+          institutions evaluating identity infrastructure, and the community participants,
+          operators, and builders running the underlying network. Mixing them on the same surface
           confuses both. Institutional review starts at the home page; community participation lives
           here.
         </p>

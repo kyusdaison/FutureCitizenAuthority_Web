@@ -183,7 +183,20 @@ const MOCK_SYSTEM_NODES: SystemNode[] = [
 // Helper to simulate network latency
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const mockDataService = {
+/**
+ * PREVIEW DATA — sample, not live.
+ *
+ * All data returned from this service is hardcoded sample content used for
+ * UI scaffolding on community surfaces and the Sample-labeled rows of the
+ * institutional Identity Vault / Dashboard / Sentinel / Tokenomics surfaces.
+ * It must never be presented to a reviewer as production telemetry without
+ * an explicit Sample / PREVIEW label adjacent to the rendered value.
+ *
+ * Each method returns data after a small artificial delay to simulate the
+ * shape of an async fetch.  This is deliberate: it forces consumers to handle
+ * loading states the same way they will when a real backend replaces it.
+ */
+export const previewDataService = {
   getArtifacts: async (): Promise<ArtifactData[]> => {
     await delay(800);
     return MOCK_ARTIFACTS;

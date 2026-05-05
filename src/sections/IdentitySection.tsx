@@ -3,7 +3,6 @@ import { Fingerprint, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { TiltCard } from '../components/TiltCard';
 import { FadeInUp } from '../components/FadeInUp';
-import { HexGridBackground } from '../components/HexGridBackground';
 
 export const IdentitySection = () => {
   const { scrollYProgress } = useScroll();
@@ -18,10 +17,6 @@ export const IdentitySection = () => {
       <motion.div style={{ y: yParallaxSlow }} className="absolute left-[80%] top-[40%] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.015] font-display font-black text-[40vw] tracking-tighter text-white mix-blend-overlay z-0">
          PROOF
       </motion.div>
-      <div className="absolute inset-0 z-0">
-        <HexGridBackground />
-      </div>
-
       {/* Vertical Label */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:block opacity-[0.03] pointer-events-none vertical-text z-0">
          <h2 className="text-[8rem] font-serif font-black tracking-tighter uppercase text-white mix-blend-overlay">
@@ -29,10 +24,6 @@ export const IdentitySection = () => {
          </h2>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="absolute -top-6 right-0 text-[10px] font-mono tracking-[0.4em] text-slate-500 uppercase flex items-center gap-2">
-          <span className="w-2 h-2 bg-slate-700"></span>
-          [CLASSIFICATION: UNRESTRICTED]
-        </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-stretch mt-8">
           
           <div className="lg:col-span-5 relative flex flex-col justify-center">
@@ -65,18 +56,18 @@ export const IdentitySection = () => {
                </div>
                <div className="mt-auto border-t border-slate-800 pt-6 relative overflow-hidden bg-slate-900/40 p-4 border-l border-slate-800">
                  <div className="absolute inset-x-0 top-0 h-px bg-fc-gold/25 pointer-events-none"></div>
-                 <ul className="space-y-4 text-[9px] font-mono tracking-widest uppercase text-fc-gold/70 relative z-10">
+                 <ul className="space-y-4 text-[10px] font-mono tracking-[0.18em] uppercase text-fc-gold/80 relative z-10">
                    <li className="flex items-center gap-4">
                      <span className="w-2 h-2 bg-fc-gold/50"></span>
-	                     [REVIEW FILE] PRIVACY PROOF MODEL: DOCUMENTED
+                     Privacy proof model documented
                    </li>
                    <li className="flex items-center gap-4">
                      <span className="w-2 h-2 bg-fc-gold/50"></span>
-	                     [REVIEW FILE] GOVERNANCE ACCESS: ROLE-BOUND
+                     Governance access role-bound
                    </li>
                    <li className="flex items-center gap-4">
                      <span className="w-2 h-2 bg-fc-gold/50"></span>
-	                     [REVIEW FILE] RAW DATA EXPOSURE: MINIMIZED
+                     Raw data exposure minimized
                    </li>
                  </ul>
                 </div>

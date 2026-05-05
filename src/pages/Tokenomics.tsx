@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { mockDataService, type ProposalData } from '../services/mockDataService';
+import { previewDataService, type ProposalData } from '../services/previewDataService';
 import { FCCTokenMark } from '../components/BrandMarks';
 
 export default function Tokenomics() {
@@ -12,7 +12,7 @@ export default function Tokenomics() {
   // Representative preview mechanics until a production economics feed is connected.
   useEffect(() => {
     let mounted = true;
-    mockDataService.getActiveProposals().then(data => {
+    previewDataService.getActiveProposals().then(data => {
       if (mounted) {
         setProposals(data);
         setIsLoading(false);
@@ -238,7 +238,7 @@ export default function Tokenomics() {
                       <div className="h-1.5 w-full bg-red-500/20 rounded-full overflow-hidden flex">
                         <div 
                           className="h-full bg-green-500" 
-                          style={{ width: `${(votesFor / (votesFor + votesAgainst)) * 100}%` }}
+                          style={{ width: `${(votesFor / (votesFor + votesAgainst)) * 100}%` } as React.CSSProperties}
                         />
                       </div>
                     </div>

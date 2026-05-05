@@ -5,7 +5,7 @@ import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';
 import { useToast } from '../contexts/ToastContext';
 import { useSoundEffects } from '../hooks/useSoundEffects';
-import { mockDataService, type IdentityStat, type ActivityLog } from '../services/mockDataService';
+import { previewDataService, type IdentityStat, type ActivityLog } from '../services/previewDataService';
 import { ConnectWalletModal } from '../components/ConnectWalletModal';
 import { IssuerDemo } from '../components/IssuerDemo';
 import { lazy, Suspense } from 'react';
@@ -47,7 +47,7 @@ const issuerPillars = [
 export default function Identity() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { connectedIdentity, balances, level, stakedFCC } = useWallet();
+  const { connectedIdentity, level } = useWallet();
   const [isMinted, setIsMinted] = useState(false);
   const [mintPhase, setMintPhase] = useState(0); // 0=idle, 1=uplink, 2=biometrics, 3=hash, 4=minting, 5=done
   const [isScanning, setIsScanning] = useState(true);
@@ -153,8 +153,8 @@ export default function Identity() {
     let mounted = true;
     
     Promise.all([
-      mockDataService.getIdentityStats(),
-      mockDataService.getActivityLogs()
+      previewDataService.getIdentityStats(),
+      previewDataService.getActivityLogs()
     ]).then(([statsData, logsData]) => {
       if (mounted) {
         setIdentityStats(statsData);
@@ -166,15 +166,11 @@ export default function Identity() {
     return () => { mounted = false; };
   }, [connectedIdentity]);
 
-  const availableLiquidity = balances.fcc;
-  const delegatedLiquidity = stakedFCC;
-  const portfolioUsdValue = availableLiquidity * 0.69;
   const credentialStatus = !connectedIdentity
     ? 'AWAITING AUTHORIZATION'
     : isMinted
       ? 'VERIFIED'
       : 'READY FOR ISSUANCE';
-  const credentialTier = level >= 3 ? 'INSTITUTIONAL' : level >= 2 ? 'CIVIC PLUS' : 'CITIZEN';
 
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8 md:space-y-12 flex flex-col items-center md:items-stretch">
@@ -186,12 +182,6 @@ export default function Identity() {
           </h1>
           <p className="text-slate-400 font-mono text-xs tracking-widest">ISSUER BRIEF + HOLDER PREVIEW</p>
         </div>
-        {level >= 2 && (
-          <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-            <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" />
-            <span className="text-xs font-bold text-yellow-500 tracking-widest uppercase">Premium</span>
-          </div>
-        )}
       </div>
 
       {/* Issuer view — institutional brief */}
@@ -267,7 +257,6 @@ export default function Identity() {
           type="button"
           onClick={() => setShowHolderPreview((prev) => !prev)}
           className="mt-5 inline-flex items-center gap-3 border border-white/10 bg-white/[0.02] px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-fc-gold/40 hover:bg-fc-gold/5 hover:text-white"
-          aria-expanded={showHolderPreview}
         >
           <span aria-hidden>{showHolderPreview ? '▼' : '▶'}</span>
           {showHolderPreview ? 'Hide holder preview' : 'Show holder preview'}
@@ -329,8 +318,7 @@ export default function Identity() {
                       transition={{ duration: 3 + i, repeat: Infinity, ease: "linear" }}
                     >
                       <div 
-                        className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] absolute"
-                        style={{ top: 0, left: '50%', transform: 'translateX(-50%)' }}
+                        className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] absolute top-0 left-1/2 -translate-x-1/2"
                       />
                     </motion.div>
                   ))}
@@ -415,7 +403,6 @@ export default function Identity() {
                       <p className="font-mono text-xs text-slate-400 bg-black/50 px-3 py-1.5 inline-block border border-cyan-500/20 shadow-[0_0_10px_rgba(6,182,212,0.1)]">{connectedIdentity || 'Not Connected'}</p>
                       <div className="mt-4 flex flex-wrap gap-2">
                         <span className="border border-cyan-500/20 bg-cyan-500/5 px-3 py-2 text-[9px] font-mono tracking-[0.28em] text-cyan-300 uppercase">{credentialStatus}</span>
-                        <span className="border border-yellow-500/20 bg-yellow-500/5 px-3 py-2 text-[9px] font-mono tracking-[0.28em] text-yellow-400 uppercase">{credentialTier}</span>
                       </div>
                     </div>
                     {/* Official Seal Mockup */}
@@ -456,46 +443,52 @@ export default function Identity() {
                 </div>
               </div>
 
-              {/* --- 2. THE CONTROL VAULT --- */}
+              {/* --- 2. CREDENTIAL VAULT (institutional, not a wallet) --- */}
               <div className="pt-8">
                 <div className="flex items-center gap-3 mb-6 relative">
-                  <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-yellow-500/30 to-transparent" />
-                  <svg className="w-5 h-5 text-yellow-600 drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-fc-gold/30 to-transparent" />
+                  <svg className="w-5 h-5 text-fc-gold/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
-                  <h3 className="text-xl font-bold text-white tracking-[0.2em] uppercase text-shadow-gold">Control Vault</h3>
+                  <h3 className="text-xl font-bold text-white tracking-[0.2em] uppercase">Credential Vault</h3>
                   <span className="ml-auto border border-fc-gold/25 bg-fc-gold/5 px-3 py-1 text-[9px] font-mono uppercase tracking-[0.28em] text-fc-gold/80">Sample preview</span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                  {/* Balance Panel */}
-                  <div className="p-6 bg-[#09090b] border border-yellow-500/20 relative group hover:border-yellow-500/50 transition-colors">
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute left-0 top-0 w-1 h-full bg-yellow-600/50 group-hover:bg-yellow-500 transition-colors" />
-                    <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2 font-mono ml-2">Available Liquidity</div>
-                    <div className="flex items-baseline gap-2 ml-2">
-                       <span className="text-3xl font-display font-bold text-white tracking-wider">{availableLiquidity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                       <span className="text-yellow-600 font-bold font-mono">FCC</span>
+                <div className="space-y-3 relative z-10">
+                  {/* Row 1 — Credential records */}
+                  <div className="border border-white/10 bg-[#09090b] p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500">Credential records</span>
+                      <span className="text-[9px] font-mono uppercase tracking-[0.24em] text-slate-600">Sample</span>
                     </div>
-                    <div className="mt-4 text-[10px] font-mono text-slate-500 flex justify-between ml-2 pt-4 border-t border-white/5">
-                       <span>USD EQUIVALENT</span>
-                       <span className="text-slate-300">~${portfolioUsdValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    </div>
+                    <p className="text-sm text-slate-200 leading-relaxed">
+                      <span className="text-white font-medium">4 active</span> · 0 revoked · 0 pending review.
+                      Issued under the demo issuer key on /identity. Each record carries schema, issuance time, status, and a JWT proof pointer.
+                    </p>
                   </div>
 
-                  {/* Staked / Delegated Panel */}
-                  <div className="p-6 bg-[#09090b] border border-cyan-500/20 relative group hover:border-cyan-500/50 transition-colors">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute left-0 top-0 w-1 h-full bg-cyan-600/50 group-hover:bg-cyan-400 transition-colors" />
-                    <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2 font-mono ml-2">Delegated To Network</div>
-                    <div className="flex items-baseline gap-2 ml-2">
-                       <span className="text-3xl font-display font-bold text-white tracking-wider">{delegatedLiquidity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                       <span className="text-cyan-600 font-bold font-mono">FCC</span>
+                  {/* Row 2 — Issuer key custody */}
+                  <div className="border border-white/10 bg-[#09090b] p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500">Issuer key custody</span>
+                      <span className="text-[9px] font-mono uppercase tracking-[0.24em] text-slate-600">Sample</span>
                     </div>
-                    <div className="mt-4 text-[10px] font-mono text-slate-500 flex justify-between ml-2 pt-4 border-t border-white/5">
-                       <span>VERIFIED NODES</span>
-                       <span className="text-slate-300">{delegatedLiquidity > 0 ? '4 ACTIVE' : 'NO POSITIONS'}</span>
+                    <p className="text-sm text-slate-200 leading-relaxed">
+                      <span className="text-white font-medium">MPC, 2-of-3</span> shards held by an agency-owned signing service.
+                      The live demo above uses an in-browser Ed25519 key for the W3C VC walkthrough; production custody would be operator-controlled with named recovery roles.
+                    </p>
+                  </div>
+
+                  {/* Row 3 — Recovery & escalation */}
+                  <div className="border border-white/10 bg-[#09090b] p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500">Recovery &amp; escalation</span>
+                      <span className="text-[9px] font-mono uppercase tracking-[0.24em] text-slate-600">Sample</span>
                     </div>
+                    <p className="text-sm text-slate-200 leading-relaxed">
+                      Recovery requires <span className="text-white font-medium">multi-signer attestation</span> from named operators, with role separation between credential issuance, revocation, and key replacement.
+                      Escalation path is a documented contact, not an anonymous queue.
+                    </p>
                   </div>
                 </div>
 

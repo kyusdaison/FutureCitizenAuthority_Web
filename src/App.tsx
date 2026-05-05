@@ -2,8 +2,6 @@ import { motion, useScroll, useTransform, AnimatePresence, MotionConfig } from '
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { OfficialBackground } from './components/OfficialBackground';
-import { BootSequence } from './components/BootSequence';
-import { NoiseOverlay } from './components/NoiseOverlay';
 import { MobileMenu } from './components/MobileMenu';
 import { LiveTelemetryFooter } from './components/LiveTelemetryFooter';
 import { CommandPalette, type Command } from './components/CommandPalette';
@@ -37,7 +35,6 @@ const ReviewRoom = React.lazy(() => import('./pages/ReviewRoom'));
 
 import { FCChainNetworkSeal } from './components/BrandMarks';
 import { useWallet } from './contexts/WalletContext';
-const VanguardOrb = React.lazy(() => import('./components/VanguardOrb').then(module => ({ default: module.VanguardOrb })));
 import { useCommandPalette } from './hooks/useCommandPalette';
 import { useMouseTracker } from './hooks/useMouseTracker';
 import { useSoundEffects } from './hooks/useSoundEffects';
@@ -49,6 +46,9 @@ const homeNavItems = [
   { label: 'Assurance', target: 'assurance' },
   { label: 'Pilot', target: 'deployment' },
 ];
+
+const communityViews: View[] = ['tokenomics', 'staking', 'bridge', 'swap', 'artifacts', 'oracle', 'whisper', 'sentinel'];
+const isCommunityAppendixView = (view: View) => view === 'community' || communityViews.includes(view);
 
 export default function App() {
   const location = useLocation();
@@ -173,40 +173,10 @@ export default function App() {
       action: () => { navigateToHomeSection('assurance'); closeCommandPalette(); }
     },
     {
-      id: 'nav-staking',
-      title: 'Community: Network Operations',
-      subtitle: 'Community operations, delegation, and participation records',
-      action: () => { navigate('staking'); closeCommandPalette(); }
-    },
-    {
       id: 'nav-developer',
       title: 'Open Integration Portal',
       subtitle: 'SDKs, integration paths, and deployment tooling',
       action: () => { navigate('developer'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-bridge',
-      title: 'Community: Interoperability Bridge',
-      subtitle: 'Community interoperability appendix',
-      action: () => { navigate('bridge'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-swap',
-      title: 'Community: Settlement Routing',
-      subtitle: 'Community settlement-routing appendix',
-      action: () => { navigate('swap'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-whisper',
-      title: 'Community: Secure Messaging',
-      subtitle: 'Encrypted communications and proof exchange',
-      action: () => { navigate('whisper'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-sentinel',
-      title: 'Community: Security Operations',
-      subtitle: 'Network Security Operations',
-      action: () => { navigate('sentinel'); closeCommandPalette(); }
     },
     {
       id: 'nav-identity',
@@ -215,22 +185,10 @@ export default function App() {
       action: () => { navigate('identity'); closeCommandPalette(); }
     },
     {
-      id: 'nav-artifacts',
-      title: 'Community: Digital Assets',
-      subtitle: 'Credential and asset records',
-      action: () => { navigate('artifacts'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-oracle',
-      title: 'Community: Policy Intelligence',
-      subtitle: 'Network intelligence and policy telemetry',
-      action: () => { navigate('oracle'); closeCommandPalette(); }
-    },
-    {
-      id: 'nav-tokenomics',
-      title: 'Community: Network Economics',
-      subtitle: 'Supply, reserves, fees, and community disclosures',
-      action: () => { navigate('tokenomics'); closeCommandPalette(); }
+      id: 'nav-community',
+      title: 'Open Community Appendix',
+      subtitle: 'Separated network, economics, and participant surfaces',
+      action: () => { navigate('community'); closeCommandPalette(); }
     },
     {
       id: 'action-connect-wallet',
@@ -270,20 +228,8 @@ export default function App() {
     <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-[#0b1220] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-white pb-8">
       <OfficialBackground />
-      
-      {/* Official State Banner */}
-      <div className="w-full overflow-hidden bg-[#0a1019] border-b border-white/5 px-3 py-2 text-[8px] uppercase tracking-[0.18em] text-slate-500 sm:text-[9px] sm:tracking-[0.3em] flex justify-center items-center gap-2 sm:gap-3 relative z-[60]">
-        <svg className="w-3.5 h-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-        </svg>
-        <span className="whitespace-nowrap font-bold font-mono text-slate-300">FCA Institutional Site</span>
-        <span className="hidden opacity-20 text-slate-500 sm:inline">|</span>
-        <span className="hidden whitespace-nowrap font-mono text-gold-gradient font-bold drop-shadow-[0_0_5px_rgba(212,175,55,0.3)] sm:inline">Secure Digital Governance Review Channel</span>
-      </div>
 
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-      {currentView !== 'home' && !isReviewRoom && !isLowPowerMode && <NoiseOverlay />}
-      {currentView !== 'home' && !isReviewRoom && <BootSequence />}
 
       {isCommandPaletteOpen && (
         <CommandPalette 
@@ -300,22 +246,6 @@ export default function App() {
         />
       )}
 
-      {/* Global CSS background effects */}
-      {currentView !== 'home' && !isReviewRoom && (
-        <>
-          <div className="fixed inset-0 pointer-events-none z-[1] mouse-spotlight mix-blend-screen opacity-30" />
-          <div className="scanline-overlay" />
-          <div className="noise-overlay" />
-        </>
-      )}
-
-      {/* Avant-Garde Central Data Spine */}
-      <div className="fixed top-0 bottom-0 left-[50%] -translate-x-1/2 w-px bg-gradient-to-b from-transparent via-white/[0.04] to-transparent z-0 pointer-events-none hidden md:block" />
-      
-      {/* Global Foreground Scanline */}
-      {currentView !== 'home' && !isReviewRoom && (
-        <div className="fixed top-0 left-0 w-full h-[15vh] bg-gradient-to-b from-transparent via-white/[0.008] to-transparent z-[100] pointer-events-none animate-[scan_24s_linear_infinite]" />
-      )}
 
       {/* Ambient Volumetric Orbs - Muted for Authority */}
       <div className="fixed top-[10%] left-[-15%] w-[50vw] h-[50vw] rounded-full bg-cyan-700/[0.012] blur-[150px] z-0 pointer-events-none mix-blend-screen will-change-transform" />
@@ -336,7 +266,7 @@ export default function App() {
 
       {/* Top Navigation Protocol */}
       {currentView === 'home' && (
-      <nav className="fixed top-8 sm:top-9 w-full z-50 py-3 sm:py-4 px-4 sm:px-6 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
+      <nav className="fixed top-0 w-full z-50 py-3 sm:py-4 px-4 sm:px-6 md:px-16 flex justify-between items-center bg-[#020617]/95 backdrop-blur-md border-b border-slate-800 transition-all">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
           <img src="/hero-logo.webp" alt="Future Citizen Authority" className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] grayscale group-hover:grayscale-0 transition-all duration-500" loading="eager" decoding="async" />
           <div className="flex min-w-0 flex-col">
@@ -446,7 +376,7 @@ export default function App() {
                     transition={{ duration: 0.3 }}
                     className="w-full h-full min-h-screen"
                   >
-                     {(['tokenomics', 'staking', 'bridge', 'swap', 'artifacts', 'oracle', 'whisper', 'sentinel'] as View[]).includes(currentView) && <CommunityBreadcrumb />}
+                     {communityViews.includes(currentView) && <CommunityBreadcrumb />}
                      {currentView === 'ecosystem' && <Ecosystem />}
                      {currentView === 'dashboard' && <Dashboard />}
                        {currentView === 'explorer' && <Explorer />}
@@ -470,15 +400,8 @@ export default function App() {
         </div>
       )}
 
-      {currentView !== 'home' && !isReviewRoom && (
-        <>
-          {!isLowPowerMode && (
-            <Suspense fallback={null}>
-              <VanguardOrb />
-            </Suspense>
-          )}
-          <LiveTelemetryFooter />
-        </>
+      {currentView !== 'home' && !isReviewRoom && !isCommunityAppendixView(currentView) && (
+        <LiveTelemetryFooter />
       )}
     </div>
     </MotionConfig>

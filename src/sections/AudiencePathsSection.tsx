@@ -54,7 +54,6 @@ export const AudiencePathsSection = () => {
 
   return (
     <section id="audiences" className="relative overflow-hidden border-y border-white/5 bg-[#04070d] px-6 py-24 lg:px-12">
-      <div className="absolute inset-0 bg-tactical-dots opacity-20 pointer-events-none" />
       <div className="absolute left-[-20%] top-1/2 h-[640px] w-[640px] -translate-y-1/2 rounded-full bg-fc-gold/[0.035] blur-[150px] pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
