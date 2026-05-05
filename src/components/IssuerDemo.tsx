@@ -126,7 +126,7 @@ export const IssuerDemo = () => {
           <button
             type="button"
             onClick={handleReset}
-            className="self-start md:self-end border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-fc-gold/40 hover:text-white"
+            className="self-start md:self-end inline-flex items-center justify-center min-h-[44px] border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-fc-gold/40 hover:text-white"
           >
             Reset
           </button>
@@ -192,7 +192,7 @@ export const IssuerDemo = () => {
               <button
                 type="button"
                 onClick={handleCopy}
-                className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.02] px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-fc-gold/40 hover:text-white"
+                className="inline-flex items-center gap-2 min-h-[44px] border border-white/10 bg-white/[0.02] px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-fc-gold/40 hover:text-white"
               >
                 {copied ? <Check className="h-3 w-3 text-fc-gold" /> : <Copy className="h-3 w-3" />}
                 {copied ? 'Copied' : 'Copy'}

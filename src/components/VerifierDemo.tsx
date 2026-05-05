@@ -228,7 +228,7 @@ export const VerifierDemo = () => {
           <button
             type="button"
             onClick={reset}
-            className="self-start md:self-end border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-cyan-300/40 hover:text-white"
+            className="self-start md:self-end inline-flex items-center justify-center min-h-[44px] border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-cyan-300/40 hover:text-white"
           >
             Reset
           </button>
@@ -244,7 +244,7 @@ export const VerifierDemo = () => {
               type="button"
               onClick={useLast}
               disabled={!lastIssued.jwt}
-              className="inline-flex items-center gap-2 border border-cyan-300/30 bg-cyan-300/[0.04] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/10 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 min-h-[44px] border border-cyan-300/30 bg-cyan-300/[0.04] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/10 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <FileSearch className="h-3 w-3" />
               Use last issued
@@ -253,7 +253,7 @@ export const VerifierDemo = () => {
               type="button"
               onClick={tamperLast}
               disabled={!lastIssued.jwt}
-              className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-red-400/40 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 min-h-[44px] border border-white/10 bg-white/[0.02] px-3 py-2 text-[10px] font-mono uppercase tracking-[0.22em] text-slate-300 transition-colors hover:border-red-400/40 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <XCircle className="h-3 w-3" />
               Tamper, then verify
